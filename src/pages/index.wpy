@@ -25,6 +25,7 @@
   font-size: 20rpx;
   color: #393939;
   padding: 0 20rpx;
+  z-index: 20;
 }
 .notice image{
   width: 30rpx;
@@ -46,12 +47,13 @@
   width: 100%;
   height: 500rpx;
   margin-top: -500rpx;
-}
-.stepCount image{
-  width: 100%;
-  height: 100%;
   z-index: -10;
 }
+// .stepCount image{
+//   width: 100%;
+//   height: 100%;
+//   z-index: -10;
+// }
 .stepCountInfo{
   text-align: center;
   overflow:hidden;
@@ -314,6 +316,16 @@
 //   url: './pages?a=1&b=2'
 // });
 // this.$navigate(url)
+
+
+  // 水平垂直居中
+  // display: flex;
+  // align-items: center;
+  // justify-content: center;
+
+  // 居右
+  // flex-direction:row;
+  // justify-content:flex-end
 
 <script>
 import wepy from 'wepy'

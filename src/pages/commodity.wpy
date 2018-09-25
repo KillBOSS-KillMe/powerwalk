@@ -1,0 +1,300 @@
+<style lang="less">
+page{
+  background-color: #efefef;
+}
+.commdoity{
+  background-color: #fff;
+}
+.commdoityImgCon{
+  height: 620rpx;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.commdoityImg{
+  width: 386rpx;
+  height: 454rpx;
+  border: 1rpx solid #eaeaea;
+  border-radius: 10rpx;
+}
+
+.commdoityInfo{
+  padding-left: 60rpx;
+  width: 660rpx;
+}
+.commdoityTitle{
+  color: #222;
+  line-height: 50rpx;
+  font-size: 30rpx;
+}
+.commdoityType{
+  height: 50rpx;
+  line-height: 50rpx;
+  color: #333;
+  font-size: 20rpx;
+}
+.commdoityInfoCon{
+  display: flex;
+}
+.commdoityInfo image{
+  width: 40rpx;
+  height: 40rpx;
+}
+.price,.lave{
+  width: 50%;
+  font-size: 30rpx;
+}
+.price{
+  color: #fe0200;
+}
+.lave{
+  color: #666;
+  text-align: right;
+}
+.quantity{
+  margin-top: 20rpx;
+  background-color: #fff;
+  border-top: 1rpx solid #a0a0a0;
+  padding-left:60rpx;
+  width:660rpx;
+  height: 100rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #333;
+  flex-direction:row;
+  justify-content:flex-end;
+}
+.quantity view{
+  width: auto;
+  min-width: 40rpx;
+  height: 40rpx;
+  line-height: 40rpx;
+  border: 1rpx solid #a0a0a0;
+  margin: 0 10rpx;
+  text-align: center;
+}
+.quantityShow{
+  font-size: 30rpx;
+}
+
+.descriptionCon{
+  background-color: #fff;
+}
+.description{
+  width: 100%;
+  height: 80rpx;
+  line-height: 100rpx;
+  display: flex;
+  margin-top: 20rpx;
+  border: 1rpx solid #dcdcdc;
+  text-align: center;
+}
+.description view{
+  width: 175rpx;
+  margin: 0 100rpx;
+}
+.description .action{
+  color: #ea6200;
+  border-bottom: 2rpx solid #ea6200
+}
+.descriptionInfo{
+  width: 650rpx;
+  height: auto;
+  padding:60rpx;
+  white-space: pre-wrap;
+}
+
+.descriptionList{
+  min-height: 540rpx;
+  height: auto;
+}
+.descriptionList .list{
+  height: 134rpx;
+  line-height: 134rpx;
+  display: flex;
+  font-size: 30rpx;
+  color: #333;
+  border-bottom: 1rpx solid #e5e5e5;
+}
+.descriptionList .user{
+  width: 190rpx;
+  padding-left: 20rpx;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.descriptionList .user image{
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 40rpx;
+  vertical-align:middle
+}
+.descriptionList .info{
+  margin-left: 70rpx;
+  width: 280rpx;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.descriptionList .info text{
+  color: #fa7100;
+}
+.descriptionList .time{
+  width: 180rpx;
+  color: #888;
+  text-align: right;
+}
+
+
+.buy{
+  height: 100rpx;
+  color: #fff;
+  font-size: 30rpx;
+  text-align: center;
+  display: flex;
+  margin-bottom: 110rpx;
+  line-height: 100rpx;
+}
+.buy .shoppCart{
+  width: 326rpx;
+  height: 100rpx;
+  background-color: #f39900;
+}
+.buy .price{
+  width: 190rpx;
+  height: 100rpx;
+  color: #fff;
+  background-color: #ff4a00;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.buy image{
+  width: 40rpx;
+  height: 40rpx;
+}
+.buy text{
+  width: 40rpx;
+  height: 40rpx;
+}
+.exchange{
+  width: 222rpx;
+  height: 100rpx;
+  background-color: #ff4a00;
+}
+.buyborder{
+  background-color: #ff4a00;
+}
+
+</style>
+<template>
+  <view>
+    <view class="commdoity">
+        <!-- 顶部商品图 -->
+      <view class="commdoityImgCon">
+        <image class="commdoityImg" src="/img/index_main.jpg" />
+      </view>
+      <!-- 商品信息 -->
+      <view class="commdoityInfo">
+        <view class="commdoityTitle">商品名称商品名称商品名称商品名称商品名称商品名称商品名称商品名称</view>
+        <view class="commdoityType">型号：型号型号型号型号型号</view>
+        <view class="commdoityInfoCon">
+          <view class="price">
+            <image src="/img/tui.png" />
+            200
+          </view>
+          <view class="lave">剩余12件</view>
+        </view>
+      </view>
+      <view class="quantity">
+        数量：
+        <view class="set">-</view>
+        <view class="quantityShow">1222</view>
+        <view class="set">+</view>
+      </view>
+    </view>
+    <view class="descriptionCon">
+      <view class="description">
+        <view class="action">商品详情</view>
+        <view class="action">兑换记录</view>
+      </view>
+      <view class="descriptionInfo hide">
+        商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情
+      </view>
+      <view class="descriptionList">
+        <view class="list">
+          <view class="user">
+            <image src="/img/index_main.jpg" />
+            名字名字
+          </view>
+          <view class="info">
+            兑换了<text>奖品奖品奖品奖品奖品奖品奖品奖品奖品</text>
+          </view>
+          <view class="time">
+            2小时前
+          </view>
+        </view>
+        <view class="list">
+          <view class="user">
+            <image src="/img/index_main.jpg" />
+            名字名字
+          </view>
+          <view class="info">
+            兑换了<text>奖品奖品奖品奖品奖品奖品奖品奖品奖品</text>
+          </view>
+          <view class="time">
+            2小时前
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="buy">
+      <view class="shoppCart">加入购物车</view>
+      <view class="price">
+        <image src="/img/tui.png" />
+        200
+      </view>
+      <view class="buyborder">
+        <text>|</text>
+      </view>
+      <view class="exchange">立即兑换</view>
+    </view>
+    
+
+
+    <nav @childFn.user="goPage" />
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import nav from '../components/nav' // 底部导航
+// import author from '../components/author' // 授权按钮
+export default class Commodity extends wepy.page {
+  config = {
+    'navigationBarTitleText': '商品详情'
+  };
+  // 生命组件ID
+  components = {
+    // 底部导航
+    nav: nav
+  };
+  // alias example
+  data = {
+    userInfo: null
+  };
+
+  methods = {
+    // 底部导航跳转
+    goPage (url, evt) {
+      // 销毁当前页{跳转}
+      this.$redirect(url)
+    }
+  };
+  async onLoad(options) {
+    
+  };
+}
+</script>

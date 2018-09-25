@@ -66,27 +66,8 @@ export default class extends wepy.app {
   // -----json部分-----
   config = {
     pages: [
-      'pages/index',
-      'pages/withdraw',
-      'pages/winningList',
-      'pages/orderList',
-      'pages/shop',
-      'pages/user',
-      'pages/upDataMoney',
-      'pages/extensionList',
-      'pages/grantList',
-      'pages/turntable',
-      'pages/shopRecharge',
-      'pages/shopWithdraw',
-      'pages/balanceList',
-      'pages/reserveList',
-      'pages/balanceToReserve',
-      'pages/advertising',
-      'pages/userWalletIn',
-      'pages/userWalletOut',
-      'pages/newLottery',
-      'pages/shopReservation',
-      'pages/shopUserLottery'
+      'pages/commodity',
+      'pages/index'
     ],
     window: {
       backgroundTextStyle: 'light',
