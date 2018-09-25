@@ -1,0 +1,134 @@
+<style lang="less">
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+.mask{
+  width:100%;
+  height:100%;
+  position:fixed;
+  background-color:rgba(0, 0,0,0.5);
+  z-index:2;
+  top:0;
+  left:0;
+}
+.hide{
+  display: none;
+}
+.show{
+  display: block !important;
+}
+.listMessage{
+  height: 200rpx;
+  line-height: 200rpx;
+  color: #888;
+  text-align: center
+}
+
+.loadingImg{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.loadingImg image{
+  width: 150rpx;
+  height: 30rpx;
+}
+</style>
+// 此处应该为此框架的基础包
+// import wepy from 'wepy';
+
+// // 声明一个App小程序实例{wepy.app | app.js}
+// export default class MyAPP extends wepy.app {
+// }
+
+// // 声明一个Page页面实例{wepy.page}
+// export default class IndexPage extends wepy.page {
+// }
+
+// // 声明一个Component组件实例{wepy.component}
+// export default class MyComponent extends wepy.component {
+// }
+<script>
+import wepy from 'wepy'
+import 'wepy-async-function'
+
+export default class extends wepy.app {
+  constructor () {
+    super()
+    this.use('promisify')
+  }
+  
+  // -----json部分-----
+  config = {
+    pages: [
+      'pages/index',
+      'pages/withdraw',
+      'pages/winningList',
+      'pages/orderList',
+      'pages/shop',
+      'pages/user',
+      'pages/upDataMoney',
+      'pages/extensionList',
+      'pages/grantList',
+      'pages/turntable',
+      'pages/shopRecharge',
+      'pages/shopWithdraw',
+      'pages/balanceList',
+      'pages/reserveList',
+      'pages/balanceToReserve',
+      'pages/advertising',
+      'pages/userWalletIn',
+      'pages/userWalletOut',
+      'pages/newLottery',
+      'pages/shopReservation',
+      'pages/shopUserLottery'
+    ],
+    window: {
+      backgroundTextStyle: 'light',
+      navigationBarBackgroundColor: '#fff',
+      navigationBarTitleText: 'WeChat',
+      navigationBarTextStyle: 'black'
+    }
+  }
+  // -----json部分结束-----
+  // 全局变量
+  globalData = {
+    userInfo: null,
+    testData: 'globalData',
+    code: null,
+    // 线下
+    requestUrl: 'http://47.97.161.139:8081/api',
+    // 线上
+    // requestUrl: 'https://test.beaconway.cn/api',
+    // 图片资源--线下
+    imgUrl: 'http://47.97.161.139:8081',
+    // 图片资源--线上
+    // imgUrl: 'https://test.beaconway.cn',
+    userShopInfo: null,
+    shopInfo: null,
+    guangGao: null
+  };
+
+  testFunctiong() {
+    console.log('testFunctiong')
+  }
+  // 获取用户信息
+  getUserInfo(cb) {
+    const that = this
+    if (this.globalData.userInfo) {
+      return this.globalData.userInfo
+    }
+    wepy.getUserInfo({
+      success (res) {
+        that.globalData.userInfo = res.userInfo
+        cb && cb(res.userInfo)
+      }
+    })
+  };
+}
+</script>
