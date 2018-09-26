@@ -327,6 +327,11 @@
   // flex-direction:row;
   // justify-content:flex-end
 
+// vertical-align:middle;
+
+  // overflow:hidden;
+  // text-overflow:ellipsis;
+  // white-space:nowrap;
 <script>
 import wepy from 'wepy'
 import nav from '../components/nav' // 底部导航
