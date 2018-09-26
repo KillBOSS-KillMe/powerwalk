@@ -66,6 +66,7 @@ export default class extends wepy.app {
   // -----json部分-----
   config = {
     pages: [
+      'pages/donation',
       'pages/donationList',
       'pages/leaderboard',
       'pages/commodity',

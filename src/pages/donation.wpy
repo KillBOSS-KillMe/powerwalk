@@ -1,0 +1,252 @@
+<style lang="less">
+page{
+  background-color: #efefef;
+}
+.top{
+  width: 100%;
+  // min-height: 500rpx;
+  height: auto;
+  background-color: #fff;
+}
+.img{
+  width: 710rpx;
+  height: 500rpx;
+  border: 1rpx solid #bfbfbf;
+  margin: 0 20rpx;
+}
+.img image{
+  width: 100%;
+  height: 100%;
+}
+.schedule{
+  width: 710rpx;
+  height: 20rpx;
+  background-color: #e5e5e5;
+  margin: 20rpx;
+  border-radius: 10rpx;
+}
+.progressBar{
+  width: 30%;
+  height: 20rpx;
+  background-color: #ff7f00;
+  border-radius: 10rpx;
+}
+.dataInfo{
+  width: 100%;
+  height: 110rpx;
+  display: flex;
+  padding-left: 20rpx;
+  border-bottom: 1rpx solid #e5e5e5;
+}
+.dataInfo view{
+  height: 110rpx;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.dataInfo view:nth-child(1){
+  width: 330rpx;
+}
+.dataInfo view:nth-child(2){
+  width: 300rpx;
+}
+.dataInfo view:nth-child(3){
+  width: 80rpx;
+}
+.dataInfo .data, .dataInfo .description{
+  width: 100%;
+  height: 40rpx;
+  line-height: 40rpx;
+  font-size: 30rpx;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.dataInfo .data{
+  color: #fc901e;
+}
+.dataInfo .description{
+  color: #666;
+}
+.explain{
+  width: 100%;
+  height: 80rpx;
+  line-height: 80rpx;
+  font-size: 25rpx;
+  color: #333;
+  padding: 0 20rpx;
+  background-color: #fff;
+}
+
+.donationExplain{
+  margin-top: 20rpx;
+  width: 100%;
+  height: auto;
+  min-height: 400rpx;
+  background-color: #fff;
+  padding-bottom: 30rpx;
+  border-bottom: 1rpx solid #e5e5e5;
+}
+.donationTitle, .donationTitle2, .donationArticle, .messageTitle{
+  padding: 20rpx;
+  width: 720rpx;
+  height: auto;
+  min-height: 70rpx;
+  line-height: 70rpx;
+  font-size: 30rpx;
+  color: #333;
+}
+.donationTitle2{
+  color: #666;
+  min-height: 30rpx;
+  line-height: 30rpx;
+  padding: 0 20rpx;
+}
+.donationArticle{
+  margin-top: 30rpx;
+  min-height: 30rpx;
+  line-height: 50rpx;
+  font-size: 25rpx;
+  color: #444;
+}
+.message{
+  background-color: #fff;
+  margin-bottom: 110rpx; 
+}
+.message .con{
+  padding: 20rpx;
+  display: flex;
+}
+.message image{
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 30rpx;
+  vertical-align:middle;
+}
+.messageInfo{
+  display: block;
+  margin-left: 20rpx;
+}
+.messageUser{
+  height: 40rpx;
+  display: flex;
+  color: #333;
+  font-size: 30rpx;
+}
+.messageUser view{
+  width: 50%;
+}
+.messageUser view:nth-child(2){
+  font-size: 25rpx;
+  color: #666;
+  text-align: right;
+}
+.messageCon{
+  font-size: 30rpx;
+  color: #333;
+}
+.messageBottom{
+  height: 160rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.messageBottom view{
+  width: 660rpx;
+  height: 85rpx;
+  line-height: 85rpx;
+  text-align: center;
+  color: #fff;
+  border-radius: 43rpx;
+  background-color: #fe5600;
+}
+</style>
+<template>
+  <view>
+    <view class="top">
+      <view class="img">
+        <image src="/img/index_main.jpg" />
+      </view>
+      <!-- 进度条 -->
+      <view class="schedule">
+        <view class="progressBar"></view>
+      </view>
+      <view class="dataInfo">
+        <view>
+          <view class="data">000,000,00</view>
+          <view class="description">目标:999,999,999</view>
+        </view>
+        <view>
+          <view class="data">000,000,00</view>
+          <view class="description">爱心:999,999,999</view>
+        </view>
+        <view>
+          <view class="data">300%</view>
+          <view class="description">进度</view>
+        </view>
+      </view>
+      <view class="explain">
+        帮助00000000000000就好
+      </view>
+    </view>
+    <view class="donationExplain">
+      <view class="donationTitle">项目说明项目说明项目说明</view>
+      <view class="donationTitle2">项目说明项目说明项目说明</view>
+      <view class="donationArticle">项目说明项目说明项目说明项目说明项目说明项目说明项目说明项目说明项目说明项目说明项目说明项目说明项目说明项目说明项目说明项目说明项目说明项目说明</view>
+      <view class="img">
+        <image src="/img/index_main.jpg" />
+      </view>
+    </view>
+    <view class="message">
+      <view class="messageTitle">
+        爱心留言
+      </view>
+      <view class="con">
+        <view>
+          <image src="/img/index_main.jpg" />
+        </view>
+        <view class="messageInfo">
+          <view class="messageUser">
+            <view>明项目</view>
+            <view>明项目</view>
+          </view>
+          <view class="messageCon">项目说明项目说明项目说明项目说明项目说明项目说明项目说明项目说明项目说明项目说明项目说明项目说明</view>
+        </view>
+      </view>
+      <view class="messageBottom">
+        <view>捐赠</view>
+      </view>
+    </view>
+    <nav @childFn.user="goPage" />
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import nav from '../components/nav' // 底部导航
+export default class Donation extends wepy.page {
+  config = {
+    'navigationBarTitleText': '捐赠'
+  };
+  // 生命组件ID
+  components = {
+  // 底部导航
+    nav: nav
+  };
+  // alias example
+  data = {
+    userInfo: null
+  };
+
+  methods = {
+  // 底部导航跳转
+  goPage (url, evt) {
+    // 销毁当前页{跳转}
+    this.$redirect(url)
+  }
+  };
+  async onLoad(options) {
+  
+  };
+}
+</script>
