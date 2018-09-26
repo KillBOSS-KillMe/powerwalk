@@ -332,6 +332,13 @@
   // overflow:hidden;
   // text-overflow:ellipsis;
   // white-space:nowrap;
+
+  // 自动换行
+  // word-break:break-all;
+
+  // overflow:hidden;
+  // text-overflow:ellipsis;
+  // white-space:nowrap;
 <script>
 import wepy from 'wepy'
 import nav from '../components/nav' // 底部导航

@@ -1,0 +1,237 @@
+<style lang="less">
+page{
+  background-color: #efefef;
+}
+.list{
+  width: 750rpx;
+  height: auto;
+  background-color: #fff;
+  display: flex;
+}
+.listCon{
+  width: 710rpx;
+  height: 404rpx;
+  margin: 30rpx 20rpx;
+  border-radius: 20rpx;
+  background-color: #eee;
+  display: flex;
+  // padding: 30rpx 20rpx;
+}
+.select, .img, .info{
+  margin: 30rpx 0;
+}
+.select{
+  width: 80rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.img{
+  width: 310rpx;
+  height: 350rpx;
+  border-radius: 20rpx;
+}
+.info{
+  width: 260rpx;
+  margin-left: 44rpx;
+  display: flex;
+  position: relative;
+}
+.listCon image{
+  width: 100%;
+  height: 100%;
+  border-radius: 20rpx;
+}
+.info view:nth-child(1){
+  
+}
+.info view:nth-child(2){
+  width: 100%;
+  height: auto;
+  color: #333;
+  word-break:break-all;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.info view:nth-child(3){
+  position: absolute;
+  bottom: 0rpx;
+  right: 0rpx;
+  display: flex;
+}
+.info view:nth-child(3) view{
+  position: relative;
+  // min-width: 40rpx;
+  // height: 40rpx;
+  // line-height: 40rpx;
+  margin-left: 15rpx;
+  border: 1rpx solid #9d9d9d;
+  font-size: 25rpx;
+  text-align: center;
+  padding:5rpx 10rpx;
+}
+.info .delete{
+  position: absolute;
+  top: 0rpx;
+  right: 0rpx;
+  color: #555;
+}
+// .infoShow view:nth-child(1){
+//   width:100%;
+//   height:auto;
+//   color:#333;
+//   word-break:break-all;
+//   display:flex;
+//   align-items:center;
+//   justify-content:center;
+
+// }
+.info image{
+  width: 30rpx;
+  height: 30rpx;
+}
+
+
+
+
+.selected{
+  width: 750rpx;
+  height: 300rpx;
+  display: flex;
+  background-color: #fff;
+}
+.count{
+  width: 315rpx;
+  height: 300rpx;
+  line-height: 300rpx;
+  margin-left: 60rpx;
+}
+.assets{
+  width: 355rpx;
+  height: 300rpx;
+  margin-right: 20rpx;
+}
+.surplus{
+  height: 120rpx;
+  line-height: 120rpx;
+  width: 355rpx;
+  text-align: right;
+  color: #fc6800;
+  font-size: 30rpx;
+}
+.operating{
+  height: 85rpx;
+  line-height: 85rpx;
+  width: 355rpx;
+  display: flex;
+    flex-direction:row;
+  justify-content:flex-end
+}
+.operating image{
+  width: 100%;
+  height: 100%;
+}
+.operating view:nth-child(1){
+  display: flex;
+  height: 50rpx;
+  width: 50rpx;
+}
+.operating view:nth-child(2){
+  width: 120rpx;
+  height: 50rpx;
+  line-height: 50rpx;
+  color: #fe5600;
+  padding-left: 12rpx;
+}
+.operating view:nth-child(3){
+  text-align: center;
+  color: #fff;
+  font-size: 30rpx;
+  height: 50rpx;
+  line-height: 50rpx;
+  width: 120rpx;
+  background-color: #fe5600;
+  border-radius: 10rpx;
+}
+</style>
+
+<template>
+  <view>
+    <view class="cartList">
+
+      <view class="list">
+        <view class="listCon">
+          <view class="select">
+            <radio/>
+          </view>
+          <view class="img">
+            <image src="/img/index_main.jpg" />
+          </view>
+          <view class="info">
+            <view class="delete">×</view>
+            <view class="">
+              <!-- <view>
+                <image src="/img/index_main.jpg" />
+                200
+              </view> -->
+              <view>
+                asdadsfadsfadsfasdfasdfadsfadsf
+              </view>
+            </view>
+            <view>
+              <view>-</view>
+              <view>2222</view>
+              <view>+</view>
+            </view>
+          </view>
+        </view>
+      </view>
+      
+    </view>
+    <view class="selected">
+      <view class="count">已选：1</view>
+      <view class="assets">
+        <view class="surplus">剩余活力豆:1000</view>
+        <view class="operating">
+          <view>
+            <image src="/img/index_main.jpg" />
+          </view>
+          <view>200</view>
+          <view>兑换</view>
+        </view>
+      </view>
+    </view>
+    <nav @childFn.user="goPage" />
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import nav from '../components/nav' // 底部导航
+export default class Cart extends wepy.page {
+  config = {
+    'navigationBarTitleText': '购物车'
+  };
+  // 生命组件ID
+  components = {
+  // 底部导航
+    nav: nav
+  };
+  // alias example
+  data = {
+    userInfo: null
+  };
+
+  methods = {
+  // 底部导航跳转
+  goPage (url, evt) {
+    // 销毁当前页{跳转}
+    this.$redirect(url)
+  }
+  };
+  async onLoad(options) {
+  
+  };
+}
+</script>
