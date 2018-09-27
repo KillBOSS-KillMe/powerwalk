@@ -7,6 +7,7 @@ page{
   height: auto;
   background-color: #fff;
   display: flex;
+  border-bottom: 1rpx solid #e5e5e5;
 }
 .listCon{
   width: 710rpx;
@@ -34,7 +35,6 @@ page{
 .info{
   width: 260rpx;
   margin-left: 44rpx;
-  display: flex;
   position: relative;
 }
 .listCon image{
@@ -50,9 +50,8 @@ page{
   height: auto;
   color: #333;
   word-break:break-all;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display:table-cell;
+  vertical-align:middle
 }
 .info view:nth-child(3){
   position: absolute;
@@ -70,6 +69,7 @@ page{
   font-size: 25rpx;
   text-align: center;
   padding:5rpx 10rpx;
+  min-width: 18rpx;
 }
 .info .delete{
   position: absolute;
@@ -90,9 +90,24 @@ page{
 .info image{
   width: 30rpx;
   height: 30rpx;
+  margin-right:10rpx; 
 }
-
-
+.infoCon{
+  height:350rpx !important;
+}
+.infoCon view{
+  display: flex;
+  align-items: center;
+}
+.infoCon view:nth-child(1){
+  font-size: 30rpx;
+  color: #fa0100;
+}
+.infoCon view:nth-child(2){
+  font-size: 28rpx;
+  color: #444;
+}
+  
 
 
 .selected{
@@ -100,6 +115,7 @@ page{
   height: 300rpx;
   display: flex;
   background-color: #fff;
+  margin-bottom: 110rpx;
 }
 .count{
   width: 315rpx;
@@ -121,11 +137,11 @@ page{
   font-size: 30rpx;
 }
 .operating{
-  height: 85rpx;
-  line-height: 85rpx;
+  height: 50rpx;
+  line-height: 50rpx;
   width: 355rpx;
   display: flex;
-    flex-direction:row;
+  flex-direction:row;
   justify-content:flex-end
 }
 .operating image{
@@ -133,9 +149,9 @@ page{
   height: 100%;
 }
 .operating view:nth-child(1){
-  display: flex;
-  height: 50rpx;
-  width: 50rpx;
+  height: 30rpx;
+  width: 30rpx;
+  vertical-align:middle;
 }
 .operating view:nth-child(2){
   width: 120rpx;
@@ -170,11 +186,11 @@ page{
           </view>
           <view class="info">
             <view class="delete">×</view>
-            <view class="">
-              <!-- <view>
+            <view class="infoCon">
+              <view>
                 <image src="/img/index_main.jpg" />
                 200
-              </view> -->
+              </view>
               <view>
                 asdadsfadsfadsfasdfasdfadsfadsf
               </view>
@@ -187,7 +203,33 @@ page{
           </view>
         </view>
       </view>
-      
+      <view class="list">
+        <view class="listCon">
+          <view class="select">
+            <radio/>
+          </view>
+          <view class="img">
+            <image src="/img/index_main.jpg" />
+          </view>
+          <view class="info">
+            <view class="delete">×</view>
+            <view class="infoCon">
+              <view>
+                <image src="/img/index_main.jpg" />
+                200
+              </view>
+              <view>
+                asdadsfadsfadsfasdfasdfadsfadsf
+              </view>
+            </view>
+            <view>
+              <view>-</view>
+              <view>2222</view>
+              <view>+</view>
+            </view>
+          </view>
+        </view>
+      </view>
     </view>
     <view class="selected">
       <view class="count">已选：1</view>
