@@ -62,11 +62,10 @@ export default class extends wepy.app {
     super()
     this.use('promisify')
   }
-  
   // -----json部分-----
   config = {
     pages: [
-      
+      'pages/user',
       'pages/exchange',
       'pages/cart',
       'pages/donation',

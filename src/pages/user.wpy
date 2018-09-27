@@ -1,0 +1,219 @@
+<style lang="less">
+page{
+  background-color: #efefef;
+}
+.userShow{
+  width: 750rpx;
+  height: 400rpx;
+  background-color: #fff;
+}
+.userShow image{
+  width: 140rpx;
+  height: 140rpx;
+  border-radius: 70rpx;
+}
+.userShow view{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #333;
+}
+.userShow view:nth-child(1){
+  padding-top: 40rpx;
+}
+.userShow view:nth-child(2){
+  height: 60rpx;
+  line-height: 60rpx;
+  padding-top: 30rpx;
+  font-size: 30rpx;
+}
+.userShow view:nth-child(3){
+  height: 60rpx;
+  line-height: 60rpx;
+  font-size: 25rpx;
+}
+.userNavT{
+  width: 750rpx;
+  height: 100rpx;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.userNavT view{
+  height: 60rpx;
+  line-height: 60rpx;
+  font-size: 34rpx;
+  color: #333;
+  text-align: center;
+  width: 375rpx;
+}
+.userNavT view:nth-child(2){
+  border-left: 1rpx solid #e5e5e5;
+}
+.userNav{
+  margin-top: 20rpx;
+  width: 750rpx;
+  height: auto;
+  background-color: #fff;
+  padding-bottom: 20rpx;
+}
+.userNav .list{
+  height: 215rpx;
+  display:inline-block;
+  width: 33.3%;
+  // border: 1rpx solid red;
+}
+.userNav .list view:nth-child(1){
+  margin: 30rpx 80rpx;
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50rpx;
+  border: 1rpx solid #eee;
+
+}
+.userNav .list image{
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50rpx;
+}
+.userNav .list view:nth-child(2){
+  font-size: 30rpx;
+  color: #333;
+  text-align: center;
+}
+.featuresList{
+  width: 750rpx;
+  height: auto;
+  // padding: 0 50rpx;
+  background-color: #fff;
+  margin-bottom: 110rpx;
+}
+.features{
+  margin: 0 50rpx;
+  height:140rpx;
+  line-height: 140rpx;
+  vertical-align:middle;
+  border-top: 1rpx solid #e5e5e5;
+  display: flex;
+  align-items: center;
+}
+.features image{
+  width: 60rpx;
+  height: 60rpx;
+  margin-left: 20rpx;
+}
+.features view{
+  width: 500rpx;
+  font-size: 30rpx;
+  color: #333;
+  margin-left: 20rpx;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.features image:nth-child(2){
+  flex-direction:row;
+  justify-content:flex-end
+}
+</style>
+
+<template>
+  <view>
+    <view class="userShow">
+      <view>
+        <image src="/img/index_main.jpg" />
+      </view>
+      <view>名字名字名字名字</view>
+      <view>ID:3333333333</view>
+    </view>
+    <view class="userNavT">
+      <view>兑换记录</view>
+      <view>兑换记录</view>
+    </view>
+    <view class="userNav">
+      <view class="list">
+        <view>
+          <image src="/img/index_main.jpg" />
+        </view>
+        <view>购物车</view>
+      </view>
+      <view class="list">
+        <view>
+          <image src="/img/index_main.jpg" />
+        </view>
+        <view>订单</view>
+      </view>
+      <view class="list">
+        <view>
+          <image src="/img/index_main.jpg" />
+        </view>
+        <view>签到</view>
+      </view>
+      <view class="list">
+        <view>
+          <image src="/img/index_main.jpg" />
+        </view>
+        <view>充值</view>
+      </view>
+      <view class="list">
+        <view>
+          <image src="/img/index_main.jpg" />
+        </view>
+        <view>邀请</view>
+      </view>
+      <view class="list">
+        <view>
+          <image src="/img/index_main.jpg" />
+        </view>
+        <view>客服</view>
+      </view>
+    </view>
+    <view class="featuresList">
+      <view class="features">
+        <image src="/img/index_main.jpg" />
+        <view>地址</view>
+        <image src="/img/index_main.jpg" />
+      </view>
+      <view class="features">
+        <image src="/img/index_main.jpg" />
+        <view>帮助中心</view>
+        <image src="/img/index_main.jpg" />
+      </view>
+      <view class="features">
+        <image src="/img/index_main.jpg" />
+        <view>帮助中心</view>
+        <image src="/img/index_main.jpg" />
+      </view>
+    </view>
+    <nav @childFn.user="goPage" />
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import nav from '../components/nav' // 底部导航
+export default class User extends wepy.page {
+  config = {
+    'navigationBarTitleText': '个人中心'
+  };
+  // 生命组件ID
+  components = {
+  // 底部导航
+    nav: nav
+  };
+  // alias example
+  data = {
+    userInfo: null
+  };
+
+  methods = {
+    // 底部导航跳转
+    goPage (url, evt) {
+      // 销毁当前页{跳转}
+      this.$redirect(url)
+    }
+  };
+  async onLoad(options) {};
+}
+</script>
