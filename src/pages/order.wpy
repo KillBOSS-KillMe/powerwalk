@@ -1,0 +1,189 @@
+<style lang="less">
+.list{
+  width: 750rpx;
+  height: auto;
+}
+.listCon{
+  width: 750rpx;
+  height: 770rpx;
+  border-bottom: 1rpx solid #eee;
+  margin-bottom: 20rpx;
+}
+.con{
+  width: 750rpx;
+  height: 716rpx;
+  background-color: #eee;
+  border-radius: 30rpx;
+}
+.orderNumber{
+  padding: 0 20rpx;
+  padding-top: 40rpx;
+  width: 750rpx;
+  height: 75rpx;
+  line-height: 75rpx;
+  border-bottom: 1rpx solid #d3d3d3;
+  color: #333;
+  font-size: 30rpx;
+}
+.info{
+  width: 750rpx;
+  height: 124rpx;
+  display: flex;
+  align-items: center;
+  border-bottom: 1rpx solid #d3d3d3;
+  position: relative;
+}
+.again{
+  position: absolute;
+  right: 20rpx;
+  width: 160rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  color: #fff;
+  text-align: center;
+  font-size: 30rpx;
+  border-radius: 10rpx;
+  background-color: #e76503;
+}
+.status{
+  color: #333;
+  font-size: 30rpx;
+}
+.status view{
+  height: 60rpx;
+  line-height: 60rpx;
+  padding-left: 20rpx;
+}
+.status text{
+  color: #f70300;
+}
+
+.infoTitle{
+  width: 750rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  padding-left: 20rpx;
+  font-size: 30rpx;
+  color: #333;
+}
+.infoTitle image{
+  width: 30rpx;
+  height: 30rpx;
+}
+.details{
+  margin-top: 10rpx;
+  margin: 0 30rpx;
+  display: flex;
+}
+.detailsImg{
+  width: 300rpx;
+  height: 356rpx;
+  border-radius: 20rpx;
+}
+.detailsImg image{
+  width: 100%;
+  height: 100%;
+}
+.detailsInfo{
+  font-size: 30rpx;
+  color: #333;
+  margin-left: 50rpx;
+  width: 348rpx;
+  word-break:break-all;
+}
+.detailsInfo view:nth-child(1){
+  margin-top: 60rpx;
+  font-size: 30rpx;
+  display: flex;
+  align-items: center;
+}
+.detailsInfo view:nth-child(1) view{
+  color: #f70300;
+}
+.detailsInfo image{
+  width: 30rpx;
+  height: 30rpx;
+}
+.detailsCon{
+  height: auto;
+  max-height: 120rpx;
+  margin-top: 20rpx;
+  font-size: 30rpx;
+  color: #333;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.detailsInfo view:nth-child(3){
+  margin-top: 20rpx
+}
+</style>
+
+<template>
+  <view>
+    <view class="list">
+      <view class="listCon">
+        <view class="con">
+          <view class="orderNumber">订单号:333333333333333333</view>
+          <view class="info">
+            <view class="status">
+              <view>
+                状态:
+                <text>已签收</text>
+              </view>
+              <view>总价:￥6.00</view>
+            </view>
+            <view class="again">再次购买</view>
+          </view>
+          <view class="infoTitle">
+            步行的力量
+            <image src="/img/tui.png" />
+          </view>
+          <view class="details">
+            <view class="detailsImg">
+              <image src="/img/index_main.jpg" />
+            </view>
+            <view class="detailsInfo">
+              <view>
+                <image src="/img/tui.png" />
+                <view>200</view>
+              </view>
+              <view class="detailsCon">asdfafasdfadsasasdfasdfadsasasdfasdfdfasdasdfafasdfadsasasdfasdfdfasdasdfafasdfadsasasdfasdfadsasasdfasdfdfasdasdfafasdfadsasasdfasdfdfasd</view>
+              <view>×22</view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <nav @childFn.user="goPage" />
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import nav from '../components/nav' // 底部导航
+export default class Order extends wepy.page {
+  config = {
+    'navigationBarTitleText': '订单'
+  };
+  // 生命组件ID
+  components = {
+  // 底部导航
+    nav: nav
+  };
+  // alias example
+  data = {
+    userInfo: null
+  };
+
+  methods = {
+  // 底部导航跳转
+  goPage (url, evt) {
+    // 销毁当前页{跳转}
+    this.$redirect(url)
+  }
+  };
+  async onLoad(options) {
+  
+  };
+}
+</script>

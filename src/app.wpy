@@ -76,6 +76,7 @@ export default class extends wepy.app {
   // -----json部分-----
   config = {
     pages: [
+      'pages/order',
       'pages/exchangeRecording',
       'pages/signIn',
       'pages/newAddss',
