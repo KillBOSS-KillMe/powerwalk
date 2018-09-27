@@ -1,0 +1,206 @@
+<style lang="less">
+page{
+  background-color: #fff;
+}
+
+.button{
+  position: absolute;
+  width: 750rpx;
+  bottom: 110rpx;
+  height: 380rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.button view{
+  width: 640rpx;
+  height: 80rpx;
+  font-size: 30rpx;
+  color: #fff;
+  border-radius: 40rpx;
+  background-color: #ea6200;
+  display: flex;
+  align-items: center;
+	justify-content: center;
+	border: 1rpx solid #ea6200;
+}
+.already{
+	background-color: #d2d2d2 !important;
+	border: 1rpx solid #d2d2d2 !important;
+}
+.head{
+	width: 750rpx;
+	height: 300rpx;
+	display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.headInfo{
+	width: 620rpx;
+	height: 240rpx;
+	border: 1rpx solid #e5e5e5;
+	box-shadow: #e5e5e5 0px 0px 3px 3px inset;
+	border-radius: 30rpx;
+}
+.headInfo view:nth-child(1){
+	// width: 100%;
+	height: 140rpx;
+	line-height: 140rpx;
+	text-align: center;
+	font-size: 30rpx;
+	color: #333;
+}
+.day{
+	color: #333;;
+	display: flex;
+  align-items: center;
+	justify-content: center;
+	overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.day view{
+	margin: 0 30rpx;
+	padding: 0 20rpx;
+	height: 60rpx !important;
+	line-height: 60rpx !important;
+	text-align: center;
+	color: #fff !important;
+	border-radius: 20rpx;
+	background-color: #ff8000;
+	overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.dayShow{
+  margin-top: 20rpx;
+  width: 750rpx;
+  height: auto;
+  background-color: #fff;
+  padding-bottom: 20rpx;
+}
+.dayShow .list{
+  height: 215rpx;
+  display:inline-block;
+  width: 150rpx;
+  // border: 1rpx solid red;
+}
+.dayShow .list view:nth-child(2){
+  margin: 16rpx 34rpx;
+  width: 76rpx;
+  height: 76rpx;
+  border-radius: 38rpx;
+  border: 1rpx solid #eee;
+}
+.dayShow .list image{
+  width: 76rpx;
+  height: 76rpx;
+  border-radius: 38rpx;
+}
+.dayShow .list view:nth-child(1),.dayShow .list view:nth-child(3){
+  font-size: 30rpx;
+  color: #606060;
+  text-align: center;
+}
+.dayShow .list view:nth-child(3){
+  font-size: 25rpx;
+}
+.dayShowSelected view:nth-child(1),.dayShowSelected view:nth-child(3){
+  color: #ff8000 !important;
+}
+</style>
+
+<template>
+  <view>
+    <view class="head">
+			<view class="headInfo">
+				<view>纪念您与步行的力量每一天</view>
+				<view class="day">
+					连续签到
+					<view>222</view>
+					天
+				</view>
+			</view>
+		</view>
+		<view class="dayShow">
+			<view class="list dayShowSelected">
+				<view>第1天</view>
+        <view>
+          <image src="/img/index_main.jpg" />
+        </view>
+        <view>+10</view>
+      </view>
+			<view class="list">
+				<view>第1天</view>
+        <view>
+          <image src="/img/index_main.jpg" />
+        </view>
+        <view>+10</view>
+      </view>
+			<view class="list">
+				<view>第1天</view>
+        <view>
+          <image src="/img/index_main.jpg" />
+        </view>
+        <view>+10</view>
+      </view>
+			<view class="list">
+				<view>第1天</view>
+        <view>
+          <image src="/img/index_main.jpg" />
+        </view>
+        <view>+10</view>
+      </view>
+			<view class="list">
+				<view>第1天</view>
+        <view>
+          <image src="/img/index_main.jpg" />
+        </view>
+        <view>+10</view>
+      </view>
+			<view class="list">
+				<view>第1天</view>
+        <view>
+          <image src="/img/index_main.jpg" />
+        </view>
+        <view>+10</view>
+      </view>
+		</view>
+		
+		<view class="button">
+			<!-- 删除already属性，即为可点击状态 -->
+			<view class="already">今日已成功签到</view>
+		</view>
+    <nav @childFn.user="goPage" />
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import nav from '../components/nav' // 底部导航
+export default class Signin extends wepy.page {
+  config = {
+    'navigationBarTitleText': '签到'
+  };
+  // 生命组件ID
+  components = {
+  // 底部导航
+    nav: nav
+  };
+  // alias example
+  data = {
+    userInfo: null
+  };
+
+  methods = {
+  // 底部导航跳转
+  goPage (url, evt) {
+    // 销毁当前页{跳转}
+    this.$redirect(url)
+  }
+  };
+  async onLoad(options) {
+  
+  };
+}
+</script>
