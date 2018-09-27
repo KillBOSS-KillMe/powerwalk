@@ -1,0 +1,150 @@
+<style lang="less">
+page{
+  background-color: #efefef;
+}
+.head{
+  width: 750rpx;
+  height: 340rpx;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.headCon{
+  width: 710rpx;
+  height: 300rpx;
+  border-radius: 20rpx;
+  border: 1rpx solid #e5e5e5;
+}
+.headCon view:nth-child(1){
+  height: 80rpx;
+  line-height: 80rpx;
+  font-size: 30rpx;
+  color: #333;
+  text-align: center;
+}
+.headCon view:nth-child(2){
+  height: 90rpx;
+  line-height: 90rpx;
+  font-size: 50rpx;
+  color: #f39900;
+  text-align: center;
+}
+.headCon view:nth-child(3){
+  height: 120rpx;
+  line-height: 120rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.headCon view:nth-child(3) view{
+  width: 200rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  font-size: 30rpx;
+  color: #fff;
+  background-color: #f39900;
+  border-radius: 30rpx;
+  text-align: center;
+}
+.description{
+  margin-top: 40rpx;
+  width: 750rpx;
+  height: auto;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 110rpx;
+}
+.descriptionCon{
+  width: 710rpx;
+  height: auto;
+  border-radius: 0 0 20rpx 20rpx;
+  border: 1rpx solid #e5e5e5;
+  color: #333;
+}
+.use view, .note view{
+  height: 60rpx;
+  line-height: 60rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+}
+.use, .note{
+  height: auto;
+  margin: 40rpx 20rpx;
+  line-height: 50rpx;
+  font-size: 25rpx;
+}
+.use{
+  padding-bottom: 60rpx;
+  border-bottom: 1rpx solid #e5e5e5;
+}
+</style>
+
+<template>
+  <view>
+    <view class="head">
+      <view class="headCon">
+        <view>账户余额(元)</view>
+        <view>0.00</view>
+        <view>
+          <view>立即充值</view>
+        </view>
+      </view>
+    </view>
+    <view class="description">
+      <view class="descriptionCon">
+        <view class="use">
+          <view>余额用途</view>
+          <text>账户余额账户余额账户余额账户余额账户余额账户余额账户余额账户余额账户余额账户余额账户余额账户余额账户余额账户余额账户余额</text>
+        </view>
+        <view class="note">
+          <view>充值注意事项</view>
+          <text>账户余额账户余额账户余额账户余额账户余额账户余额账户余额账户余额账户余额账户余额账户余额账户余额账户余额账户余额账户余额</text>
+        </view>
+        <view class="note">
+          <view>充值注意事项</view>
+          <text>账户余额账户余额账户余额账户余额账户余额账户余额账户余额账户余额账户余额账户余额账户余额账户余额账户余额账户余额账户余额</text>
+        </view>
+        <view class="note">
+          <view>充值注意事项</view>
+          <text>账户余额账户余额账户余额账户余额账户余额账户余额账户余额账户余额账户余额账户余额账户余额账户余额账户余额账户余额账户余额</text>
+        </view>
+        <view class="note">
+          <view>充值注意事项</view>
+          <text>账户余额账户余额账户余额账户余额账户余额账户余额账户余额账户余额账户余额账户余额账户余额账户余额账户余额账户余额账户余额</text>
+        </view>
+      </view>
+    </view>
+    <nav @childFn.user="goPage" />
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import nav from '../components/nav' // 底部导航
+export default class Balance extends wepy.page {
+  config = {
+    'navigationBarTitleText': '我的地址'
+  };
+  // 生命组件ID
+  components = {
+  // 底部导航
+    nav: nav
+  };
+  // alias example
+  data = {
+    userInfo: null
+  };
+
+  methods = {
+    // 底部导航跳转
+    goPage (url, evt) {
+      // 销毁当前页{跳转}
+      this.$redirect(url)
+    }
+  };
+  async onLoad(options) {};
+}
+</script>
