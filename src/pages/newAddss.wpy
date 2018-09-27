@@ -1,0 +1,134 @@
+<style lang="less">
+page{
+  background-color: #fff;
+}
+.setInfo{
+  width: 750rpx;
+  height: 700rpx;
+  border-radius: 30rpx;
+  background-color: #eee;
+}
+.item{
+  width: 750rpx;
+  height: 90rpx;
+  border-bottom: 1rpx solid #dcdcdc;
+  display: flex;
+  align-items: center;
+  padding: 0 30rpx;
+  color: #333;
+  font-size: 30rpx;
+  // justify-content: center;
+}
+.label{
+  width: 150rpx;
+}
+.labelCon{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.labelCon view{
+  border: 1rpx solid #d5d5d5;
+  border-radius: 10rpx;
+  padding: 5rpx 10rpx;
+  margin-right: 40rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.labelCon image{
+  width: 30rpx;
+  height: 30rpx;
+  margin-left: 10rpx;
+}
+.button{
+  position: absolute;
+  width: 750rpx;
+  bottom: 110rpx;
+  height: 110rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.button button{
+  width: 640rpx;
+  height: 80rpx;
+  font-size: 30rpx;
+  color: #fff;
+  border-radius: 20rpx;
+  background-color: #ea6200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+</style>
+
+<template>
+  <view>
+    <from>
+      <view class="setInfo">
+        <view class="item">
+          <view class="label">收货人:</view>
+          <input type="text" />
+        </view>
+        <view class="item">
+          <view class="label">联系方式:</view>
+          <input type="text" />
+        </view>
+        <view class="item">
+          <view class="label">所在地区:</view>
+          <input type="text" />
+        </view>
+        <view class="item">
+          <view class="label">详细地址:</view>
+          <input type="text" />
+        </view>
+        <view class="item">
+          <view class="label">标签:</view>
+          <view class="labelCon">
+            <view>公司</view>
+            <view>公司</view>
+            <view>
+              公司
+              <image src="/img/index_main.jpg" />
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="button">
+        <button>确认</button>
+      </view>
+    </from>
+    <nav @childFn.user="goPage" />
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import nav from '../components/nav' // 底部导航
+export default class Newaddss extends wepy.page {
+  config = {
+    'navigationBarTitleText': '新建地址'
+  };
+  // 生命组件ID
+  components = {
+  // 底部导航
+    nav: nav
+  };
+  // alias example
+  data = {
+    userInfo: null
+  };
+
+  methods = {
+  // 底部导航跳转
+  goPage (url, evt) {
+    // 销毁当前页{跳转}
+    this.$redirect(url)
+  }
+  };
+  async onLoad(options) {
+  
+  };
+}
+</script>
