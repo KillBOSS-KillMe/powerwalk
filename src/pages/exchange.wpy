@@ -1,0 +1,231 @@
+<style lang="less">
+.cartList{
+  margin-bottom: 230rpx;
+}
+.list{
+  width: 750rpx;
+  height: auto;
+  background-color: #fff;
+  display: flex;
+  border-bottom: 1rpx solid #e5e5e5;
+}
+.listCon{
+  width: 710rpx;
+  height: 404rpx;
+  margin: 30rpx 20rpx;
+  border-radius: 20rpx;
+  background-color: #eee;
+  display: flex;
+}
+.select, .img, .info{
+  margin: 30rpx 0;
+}
+.select{
+  width: 80rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.img{
+  width: 310rpx;
+  height: 350rpx;
+  border-radius: 20rpx;
+}
+.info{
+  width: 260rpx;
+  margin-left: 44rpx;
+  position: relative;
+}
+.listCon image{
+  width: 100%;
+  height: 100%;
+  border-radius: 20rpx;
+}
+.info view:nth-child(2){
+  width: 100%;
+  height: auto;
+  color: #333;
+  word-break:break-all;
+  display:table-cell;
+  vertical-align:middle
+}
+.info view:nth-child(3){
+  position: absolute;
+  bottom: 0rpx;
+  right: 0rpx;
+  display: flex;
+}
+.info view:nth-child(3) view{
+  position: relative;
+  margin-left: 15rpx;
+  border: 1rpx solid #9d9d9d;
+  font-size: 25rpx;
+  text-align: center;
+  padding:5rpx 10rpx;
+  min-width: 18rpx;
+}
+.info .delete{
+  position: absolute;
+  top: 0rpx;
+  right: 0rpx;
+  color: #555;
+}
+
+.info image{
+  width: 30rpx;
+  height: 30rpx;
+  margin-right:10rpx; 
+}
+.infoCon{
+  height:350rpx !important;
+}
+.infoCon view{
+  display: flex;
+  align-items: center;
+}
+.infoCon view:nth-child(1){
+  font-size: 30rpx;
+  color: #fa0100;
+}
+.infoCon view:nth-child(2){
+  font-size: 28rpx;
+  color: #444;
+}
+  
+.addss{
+  width: 750rpx;
+  min-height: 150rpx;
+  // padding-left: 30rpx;
+  background-color: #fff;
+  border-bottom: 1rpx solid #d2d2d2;
+  display: flex;
+}
+.addssInfo view:nth-child(1), .addss view:nth-child(2){
+  margin-left: 30rpx;
+  width: 650rpx;
+  min-height: 60rpx;
+  height: auto;
+  line-height: 60rpx;
+}
+.addssInfo view:nth-child(1){
+  font-size: 30rpx;
+  color: #333;
+}
+.addssInfo view:nth-child(2){
+  font-size: 28rpx;
+  color: #666;
+}
+.allAddss{
+  margin-left:0rpx !important;
+  vertical-align:middle;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.addss image{
+  width: 30rpx;
+  height: 30rpx;
+  vertical-align:middle;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.exchange{
+  position: fixed;
+  bottom: 110rpx;
+  height: 120rpx;
+  width: 750rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.exchange view{
+  height: 80rpx;
+  width: 520rpx;
+  border-radius: 40rpx;
+  color: #fff;
+  background-color: #ea6200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+</style>
+
+<template>
+  <view>
+    <view class="addss">
+      <view class="addssInfo">
+        <view>枫叶:18888888888</view>
+        <view>收货地址:18888888888收货地址:18888888888收货地址:18888888888收货地址:18888888888收货地址:18888888888收货地址:18888888888</view>
+      </view>
+      <view class="allAddss">
+        <image src="/img/index_main.jpg" />
+      </view>
+    </view>
+    <view class="cartList">
+
+      <view class="list">
+        <view class="listCon">
+          <view class="select">
+            <radio/>
+          </view>
+          <view class="img">
+            <image src="/img/index_main.jpg" />
+          </view>
+          <view class="info">
+            <view class="delete">×</view>
+            <view class="infoCon">
+              <view>
+                <image src="/img/index_main.jpg" />
+                200
+              </view>
+              <view>
+                asdadsfadsfadsfasdfasdfadsfadsf
+              </view>
+            </view>
+            <view>
+              <view>-</view>
+              <view>2222</view>
+              <view>+</view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="exchange">
+      <view>兑换</view>
+    </view>
+    <nav @childFn.user="goPage" />
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import nav from '../components/nav' // 底部导航
+export default class Exchange extends wepy.page {
+  config = {
+    'navigationBarTitleText': '兑换'
+  };
+  // 生命组件ID
+  components = {
+  // 底部导航
+    nav: nav
+  };
+  // alias example
+  data = {
+    userInfo: null
+  };
+
+  methods = {
+  // 底部导航跳转
+  goPage (url, evt) {
+    // 销毁当前页{跳转}
+    this.$redirect(url)
+  }
+  };
+  async onLoad(options) {
+  
+  };
+}
+</script>
