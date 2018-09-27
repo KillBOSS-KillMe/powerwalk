@@ -1,0 +1,108 @@
+<style lang="less">
+.list{
+  margin-bottom: 110rpx;
+  width: 750rpx;
+}
+.listCon{
+  width: 750rpx;
+  min-height: 160rpx;
+  height: auto;
+  border-bottom: 1rpx solid #e5e5e5;
+  padding: 20rpx 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.radio{
+  width: 90rpx;
+  text-align: center;
+}
+.con{
+  color: #333;
+  font-size: 30rpx;
+  width: 626rpx;
+  height: auto;
+  word-break:break-all;
+}
+.newAddss{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 110rpx;
+}
+.newAddss view{
+  width: 220rpx;
+  height: 70rpx;
+  line-height: 70rpx;
+  text-align: center;
+  font-size: 30rpx;
+  color: #333;
+  background-color: #e3e3e3;
+  border-radius: 10rpx;
+}
+</style>
+
+<template>
+  <view>
+    <view class="list">
+      <view class="listCon">
+        <view class="radio">
+          <radio />
+        </view>
+        <view class="con">
+          <text>asdfasdfasdfasdfasdf</text>
+        </view>
+      </view>
+      <view class="listCon">
+        <view class="radio">
+          <radio />
+        </view>
+        <view class="con">
+          <text>asdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdf</text>
+        </view>
+      </view>
+      <view class="listCon">
+        <view class="radio">
+          <radio />
+        </view>
+        <view class="con">
+          <text>asdfasdfasdfasdfasdf</text>
+        </view>
+      </view>
+    </view>
+    <view class="newAddss">
+      <view>+ 新建地址</view>
+    </view>
+    <nav @childFn.user="goPage" />
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import nav from '../components/nav' // 底部导航
+export default class Addsslist extends wepy.page {
+  config = {
+    'navigationBarTitleText': '我的地址'
+  };
+  // 生命组件ID
+  components = {
+  // 底部导航
+    nav: nav
+  };
+  // alias example
+  data = {
+    userInfo: null
+  };
+
+  methods = {
+  // 底部导航跳转
+  goPage (url, evt) {
+    // 销毁当前页{跳转}
+    this.$redirect(url)
+  }
+  };
+  async onLoad(options) {
+  
+  };
+}
+</script>
