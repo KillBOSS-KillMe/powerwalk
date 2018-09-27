@@ -1,0 +1,115 @@
+<style lang="less">
+.head, .head2{
+  width: 750rpx;
+  height: 70rpx;
+  line-height: 70rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1rpx solid #e5e5e5;
+}
+
+.head view,.head2 view{
+  margin: 0 54rpx;
+  width: 142rpx;
+  height: 70rpx;
+  line-height: 70rpx;
+  text-align: center;
+  font-size: 30rpx;
+}
+.action{
+  color: #ff6200;
+  border-bottom: 1rpx solid #ff6200;
+}
+.list{
+  margin-bottom: 110rpx; 
+}
+.list,.head2 view{
+  font-size: 22rpx;
+  color: #373737;
+}
+.listCon{
+  display: flex;
+  border-bottom: 1rpx solid #e5e5e5;
+  // margin: 0 54rpx;
+}
+.listCon view, .head2 view{
+  margin: 0 54rpx;
+  width: 142rpx;
+  height: 70rpx;
+  line-height: 90rpx;
+  text-align: center;
+}
+// .listCon view{
+//   width: 214rpx;
+// }
+// .listCon view:nth-child(1), .head2 view:nth-child(1){
+//   text-align: left;
+// }
+// .listCon view:nth-child(3), .head2 view:nth-child(3){
+//   text-align: right;
+// }
+</style>
+
+<template>
+  <view>
+    <view class="head">
+      <view class="action">兑换商品</view>
+      <view>兑换商品</view>
+      <view>兑换商品</view>
+    </view>
+    <view class="list">
+      <view class="head2">
+        <view>兑换商品</view>
+        <view>兑换商品</view>
+        <view>兑换商品</view>
+      </view>
+      <view class="listCon">
+        <view>10000</view>
+        <view>100</view>
+        <view>0000000000</view>
+      </view>
+      <view class="listCon">
+        <view>10000</view>
+        <view>100</view>
+        <view>0000000000</view>
+      </view>
+      <view class="listCon">
+        <view>10000</view>
+        <view>100</view>
+        <view>0000000000</view>
+      </view>
+    </view>
+    <nav @childFn.user="goPage" />
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import nav from '../components/nav' // 底部导航
+export default class Cart extends wepy.page {
+  config = {
+    'navigationBarTitleText': '兑换记录'
+  };
+  // 生命组件ID
+  components = {
+  // 底部导航
+    nav: nav
+  };
+  // alias example
+  data = {
+    userInfo: null
+  };
+
+  methods = {
+  // 底部导航跳转
+  goPage (url, evt) {
+    // 销毁当前页{跳转}
+    this.$redirect(url)
+  }
+  };
+  async onLoad(options) {
+  
+  };
+}
+</script>
