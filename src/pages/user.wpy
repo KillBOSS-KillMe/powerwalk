@@ -116,6 +116,54 @@ page{
   flex-direction:row;
   justify-content:flex-end
 }
+
+.mask{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(194,194,194,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.bulletBox{
+  width: 660rpx;
+  height: 560rpx;
+  border-radius: 30rpx;
+  background-color: #fff;
+  padding: 30rpx 0;
+}
+.bulletBoxTitle{
+  height: 120rpx;
+  line-height: 120rpx;
+  text-align: center;
+  font-size: 40rpx;
+  color: #f96b00;
+  border-bottom: 1rpx solid #e5e5e5;
+}
+.bulletBoxInfo{
+  height: 220rpx;
+  line-height: 220rpx;
+  font-size: 30rpx;
+  color: #333;
+  text-align: center;
+}
+.bulletBoxButton{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bulletBoxButton view{
+  width: 360rpx;
+  height: 70rpx;
+  line-height: 70rpx;
+  border-radius: 35rpx;
+  background-color: #f96b00;
+  font-size: 30rpx;
+  text-align: center;
+  color: #fff;
+}
 </style>
 
 <template>
@@ -184,6 +232,15 @@ page{
         <image src="/img/index_main.jpg" />
         <view>帮助中心</view>
         <image src="/img/index_main.jpg" />
+      </view>
+    </view>
+    <view class="mask hide">
+      <view class="bulletBox">
+        <view class="bulletBoxTitle">邀请好友得活力豆</view>
+        <view class="bulletBoxInfo">每邀请一个好友可获赠100活力豆</view>
+        <view  class="bulletBoxButton">
+          <view>立即邀请</view>
+        </view>
       </view>
     </view>
     <nav @childFn.user="goPage" />
