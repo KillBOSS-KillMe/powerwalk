@@ -360,7 +360,7 @@ import nav from '../components/nav' // 底部导航
 // import author from '../components/author' // 授权按钮
 export default class Challenge extends wepy.page {
   config = {
-    'navigationBarTitleText': '兑换'
+    'navigationBarTitleText': '步数挑战'
   };
   // 生命组件ID
   components = {
