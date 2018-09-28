@@ -126,7 +126,7 @@ import wepy from 'wepy'
 import nav from '../components/nav' // 底部导航
 export default class Balance extends wepy.page {
   config = {
-    'navigationBarTitleText': '我的地址'
+    'navigationBarTitleText': '我的余额'
   };
   // 生命组件ID
   components = {

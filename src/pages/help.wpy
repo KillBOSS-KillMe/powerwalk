@@ -1,0 +1,118 @@
+<style lang="less">
+page{
+  background-color: #efefef;
+}
+.titleImg{
+  width: 750rpx;
+  height: 380rpx;
+  background-color: #fff;
+}
+.titleImg image{
+  width: 750rpx;
+  height: 360rpx;
+}
+.list{
+  min-height: 700rpx;
+  margin-top: 20rpx;
+  margin-bottom: 110rpx;
+}
+
+.list, .con{
+  width: 750rpx;
+  height: auto;
+  background-color: #fff;
+}
+
+.listShow{
+  width: 750rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  color: #333;
+  font-size: 30rpx;
+  border-bottom: 1rpx solid #e5e5e5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.listShow image{
+  width: 30rpx;
+  height: 30rpx;
+  margin-left: 20rpx;
+}
+.listShow view{
+  width: 650rpx;
+}
+.listShowSon{
+  height: auto;
+  padding: 20rpx 50rpx;
+  color: #333;
+  font-size: 25rpx;
+}
+
+.listHide .listShowSon{
+  display: none;
+}
+</style>
+
+<template>
+  <view>
+    <view class="titleImg">
+      <image src="/img/index_main.jpg" />
+    </view>
+    <view class="list">
+      <view class="listCon">
+        <!-- ===================列表中加入listHide  描述信息隐藏====================== -->
+        <view class="con listHide">
+          <view class="listShow">
+            <view>余额用途余额用途</view>
+            <image src="/img/index_main.jpg" />
+          </view>
+          <view class="listShowSon">余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途</view>
+        </view>
+        <view class="con listHide">
+          <view class="listShow">
+            <view>余额用途余额用途</view>
+            <image src="/img/index_main.jpg" />
+          </view>
+          <view class="listShowSon">余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途</view>
+        </view>
+        <view class="con">
+          <view class="listShow">
+            <view>余额用途余额用途</view>
+            <image src="/img/index_main.jpg" />
+          </view>
+          <view class="listShowSon">余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途</view>
+        </view>
+      </view>
+    </view>
+    <nav @childFn.user="goPage" />
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import nav from '../components/nav' // 底部导航
+export default class Help extends wepy.page {
+  config = {
+    'navigationBarTitleText': '帮助中心'
+  };
+  // 生命组件ID
+  components = {
+  // 底部导航
+    nav: nav
+  };
+  // alias example
+  data = {
+    userInfo: null
+  };
+
+  methods = {
+    // 底部导航跳转
+    goPage (url, evt) {
+      // 销毁当前页{跳转}
+      this.$redirect(url)
+    }
+  };
+  async onLoad(options) {};
+}
+</script>
