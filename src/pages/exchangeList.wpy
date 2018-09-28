@@ -1,0 +1,174 @@
+<style lang="less">
+.titleImg, .titleImg image{
+  width: 750rpx;
+  height: 410rpx;
+}
+
+.commodityList{
+  margin-top: 25rpx;
+  margin-bottom: 130rpx;
+  word-wrap: break-word;
+}
+.commodity{
+  display:inline-block;
+  margin-top: 44rpx;
+  width: 316rpx;
+  height: 530rpx;
+  border: 1rpx solid #eee;
+  border-radius: 30rpx;
+  margin: 28rpx;
+}
+.commodityImg{
+  width: 100%;
+  height: 350rpx;
+  border-radius: 30rpx 30rpx 0 0;
+}
+.commodityInfo{
+  padding: 0 20rpx;
+  border-top: 1rpx solid #eee;
+}
+.commodityTitle{
+  height: 70rpx;
+  line-height: 70rpx;
+  font-size: 26rpx;
+  color: #333;
+}
+.commodityLave{
+  font-size: 20rpx;
+  color: #333;
+}
+.commodityInfo .info{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80rpx;
+}
+.beans,.operating{
+  width: 50%;
+  font-size: 25rpx;
+  color: #ff6101;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.commodityInfo image{
+  width: 40rpx;
+  height: 40rpx;
+}
+.operating view{
+  width: 70rpx;
+  height: 35rpx;
+  background-color: #ff6101;
+  color: #fff;
+  text-align: center;
+  border-radius: 10rpx;
+}
+</style>
+<template>
+  <view>
+    <view class="titleImg">
+      <image src="/img/index_main.jpg" />
+    </view>
+    <!-- 商品列表 -->
+    <view class="commodityList">
+      <view class="commodity">
+        <image class="commodityImg" src="/img/index_main.jpg" />
+        <view class="commodityInfo">
+          <view class="commodityTitle">手机壳手机壳</view>
+          <view class="commodityLave">剩余30件</view>
+          <view class="info">
+            <view class="beans">
+              <image src="/img/tui.png" />
+              200
+            </view>
+            <view class="operating">
+              <image src="/img/tui.png" />
+              <view>兑换</view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="commodity">
+        <image class="commodityImg" src="/img/index_main.jpg" />
+        <view class="commodityInfo">
+          <view class="commodityTitle">手机壳手机壳</view>
+          <view class="commodityLave">剩余30件</view>
+          <view class="info">
+            <view class="beans">
+              <image src="/img/tui.png" />
+              200
+            </view>
+            <view class="operating">
+              <image src="/img/tui.png" />
+              <view>兑换</view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="commodity">
+        <image class="commodityImg" src="/img/index_main.jpg" />
+        <view class="commodityInfo">
+          <view class="commodityTitle">手机壳手机壳</view>
+          <view class="commodityLave">剩余30件</view>
+          <view class="info">
+            <view class="beans">
+              <image src="/img/tui.png" />
+              200
+            </view>
+            <view class="operating">
+              <image src="/img/tui.png" />
+              <view>兑换</view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="commodity">
+        <image class="commodityImg" src="/img/index_main.jpg" />
+        <view class="commodityInfo">
+          <view class="commodityTitle">手机壳手机壳</view>
+          <view class="commodityLave">剩余30件</view>
+          <view class="info">
+            <view class="beans">
+              <image src="/img/tui.png" />
+              200
+            </view>
+            <view class="operating">
+              <image src="/img/tui.png" />
+              <view>兑换</view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <nav @childFn.user="goPage" />
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import nav from '../components/nav' // 底部导航
+// import author from '../components/author' // 授权按钮
+export default class Exchangelist extends wepy.page {
+  config = {
+    'navigationBarTitleText': '兑换'
+  };
+  // 生命组件ID
+  components = {
+  // 底部导航
+    nav: nav
+  };
+  // alias example
+  data = {
+    userInfo: null
+  };
+
+  methods = {
+    // 底部导航跳转
+    goPage (url, evt) {
+      // 销毁当前页{跳转}
+      this.$redirect(url)
+    }
+  };
+  async onLoad(options) {};
+}
+</script>
