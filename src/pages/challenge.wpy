@@ -1,0 +1,384 @@
+<style lang="less">
+.titleImg{
+  width: 748rpx;
+  border: 1rpx solid #dcdcdc;
+  height: 272rpx;
+}
+.titleImg image{
+  width: 100%;
+  height: 100%;
+}
+.gradeSel{
+  width: 750rpx;
+  height: 120rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.gradeSel view{
+  width: auto;
+  height: 60rpx;
+  line-height: 60rpx;
+  padding: 0 20rpx;
+  border: 1rpx solid #f39900;
+  border-right: 0;
+  font-size: 30rpx;
+  color: #f39900;
+  background-color: #fff;
+}
+.action{
+  background-color: #f39900 !important;
+  color: #fff !important;
+}
+.gradeSel view:nth-child(4){
+  border-right: 1rpx solid #f39900 !important;
+}
+.container{
+  margin-bottom: 130rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.showContainer{
+  width: 690rpx;
+  border: 1rpx solid #e5e5e5;
+  box-shadow: #e5e5e5 0rpx 0rpx 3rpx 3rpx;
+  border-radius: 20rpx;
+}
+.signUp{
+  height: 440rpx;
+}
+.signUpTitle{
+  width: 672rpx;
+  height: 116rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 10rpx;
+}
+.signUpTitle view:nth-child(1){
+  width: 480rpx;
+  height: 116rpx;
+  line-height: 116rpx;
+  font-size: 24rpx;
+  color: #333;
+  font-weight: 500;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.signUpTitle view:nth-child(2){
+  width: 160rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  font-size: 30rpx;
+  text-align: center;
+  color: #fff;
+  margin-left: 20rpx;
+  background-color: #f39900;
+  border-radius: 15rpx;
+}
+.timeShow{
+  width: 100%;
+  height: 64rpx;
+  font-size: 24rpx;
+  line-height: 64rpx;
+  margin-top: 20rpx;
+  text-align: center;
+}
+.setSignUp{
+  width: 100%;
+  height: 94rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.setSignUp view{
+  width: 240rpx;
+  height: 54rpx;
+  line-height: 54rpx;
+  font-size: 30rpx;
+  text-align: center;
+  color: #fff;
+  background-color: #f39900;
+  border-radius: 27rpx;
+}
+.infoContainer{
+  width: 100%;
+  height: 138rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.info{
+  width: 634rpx;
+  height: 122rpx;
+  border: 1rpx solid #f39900;
+  border-radius: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.infoContainer .count{
+  width: auto;
+  height: 122rpx;
+  line-height: 122rpx;
+  font-size: 40rpx;
+  color: #f39900;
+  padding: 20rpx;
+}
+.infoContainer .unit{
+  width: 120rpx;
+  height: 60rpx;
+  line-height: 75rpx;
+  text-align: center;
+  border-right: 1rpx solid #e3e3e3;
+  font-size: 23rpx;
+  color: #555;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.description{
+  width: 304rpx;
+  padding: 0 30rpx;
+}
+.description view{
+  width: 100%;
+  height: 40rpx;
+  line-height: 40rpx;
+  font-size: 22rpx;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.reachData{
+  
+  text-align: center;
+  font-size: 50rpx;
+}
+.reachTitle{
+  text-align: center;
+  font-size: 30rpx;
+  height: 90rpx;
+  line-height: 90rpx;
+}
+.processing {
+  height: 490rpx;
+  margin-top: 50rpx;
+}
+.processing .info{
+  border: 0rpx;
+}
+.infoShow{
+  width: 33.3%;
+  text-align: center;
+}
+.infoShow view{
+  height: 40rpx;
+  line-height: 40rpx;
+  font-size: 22rpx;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.thisStatus{
+  border-top: 1rpx solid #eee;
+  height: 80rpx;
+  line-height: 80rpx;
+  text-align: center;
+  color: #555;
+  font-size: 22rpx;
+}
+.bulletBox{
+  position: absolute;
+  top: 220rpx;
+  margin-left: 20rpx;
+  width: 670rpx;
+  height: 1200rpx;
+  background-color: #fcfcfc;
+  padding:20rpx;
+}
+.bulletBoxTitle{
+  height: 70rpx;
+  line-height: 70rpx;
+  color: #333;
+  font-size: 30rpx;
+  text-align: center;
+}
+.price{
+  height: 70rpx;
+  line-height: 70rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1rpx solid #dcdcdc;
+}
+.price view:nth-child(1){
+  height: 70rpx;
+  line-height: 70rpx;
+  font-size: 46rpx;
+  color: #333;
+}
+.price view:nth-child(2){
+  height: 70rpx;
+  line-height: 90rpx;
+  font-size: 24rpx;
+  color: #333;
+}
+.descriptionTitle{
+  height: 90rpx;
+  line-height: 90rpx;
+  text-align: center;
+  font-size: 30rpx;
+  color: #333;
+}
+.conList{height: auto;}
+.con{
+  border: 1rpx solid #e5e5e5;
+  border-radius: 20rpx;
+  margin:30rpx 22rpx 0 22rpx;
+  padding: 20rpx 60rpx;
+  color: #333;
+  font-size: 23rpx;
+}
+.con  view:nth-child(1){
+  font-size: 32rpx;
+}
+.con  view:nth-child(2){
+  margin-top: 20rpx;
+}
+.button{
+  height: 240rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.button{
+  width: 340rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  text-align: center;
+  color: #fff;
+  font-size: 30rpx;
+  border-radius: 40rpx;
+  background-color: #f39900;
+  margin: 80rpx 160rpx;
+}
+</style>
+<template>
+  <view>
+    <view class="titleImg">
+      <image src="/img/index_main.jpg" />
+    </view>
+    <view class="gradeSel">
+      <view class="action">3000步</view>
+      <view>3000步</view>
+      <view>3000步</view>
+      <view>30000步</view>
+    </view>
+    <view class="container">
+      <view class="signUp showContainer">
+        <view class="signUpTitle">
+          <view>【2018年8月28日/周三】3000步数挑战活动</view>
+          <view>报名</view>
+        </view>
+        <view class="timeShow">倒计时24时0分0秒</view>
+        <view class="setSignUp">
+          <view>报名</view>
+        </view>
+        <view class="infoContainer">
+          <view class="info">
+            <view class="count">300</view>
+            <view class="unit">动力豆</view>
+            <view class="description">
+              <view>达到3000步即可评分奖金</view>
+              <view>50动力豆报名,已有2人参与</view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="processing showContainer">
+        <view class="signUpTitle">
+          <view>【2018年8月28日/周三】3000步数挑战活动</view>
+          <view>进行中</view>
+        </view>
+        <view class="reachData">10</view>
+        <view class="reachTitle">达成目标</view>
+        <view class="infoContainer">
+          <view class="info">
+            <view class="infoShow">
+              <view>达到3000步</view>
+              <view>50动力豆报</view>
+            </view>
+            <view class="infoShow">
+              <view>达到3000</view>
+              <view>50动力豆</view>
+            </view>
+            <view class="infoShow">
+              <view>达到3000步</view>
+              <view>50动力</view>
+            </view>
+          </view>
+        </view>
+        <view class="thisStatus">您未参加该活动</view>
+      </view>
+    </view>
+    
+    <view class="bulletBox  hide">
+      <view class="bulletBoxTitle">步数契约金</view>
+      <view class="price">
+        <view>10</view>
+        <view>动力豆/人</view>
+      </view>
+      <view class="descriptionTitle">如何赚取步数奖励金？</view>
+      <view class="conList">
+        <view class="con">
+          <view>报名参赛</view>
+          <view>如何赚取步数奖励金？如何赚取步数奖励金？如何赚取步数奖励金？如何赚取步数奖励金？如何赚取步数奖励金？如何赚取步数奖励金？如何赚取步数奖励金？</view>
+        </view>
+        <view class="con">
+          <view>报名参赛</view>
+          <view>如何赚取步数奖励金？如何赚取步数奖励金？如何赚取步数奖励金？如何赚取步数奖励金？如何赚取步数奖励金？如何赚取步数奖励金？如何赚取步数奖励金？</view>
+        </view>
+        <view class="con">
+          <view>报名参赛</view>
+          <view>如何赚取步数奖励金？如何赚取步数奖励金？如何赚取步数奖励金？如何赚取步数奖励金？如何赚取步数奖励金？如何赚取步数奖励金？如何赚取步数奖励金？</view>
+        </view>
+      </view>
+      <view class="button">
+        <view>确认报名</view>
+      </view>
+    </view>
+    <nav @childFn.user="goPage" />
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import nav from '../components/nav' // 底部导航
+// import author from '../components/author' // 授权按钮
+export default class Challenge extends wepy.page {
+  config = {
+    'navigationBarTitleText': '兑换'
+  };
+  // 生命组件ID
+  components = {
+  // 底部导航
+    nav: nav
+  };
+  // alias example
+  data = {
+    userInfo: null
+  };
+
+  methods = {
+    // 底部导航跳转
+    goPage (url, evt) {
+      // 销毁当前页{跳转}
+      this.$redirect(url)
+    }
+  };
+  async onLoad(options) {};
+}
+</script>
