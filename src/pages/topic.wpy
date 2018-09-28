@@ -1,0 +1,207 @@
+<style lang="less">
+.head{
+  width: 750rpx;
+  height: 310rpx;
+  border-radius: 20rpx;
+  background-color: #f2f2f2;
+}
+.head .time{
+  width: 750rpx;
+  height: 130rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.head .time view:nth-child(1){
+  // width: 360rpx;
+  width: 210rpx;
+  height: 70rpx;
+  line-height: 70rpx;
+  border-radius: 35rpx 0 0 35rpx;
+  background-color: #fe6e00;
+  color: #fff;
+  text-align: right;
+  font-size: 20rpx;
+}
+.head .time view:nth-child(2){
+  // width: 360rpx;
+  width: 146rpx;
+  height: 70rpx;
+  line-height: 70rpx;
+  border-radius: 0 35rpx 35rpx 0;
+  background-color: #fe6e00;
+  color: #fff;
+  text-align: left;
+  font-size: 40rpx;
+}
+.grade{
+  height: 80rpx;
+  line-height: 80rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.grade view{
+  width: 66rpx;
+  height: 66rpx;
+  border-radius: 33rpx;
+  border: 1rpx solid #be9002;
+}
+.grade view:nth-child(2n) {
+  width: 72rpx;
+  height: 2rpx;
+  background-color: #be9002;
+}
+.grade image{
+  width: 66rpx;
+  height: 66rpx;
+  border-radius: 33rpx;
+}
+
+.number{
+  width: 750rpx;
+  height: 96rpx;
+  line-height: 96rpx;
+  font-size: 36rpx;
+  color: #333;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.number view:nth-child(1), .number view:nth-child(3){
+  width: 310rpx;
+  height: 20rpx;
+}
+.number view:nth-child(1){
+  margin-right: 30rpx;
+  border-radius: 0 10rpx 10rpx 0;
+  background: -webkit-linear-gradient(left, #ffaf00 , #fe6e00);
+}
+.number view:nth-child(3){
+  margin-left: 30rpx;
+  border-radius: 10rpx 0 0 10rpx;
+  background: -webkit-linear-gradient(left, #fe6e00 ,#ffaf00 );
+}
+.number text{
+  color: #fe6e00;
+}
+.article{
+  margin-bottom: 130rpx;
+}
+.articleCon{
+  // line-height:55rpx;
+  margin: 20rpx;
+  background-color: #ece4d2;
+  padding: 20rpx 0rpx;
+  word-break:break-all;
+  color: #333;
+  font-size: 30rpx;
+  border-radius: 20rpx;
+}
+.articleConTitle{
+  height: 110rpx;
+  line-height: 110rpx;
+  text-align: center;
+}
+.select{
+  margin: 50rpx 140rpx;
+  width: 430rpx;
+  height: 500rpx;
+  background-color: #fff;
+  border-radius: 20rpx;
+  padding: 1rpx 0;
+}
+.select view{
+  margin: 50rpx 64rpx;
+  width: 300rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  border: 1rpx solid #fe5600;
+  border-radius: 15rpx;
+  text-align: center;
+  color: #333;
+}
+.articleCon .action{
+  background-color: #fe5600;
+  color: #fff;
+}
+</style>
+<template>
+  <view>
+    <view class="head">
+      <view class="time">
+        <view>10s倒计时:</view>
+        <view>10</view>
+      </view>
+      <view class="grade">
+        <view>
+          <image src="/img/index_main.jpg" />
+        </view>
+        <view></view>
+        <view>
+          <image src="/img/index_main.jpg" />
+        </view>
+        <view></view>
+        <view>
+          <image src="/img/index_main.jpg" />
+        </view>
+        <view></view>
+        <view>
+          <image src="/img/index_main.jpg" />
+        </view>
+        <view></view>
+        <view>
+          <image src="/img/index_main.jpg" />
+        </view>
+      </view>
+      <view class="number">
+        <view></view>
+        <view><text>1</text>/15</view>
+        <view></view>
+      </view>
+    </view>
+    <view class="article">
+      <view class="articleCon">
+        <view class="articleConTitle">白雪公主故事中有几个小矮人？</view>
+        <view class="select">
+          <view class="action">A:7个</view>
+          <view>A:7个</view>
+          <view>A:7个</view>
+          <view>A:7个</view>
+        </view>
+      </view>
+      
+    </view>
+    <nav @childFn.user="goPage" />
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import nav from '../components/nav' // 底部导航
+// import author from '../components/author' // 授权按钮
+export default class Challenge extends wepy.page {
+  config = {
+    'navigationBarTitleText': '选择题'
+  };
+  // 生命组件ID
+  components = {
+  // 底部导航
+    nav: nav
+  };
+  // alias example
+  data = {
+    userInfo: null
+  };
+
+  methods = {
+    // 底部导航跳转
+    goPage (url, evt) {
+      // 销毁当前页{跳转}
+      this.$redirect(url)
+    }
+  };
+  async onLoad(options) {};
+}
+</script>
