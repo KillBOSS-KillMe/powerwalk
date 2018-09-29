@@ -126,6 +126,121 @@
   background-color: #fe5600;
   color: #fff;
 }
+
+.mask{
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.comeOn, .congratulations{
+  width: 710rpx;
+  border-radius: 30rpx;
+  background-color: #fff;
+  padding: 30rpx 0;
+}
+.comeOn{
+  height: 560rpx;
+}
+.comeOnTitleImg{
+  margin-top: 40rpx;
+  width: 100%;
+  height: 120rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.comeOnTitleImg image{
+  width: 410rpx;
+  height: 120rpx;
+}
+.comeOnCon{
+  width: 100%;
+  height: 70rpx;
+  line-height: 70rpx;
+  text-align: center;
+  color: #333;
+  font-size: 30rpx;
+}
+.comeOnConButton{
+  margin-top: 60rpx;
+  width: 100%;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.comeOnConButton view, .comeOnBotton view{
+  width: 240rpx;
+  height: 58rpx;
+  line-height: 58rpx;
+  border-radius: 29rpx;
+  border: 1rpx solid #e6e6e6;
+  text-align: center;
+  color: #333;
+  font-size: 30rpx;
+}
+.comeOnBottonImg{
+  width: 100%;
+  height: 320rpx;
+  background: linear-gradient(#fff, #fdff0c);
+  border-radius: 0 0 20rpx 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.comeOnBottonImg image{
+  width: 100%;
+  height: 100%;
+}
+
+.congratulations{
+  height: 570rpx;
+}
+.congsTitleImg{
+  height: 140rpx;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.congsTitleImg image{
+  height: 140rpx;
+  width: 400rpx;
+}
+.congCon{
+  width: 100%;
+  height: 90rpx;
+  line-height: 90rpx;
+  text-align: center;
+  font-size: 30rpx;
+  color: #be9002;
+}
+.congCons{
+  width: 100%;
+  height: 130rpx;
+  line-height: 130rpx;
+  text-align: center;
+  font-size: 30rpx;
+  color: #333;
+}
+.comeOnBotton{
+  height: 220rpx;
+  width: 100%;
+  border-top: 1rpx solid #eee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.comeOnBotton view{
+  border: 1rpx solid #f39900;
+  background-color: #f39900;
+  color: #fff;
+}
 </style>
 <template>
   <view>
@@ -171,7 +286,31 @@
           <view>A:7个</view>
         </view>
       </view>
-      
+    </view>
+    <view class="mask hide">
+      <view class="comeOn hide">
+        <view class="comeOnTitleImg">
+          <image src="/img/index_main.jpg" />
+        </view>
+        <view class="comeOnCon">失败乃成功之母</view>
+        <view class="comeOnConButton">
+          <view>下一题</view>
+        </view>
+        <view  class="comeOnBottonImg">
+          <image src="/img/tui.png" />
+        </view>
+      </view>
+
+      <view class="congratulations hide">
+        <view class="congsTitleImg">
+          <image src="/img/index_main.jpg" />
+        </view>
+        <view class="congCon">失败乃成功之母</view>
+        <view class="congCons">失败乃成功之母</view>
+        <view  class="comeOnBotton">
+          <view>下一题</view>
+        </view>
+      </view>
     </view>
     <nav @childFn.user="goPage" />
   </view>
