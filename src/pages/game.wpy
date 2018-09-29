@@ -1,0 +1,175 @@
+<style lang="less">
+.titleImg{
+  width: 748rpx;
+  height: 320rpx;
+  border: 1rpx solid #f0f0f0;
+}
+.titleImg image{
+  width: 748rpx;
+  height: 320rpx;
+}
+.turntable{
+  width: 750rpx;
+  height: 870rpx;
+  border-radius: 20rpx;
+  background-color: #d2d3d0;
+  margin: 40rpx 0 130rpx 0;
+}
+.turntableTitle{
+  width: 100%;
+  height: 90rpx;
+  line-height: 90rpx;
+  font-size: 30rpx;
+  color: #fff;
+  text-align: center;
+}
+.sel{
+  width: 100%;
+  height: 54rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.sel view{
+  padding: 10rpx 40rpx;
+  border: 1rpx solid #fff;
+  border-right: 0;
+  font-size: 30rpx;
+  text-align: center;
+  color: #333;
+}
+.sel view:nth-child(2){
+  border-right: 1rpx solid #fff;
+}
+.sel .action{
+  background-color: #fff;
+}
+.mask{
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.congratulations{
+  width: 710rpx;
+  height: 680rpx;
+  border-radius: 30rpx;
+  background-color: #fff;
+  padding: 30rpx 0;
+}
+.congsTitleImg{
+  height: 140rpx;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.congsTitleImg image{
+  height: 140rpx;
+  width: 400rpx;
+}
+.winningInfo{
+  width: 500rpx;
+  height: 140rpx;
+  border: 1rpx solid #f1f1f1;
+  border-radius: 20rpx;
+  margin: 60rpx 105rpx;
+  padding: 20rpx 0;
+}
+.winningInfo view{
+  width: 500rpx;
+  height: 70rpx;
+  text-align: center;
+  line-height: 70rpx;
+}
+.winningInfo view:nth-child(1){
+  color: #363636;
+  font-size: 40rpx;
+}
+.winningInfo view:nth-child(2){
+  color: #878787;
+  font-size: 30rpx;
+}
+.congBotton{
+  width: 100%;
+  height: 240rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.congBotton view{
+  width: 260rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  border-radius: 40rpx;
+  text-align: center;
+  font-size: 30rpx;
+  color: #fff;
+  background-color: #f39900;
+}
+</style>
+<template>
+  <view>
+    <view class="titleImg">
+      <image src="/img/index_main.jpg" />
+    </view>
+    <view class="turntable">
+      <view class="turntableTitle">请选择摇奖区域:</view>
+      <view class="sel">
+        <view class="action">1000</view>
+        <view>1000</view>
+        <view>1000</view>
+        <view>1000</view>
+      </view>
+    </view>
+
+    <view class="mask hide">
+      <view class="congratulations">
+        <view class="congsTitleImg">
+          <image src="/img/index_main.jpg" />
+        </view>
+        <view class="winningInfo">
+          <view class="congCon">获得奖品:啊手动阀</view>
+          <view class="congCons">奖品已发送,请前往订单查看</view>
+        </view>
+        <view  class="congBotton">
+          <view>继续抽奖</view>
+        </view>
+      </view>
+    </view>
+    <nav @childFn.user="goPage" />
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import nav from '../components/nav' // 底部导航
+// import author from '../components/author' // 授权按钮
+export default class Challenge extends wepy.page {
+  config = {
+    'navigationBarTitleText': '选择题'
+  };
+  // 生命组件ID
+  components = {
+  // 底部导航
+    nav: nav
+  };
+  // alias example
+  data = {
+    userInfo: null
+  };
+
+  methods = {
+    // 底部导航跳转
+    goPage (url, evt) {
+      // 销毁当前页{跳转}
+      this.$redirect(url)
+    }
+  };
+  async onLoad(options) {};
+}
+</script>
