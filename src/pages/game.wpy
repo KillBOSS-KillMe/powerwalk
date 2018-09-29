@@ -38,7 +38,7 @@
   text-align: center;
   color: #333;
 }
-.sel view:nth-child(2){
+.sel view:nth-child(4){
   border-right: 1rpx solid #fff;
 }
 .sel .action{
@@ -149,9 +149,9 @@
 import wepy from 'wepy'
 import nav from '../components/nav' // 底部导航
 // import author from '../components/author' // 授权按钮
-export default class Challenge extends wepy.page {
+export default class Game extends wepy.page {
   config = {
-    'navigationBarTitleText': '选择题'
+    'navigationBarTitleText': '游戏'
   };
   // 生命组件ID
   components = {

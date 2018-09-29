@@ -130,6 +130,7 @@
   margin-top: 25rpx;
   margin-bottom: 130rpx;
   word-wrap: break-word;
+  display: inline-flex;
 }
 .commodity{
   display:inline-block;
@@ -210,10 +211,10 @@
       <view>好友排行榜</view>
     </view>
     <!-- 商品列表标题 -->
-    <view class="listTitle">热门商品兑换</view>
+    <view class="listTitle"  @tap="goCommodity">热门商品兑换</view>
     <!-- 商品列表 -->
     <view class="commodityList">
-      <view class="commodity">
+      <view class="commodity" @tap="goCommodity">
         <image class="commodityImg" src="/img/index_main.jpg" />
         <view class="commodityInfo">
           <view class="commodityTitle">手机壳手机壳</view>
@@ -459,6 +460,10 @@ export default class Index extends wepy.page {
       },
       success: function (data) {}
     })
+  }
+  goCommodity() {
+    console.log('qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq')
+    this.$navigate('/pages/commodity')
   }
 }
 </script>

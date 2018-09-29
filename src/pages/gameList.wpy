@@ -1,0 +1,206 @@
+<style lang="less">
+.titleImg{
+  position: relative;
+  width: 750rpx;
+  border-radius: 20rpx;
+}
+.titleImg image{
+  width: 100%;
+  height: 100%;
+  border-radius: 20rpx;
+}
+.answer{
+  height: 640rpx;
+  border-bottom: 1rpx solid #bcbfbe;
+}
+.challenge{
+  margin-top: 70rpx;
+  height: 870rpx;
+  border-top: 1rpx solid #bcbfbe;
+}
+.turntableTitle{
+  position: relative;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.turntableTitle .gameName{
+  margin-top: 70rpx;
+  width: 580rpx;
+  height: 140rpx;
+  line-height: 140rpx;
+  font-size: 85rpx;
+  text-align: center;
+  color: #333;
+  border: 8rpx solid #dbdbdb;
+  border-radius: 40rpx;
+}
+.turntableTitle .connection{
+  width: 500rpx;
+  height: 60rpx;
+  border: 8rpx solid #dbdbdb;
+  border-top: 0;
+  border-bottom: 0;
+}
+.turntableTitle image{
+  width: 750rpx;
+  height: 860rpx;
+  border-radius: 0 0 20rpx 20rpx;
+}
+.info{
+  position: absolute;
+  top: 8rpx;
+  right: 20rpx;
+  height: 46rpx;
+  padding: 0 30rpx;
+  line-height: 46rpx;
+  border-radius: 23rpx;
+  background-color: rgba(255,255,255,0.5);;
+  font-size: 24rpx;
+  color: #fff;
+}
+.answerInfo{
+  position: absolute;
+  top: 420rpx;
+  left: 120rpx;
+  height: 70rpx;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #12b7b8;
+  border-radius: 35rpx;
+}
+.answerInfo view {
+  height: 70rpx;
+  line-height: 70rpx;
+  // border: 1rpx solid red;
+}
+.answerInfo view:nth-child(1) {
+  padding-left: 50rpx;
+}
+.answerInfo view:nth-child(2) {
+  width: 80rpx;
+  text-align: center;
+  font-size: 40rpx;
+  color: #fc6400;
+}
+.answerInfo view:nth-child(3) {
+  width: 320rpx;
+  text-align: left;
+  font-size: 30rpx;
+}
+.answerInfo image, .challengeCount image{
+  width: 40rpx;
+  height: 40rpx;
+  vertical-align:middle;
+}
+.challengeCount{
+  width: 400rpx;
+  height: 120rpx;
+  line-height: 120rpx;
+  position: absolute;
+  top: 550rpx;
+  left: 180rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.challengeCount view{
+  height: 120rpx;
+  color: #333;
+  text-align: center;
+}
+.goChallenge{
+  width: 400rpx;
+  height: 70rpx;
+  position: absolute;
+  top: 670rpx;
+  left: 180rpx;
+  border: 2rpx solid #ec6200;
+  border-radius: 35rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.goChallenge view{
+  width: 340rpx;
+  height: 66rpx;
+  line-height: 66rpx;
+  color: #333;
+  font-size: 30rpx;
+  text-align: center;
+  border: 2rpx solid #333;
+  border-radius: 35rpx;
+}
+</style>
+<template>
+  <view style="margin-bottom: 130rpx;">
+    <view class="titleImg answer">
+      <view class="info">查看规则</view>
+      <view class="answerInfo">
+        <view>
+          <image src="/img/index_main.jpg" />
+        </view>
+        <view>50</view>
+        <view>点击获取答题资格</view>
+      </view>
+      <image src="/img/index_main.jpg" />
+    </view>
+    <view class="titleImg challenge">
+      <view class="info">查看规则</view>
+      <view class="challengeCount">
+        <image src="/img/index_main.jpg" />
+        <view>50</view>
+      </view>
+      <view class="goChallenge">
+        <view>开始挑战</view>
+      </view>
+      <image src="/img/index_main.jpg" />
+    </view>
+    <view class="turntableTitle">
+      <view class="gameName">大转盘</view>
+    </view>
+    <view class="turntableTitle">
+      <view class="connection"></view>
+    </view>
+    <view class="turntableTitle">
+      <view class="connection"></view>
+    </view>
+    <view class="turntableTitle">
+      <view class="info">查看规则及等级奖品</view>
+      <image src="/img/index_main.jpg" />
+    </view>
+    <nav @childFn.user="goPage" />
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import nav from '../components/nav' // 底部导航
+// import author from '../components/author' // 授权按钮
+export default class Gamelist extends wepy.page {
+  config = {
+    'navigationBarTitleText': '游戏'
+  };
+  // 生命组件ID
+  components = {
+  // 底部导航
+    nav: nav
+  };
+  // alias example
+  data = {
+    userInfo: null
+  };
+
+  methods = {
+    // 底部导航跳转
+    goPage (url, evt) {
+      // 销毁当前页{跳转}
+      this.$redirect(url)
+    }
+  };
+  async onLoad(options) {};
+}
+</script>

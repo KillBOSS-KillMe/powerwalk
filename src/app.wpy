@@ -76,11 +76,13 @@ export default class extends wepy.app {
   // -----json部分-----
   config = {
     pages: [
-      'pages/game',
-      'pages/topic',
-      'pages/rule',
-      'pages/challenge',
+      'pages/index',
       'pages/exchangeList',
+      'pages/challenge',
+      'pages/rule',
+      'pages/topic',
+      'pages/game',
+      'pages/gameList',
       'pages/help',
       'pages/balance',
       'pages/addssList',
@@ -94,8 +96,8 @@ export default class extends wepy.app {
       'pages/donation',
       'pages/donationList',
       'pages/leaderboard',
-      'pages/commodity',
-      'pages/index'
+      'pages/commodity'
+      
     ],
     window: {
       backgroundTextStyle: 'light',
