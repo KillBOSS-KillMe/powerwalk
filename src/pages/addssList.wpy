@@ -70,7 +70,7 @@
         </view>
       </view>
     </view>
-    <view class="newAddss">
+    <view class="newAddss" @tap="goNewAddsst">
       <view>+ 新建地址</view>
     </view>
     <nav @childFn.user="goPage" />
@@ -104,5 +104,9 @@ export default class Addsslist extends wepy.page {
   async onLoad(options) {
   
   };
+  // 进入新建地址
+  goNewAddsst() {
+    this.$navigate('/pages/newAddss')
+  }
 }
 </script>

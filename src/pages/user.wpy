@@ -118,7 +118,8 @@ page{
 }
 
 .mask{
-  position: fixed;
+  position: absolute;
+  top: 0;
   width: 100%;
   height: 100%;
   background-color: rgba(194,194,194,0.5);
@@ -176,41 +177,41 @@ page{
       <view>ID:3333333333</view>
     </view>
     <view class="userNavT">
-      <view>兑换记录</view>
+      <view>登陆</view>
       <view>兑换记录</view>
     </view>
     <view class="userNav">
-      <view class="list">
+      <view class="list" @tap="goCart">
         <view>
           <image src="/img/index_main.jpg" />
         </view>
         <view>购物车</view>
       </view>
-      <view class="list">
+      <view class="list" @tap="goOrder">
         <view>
           <image src="/img/index_main.jpg" />
         </view>
         <view>订单</view>
       </view>
-      <view class="list">
+      <view class="list" @tap="goSignIn">
         <view>
           <image src="/img/index_main.jpg" />
         </view>
         <view>签到</view>
       </view>
-      <view class="list">
+      <view class="list" @tap="goRecharge">
         <view>
           <image src="/img/index_main.jpg" />
         </view>
         <view>充值</view>
       </view>
-      <view class="list">
+      <view class="list" @tap="showInvite">
         <view>
           <image src="/img/index_main.jpg" />
         </view>
         <view>邀请</view>
       </view>
-      <view class="list">
+      <view class="list" @tap="customerService">
         <view>
           <image src="/img/index_main.jpg" />
         </view>
@@ -218,7 +219,7 @@ page{
       </view>
     </view>
     <view class="featuresList">
-      <view class="features">
+      <view class="features" @tap="goAddssList">
         <image src="/img/index_main.jpg" />
         <view>地址</view>
         <image src="/img/index_main.jpg" />
@@ -272,5 +273,38 @@ export default class User extends wepy.page {
     }
   };
   async onLoad(options) {};
+  // 进入兑换记录页
+  goExchangeRecording() {
+    this.$navigate('/pages/exchangeRecording')
+  }
+  // 进入购物车
+  goCart() {
+    this.$navigate('/pages/cart')
+  }
+  // 进入订单
+  goOrder() {
+    this.$navigate('/pages/order')
+  }
+  // 进入签到页
+  goSignIn() {
+    this.$navigate('/pages/signIn')
+  }
+  // 充值
+  goRecharge() {
+    console.log('暂无充值页')
+  }
+  // 显示邀请框
+  showInvite() {
+    console.log('控制显示邀请框')
+    // this.$navigate('/pages/cart')
+  }
+  // 客服
+  customerService() {
+    this.$navigate('/pages/cart')
+  }
+  // 进入地址列表
+  goAddssList() {
+    this.$navigate('/pages/addssList')
+  }
 }
 </script>

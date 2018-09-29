@@ -207,11 +207,11 @@
     <view class="stepPrompt">今日的公益金额已对完,明天早点来哦!</view>
     <!-- 操作按钮 -->
     <view class="operateButton">
-      <view>兑换活力豆</view>
-      <view>好友排行榜</view>
+      <view @tap="goExchange">兑换活力豆</view>
+      <view @tap="goLeaderboard">好友排行榜</view>
     </view>
     <!-- 商品列表标题 -->
-    <view class="listTitle"  @tap="goCommodity">热门商品兑换</view>
+    <view class="listTitle">热门商品兑换</view>
     <!-- 商品列表 -->
     <view class="commodityList">
       <view class="commodity" @tap="goCommodity">
@@ -343,7 +343,6 @@
 <script>
 import wepy from 'wepy'
 import nav from '../components/nav' // 底部导航
-// import author from '../components/author' // 授权按钮
 export default class Index extends wepy.page {
   config = {
     'navigationBarTitleText': '首页'
@@ -356,7 +355,7 @@ export default class Index extends wepy.page {
   // alias example
   data = {
     userInfo: null,
-    authorizationButton: 'hide',
+    authorizationButton: 'hide'
   };
 
   methods = {
@@ -404,9 +403,7 @@ export default class Index extends wepy.page {
     this.userInfo = this.userInfo.rawData
     this.onGotUserInfo()
   };
-  onLaunch() {
-    
-  };
+  onLaunch() {};
   // 分享页面
   onShareAppMessage() {
     let pages = getCurrentPages() // 获取加载的页面
@@ -461,9 +458,17 @@ export default class Index extends wepy.page {
       success: function (data) {}
     })
   }
+  // 进入商品详情页
   goCommodity() {
-    console.log('qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq')
     this.$navigate('/pages/commodity')
+  }
+  // 进入好友排行榜页
+  goLeaderboard() {
+    this.$navigate('/pages/leaderboard')
+  }
+  // 进入兑换页
+  goExchange() {
+    this.$navigate('/pages/exchange')
   }
 }
 </script>

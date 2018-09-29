@@ -268,7 +268,7 @@ import wepy from 'wepy'
 import nav from '../components/nav' // 底部导航
 export default class Leaderboard extends wepy.page {
   config = {
-    'navigationBarTitleText': '首页'
+    'navigationBarTitleText': '好友排行榜'
   };
   // 生命组件ID
   components = {

@@ -101,25 +101,25 @@
     <view class="footer">
       <view class="ft_item on">
         <view @tap="goIndex">
-          <image src="/img/index.png" />
+          <image src="/img/index_main.jpg" />
           <text class="text">首页</text>
         </view>
       </view>
       <view class="ft_item">
-        <view @tap="goAppointment">
-          <image src="/img/appointment.png" />
+        <view @tap="goExchange">
+          <image src="/img/index_main.jpg" />
           <text class="text">兑换</text>
         </view>
       </view>
       <view class="ft_item">
-        <view @tap="goAppointment">
-          <image src="/img/appointment.png" />
+        <view @tap="goGameList">
+          <image src="/img/index_main.jpg" />
           <text class="text">游戏</text>
         </view>
       </view>
       <view class="ft_item">
         <view @tap="goUser">
-          <image src="/img/user.png" />
+          <image src="/img/index_main.jpg" />
           <text class="text">我的</text>
         </view>
       </view>
@@ -145,6 +145,12 @@ export default class Nav extends wepy.component {
   methods = {
     goIndex() {
       this.$emit('childFn', '/pages/index')
+    },
+    goExchange() {
+      this.$emit('childFn', '/pages/exchangeList')
+    },
+    goGameList() {
+      this.$emit('childFn', '/pages/gameList')
     },
     goUser() {
       this.$emit('childFn', '/pages/user')

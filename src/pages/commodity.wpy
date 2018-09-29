@@ -259,7 +259,7 @@ page{
       <view class="buyborder">
         <text>|</text>
       </view>
-      <view class="exchange">立即兑换</view>
+      <view class="exchange" @tap="goExchange">立即兑换</view>
     </view>
     
 
@@ -296,5 +296,9 @@ export default class Commodity extends wepy.page {
   async onLoad(options) {
     
   };
+  // 进入兑换页
+  goExchange() {
+    this.$navigate('/pages/exchange')
+  }
 }
 </script>

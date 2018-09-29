@@ -76,27 +76,27 @@ export default class extends wepy.app {
   // -----json部分-----
   config = {
     pages: [
-      'pages/index',
-      'pages/exchangeList',
-      'pages/challenge',
-      'pages/rule',
-      'pages/topic',
-      'pages/game',
-      'pages/gameList',
-      'pages/help',
-      'pages/balance',
-      'pages/addssList',
-      'pages/order',
-      'pages/exchangeRecording',
-      'pages/signIn',
-      'pages/newAddss',
-      'pages/user',
-      'pages/exchange',
-      'pages/cart',
-      'pages/donation',
-      'pages/donationList',
-      'pages/leaderboard',
-      'pages/commodity'
+      'pages/index', // 首页
+      'pages/exchangeList', // 爱心捐赠
+      'pages/challenge', // 步数挑战
+      'pages/rule', // 答题规则
+      'pages/topic', // 选择题
+      'pages/game', // 游戏
+      'pages/gameList', // 游戏列表
+      'pages/help', // 帮助中心
+      'pages/balance', // 我的余额
+      'pages/addssList', // 地址列表
+      'pages/order', // 订单
+      'pages/exchangeRecording', // 兑换记录
+      'pages/signIn', // 签到
+      'pages/newAddss', // 新建地址
+      'pages/user', // 个人中心
+      'pages/exchange', // 兑换
+      'pages/cart', // 购物车
+      'pages/donation', // 爱心捐赠详情
+      'pages/donationList', // 爱心捐赠列表
+      'pages/leaderboard', // 好友排行榜
+      'pages/commodity' // 商品详情
       
     ],
     window: {

@@ -138,8 +138,8 @@
 <template>
   <view style="margin-bottom: 130rpx;">
     <view class="titleImg answer">
-      <view class="info">查看规则</view>
-      <view class="answerInfo">
+      <view class="info" @tap="goRule">查看规则</view>
+      <view class="answerInfo" @tap="goTopic">
         <view>
           <image src="/img/index_main.jpg" />
         </view>
@@ -149,12 +149,12 @@
       <image src="/img/index_main.jpg" />
     </view>
     <view class="titleImg challenge">
-      <view class="info">查看规则</view>
+      <view class="info" @tap="goRule">查看规则</view>
       <view class="challengeCount">
         <image src="/img/index_main.jpg" />
         <view>50</view>
       </view>
-      <view class="goChallenge">
+      <view class="goChallenge" @tap="goChallenge">
         <view>开始挑战</view>
       </view>
       <image src="/img/index_main.jpg" />
@@ -168,8 +168,8 @@
     <view class="turntableTitle">
       <view class="connection"></view>
     </view>
-    <view class="turntableTitle">
-      <view class="info">查看规则及等级奖品</view>
+    <view class="turntableTitle" @tap="goGame">
+      <view class="info" @tap="goRule">查看规则及等级奖品</view>
       <image src="/img/index_main.jpg" />
     </view>
     <nav @childFn.user="goPage" />
@@ -202,5 +202,21 @@ export default class Gamelist extends wepy.page {
     }
   };
   async onLoad(options) {};
+  // 进入游戏规则页
+  goRule() {
+    this.$navigate('/pages/rule')
+  }
+  // 进入步数挑战页
+  goChallenge() {
+    this.$navigate('/pages/challenge')
+  }
+  // 进入答题页
+  goTopic() {
+    this.$navigate('/pages/topic')
+  }
+  // 进转盘页
+  goGame() {
+    this.$navigate('/pages/game')
+  }
 }
 </script>
