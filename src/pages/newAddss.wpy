@@ -35,10 +35,19 @@ page{
   align-items: center;
   justify-content: center;
 }
-.labelCon image{
+.labelCon .new{
   width: 30rpx;
   height: 30rpx;
+  color: #fff;
+  line-height: 2rpx;
+  text-align: center;
   margin-left: 10rpx;
+  border-radius: 15rpx;
+  background-color: #777;
+  margin-right: 0rpx;
+  padding: 0;
+
+
 }
 .button{
   position: absolute;
@@ -89,7 +98,7 @@ page{
             <view>公司</view>
             <view>
               公司
-              <image src="/img/index_main.jpg" />
+              <view class="new">+</view>
             </view>
           </view>
         </view>

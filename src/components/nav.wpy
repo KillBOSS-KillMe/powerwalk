@@ -163,8 +163,6 @@ export default class Nav extends wepy.component {
   };
   onLoad() {
     this.navImg = this.$parent.$parent.globalData.navImg
-    console.log(this.navImg)
-    
     this.$apply()
   };
 }

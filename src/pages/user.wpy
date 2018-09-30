@@ -106,6 +106,10 @@ page{
   height: 40rpx;
   margin-left: 20rpx;
 }
+.features .go{
+  width:20rpx;
+  height:30rpx;
+}
 .features view{
   width: 500rpx;
   font-size: 30rpx;
@@ -245,12 +249,12 @@ page{
       <view class="features" @tap="goAddssList">
         <image src="/img/addrss.png" />
         <view>地址</view>
-        <image src="/img/go.png" />
+        <image class="go" src="/img/go.png" />
       </view>
       <view class="features" @tap="goHelp">
         <image src="/img/help.png" />
         <view>帮助中心</view>
-        <image src="/img/go.png" />
+        <image class="go" src="/img/go.png" />
       </view>
     </view>
     <view class="mask {{invite}}" @tap="hideInvite">

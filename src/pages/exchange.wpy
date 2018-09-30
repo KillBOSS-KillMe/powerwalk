@@ -123,7 +123,7 @@
   justify-content: center;
 }
 .addss image{
-  width: 30rpx;
+  width: 15rpx;
   height: 30rpx;
   vertical-align:middle;
   display: flex;

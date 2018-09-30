@@ -92,9 +92,13 @@
   font-size: 30rpx;
 }
 .answerInfo image, .challengeCount image{
-  width: 40rpx;
-  height: 40rpx;
+  width: 32rpx;
+  height: 32rpx;
+  border-radius: 0;
   vertical-align:middle;
+}
+.challengeCount image{
+  margin-right: 10rpx;
 }
 .challengeCount{
   width: 400rpx;
@@ -141,7 +145,7 @@
       <view class="info" @tap="goRule">查看规则</view>
       <view class="answerInfo" @tap="goTopic">
         <view>
-          <image src="/img/index_main.jpg" />
+          <image src="/img/beans3.png" />
         </view>
         <view>50</view>
         <view>点击获取答题资格</view>
@@ -206,13 +210,13 @@ export default class Gamelist extends wepy.page {
   goRule() {
     this.$navigate('/pages/rule')
   }
-  // 进入步数挑战页
-  goChallenge() {
-    this.$navigate('/pages/challenge')
-  }
   // 进入答题页
   goTopic() {
     this.$navigate('/pages/topic')
+  }
+  // 进入步数挑战页
+  goChallenge() {
+    this.$navigate('/pages/challenge')
   }
   // 进转盘页
   goGame() {
