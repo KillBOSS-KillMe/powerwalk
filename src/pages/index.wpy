@@ -190,7 +190,7 @@
   <view>
     <!-- 信息通知栏 -->
     <view class="notice">
-      <image src="/img/tui.png" />
+      <image src="/img/notice.png" />
       提示信息
       <text class="name">名字名字</text>
       提示信息提示信息
@@ -221,13 +221,12 @@
           <view class="commodityLave">剩余30件</view>
           <view class="info">
             <view class="beans">
-              <image src="/img/tui.png" />
+              <image src="/img/beans3.png" />
               200
             </view>
             <view class="operating">
-              <image src="/img/tui.png" />
+              <image src="/img/setCart.png" />
               <view>兑换</view>
-              <!-- <button class=''>兑换</button> -->
             </view>
           </view>
         </view>
@@ -239,13 +238,12 @@
           <view class="commodityLave">剩余30件</view>
           <view class="info">
             <view class="beans">
-              <image src="/img/tui.png" />
+              <image src="/img/beans3.png" />
               200
             </view>
             <view class="operating">
-              <image src="/img/tui.png" />
+              <image src="/img/setCart.png" />
               <view>兑换</view>
-              <!-- <button class=''>兑换</button> -->
             </view>
           </view>
         </view>
@@ -257,13 +255,12 @@
           <view class="commodityLave">剩余30件</view>
           <view class="info">
             <view class="beans">
-              <image src="/img/tui.png" />
+              <image src="/img/beans3.png" />
               200
             </view>
             <view class="operating">
-              <image src="/img/tui.png" />
+              <image src="/img/setCart.png" />
               <view>兑换</view>
-              <!-- <button class=''>兑换</button> -->
             </view>
           </view>
         </view>
@@ -275,13 +272,12 @@
           <view class="commodityLave">剩余30件</view>
           <view class="info">
             <view class="beans">
-              <image src="/img/tui.png" />
+              <image src="/img/beans3.png" />
               200
             </view>
             <view class="operating">
-              <image src="/img/tui.png" />
+              <image src="/img/setCart.png" />
               <view>兑换</view>
-              <!-- <button class=''>兑换</button> -->
             </view>
           </view>
         </view>
@@ -398,6 +394,12 @@ export default class Index extends wepy.page {
     this.$apply()
   }
   async onLoad(options) {
+    wx.getWeRunData({
+    success(res) {
+        const encryptedData = res.encryptedData
+        console.log(encryptedData)
+    }
+})
     // 获取用户信息
     this.userInfo = await wepy.getUserInfo()
     this.userInfo = this.userInfo.rawData
@@ -468,7 +470,8 @@ export default class Index extends wepy.page {
   }
   // 进入兑换页
   goExchange() {
-    this.$navigate('/pages/exchange')
+    console.log('进入此页,自动兑换豆子')
+    // this.$navigate('/pages/exchange')
   }
 }
 </script>

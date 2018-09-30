@@ -151,13 +151,13 @@
     <view class="titleImg challenge">
       <view class="info" @tap="goRule">查看规则</view>
       <view class="challengeCount">
-        <image src="/img/index_main.jpg" />
+        <image src="/img/beans3.png" />
         <view>50</view>
       </view>
       <view class="goChallenge" @tap="goChallenge">
         <view>开始挑战</view>
       </view>
-      <image src="/img/index_main.jpg" />
+      <image class="bg" src="/img/challengeBg.png" />
     </view>
     <view class="turntableTitle">
       <view class="gameName">大转盘</view>

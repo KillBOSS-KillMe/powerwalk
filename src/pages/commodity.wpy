@@ -202,7 +202,7 @@ page{
         <view class="commdoityType">型号：型号型号型号型号型号</view>
         <view class="commdoityInfoCon">
           <view class="price">
-            <image src="/img/tui.png" />
+            <image src="/img/beans3.png" />
             200
           </view>
           <view class="lave">剩余12件</view>
@@ -253,7 +253,7 @@ page{
     <view class="buy">
       <view class="shoppCart">加入购物车</view>
       <view class="price">
-        <image src="/img/tui.png" />
+        <image src="/img/beans1.png" />
         200
       </view>
       <view class="buyborder">

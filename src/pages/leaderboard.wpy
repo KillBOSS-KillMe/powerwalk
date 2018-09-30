@@ -1,5 +1,6 @@
 <style lang="less">
 page{
+  color: #333;
   background-color: #efefef;
 }
 .leaderboardTitle{
@@ -99,7 +100,7 @@ page{
 }
 
 .myInfo .user view{
-  width: 200rpx;
+  width: 150rpx;
   height: 90rpx;
   line-height: 130rpx;
   color: #242424;
@@ -115,7 +116,7 @@ page{
 }
 
 .myInfo .count{
-  width: 200rpx;
+  width: 160rpx;
   height: 150rpx;
   overflow:hidden;
   text-overflow:ellipsis;
@@ -136,24 +137,26 @@ page{
   text-overflow:ellipsis;
   white-space:nowrap;
   display: flex;
-  align-items: center;
+  // align-items: center;
   justify-content: center;
 }
 .myInfo .like image{
-  width: 80rpx;
-  height: 70rpx;
+  width: 32rpx;
+  height: 32rpx;
 }
-.rankingImg{
+.rankingImg,.steal{
   width: 90rpx;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-
-.rankingImg image{
+.steal{
+  border-bottom:1rpx solid #dcdcdc;
+}
+.rankingImg image,.steal image{
   width: 60rpx;
   height: 60rpx;
-  border-radius: 30rpx;
+  // border-radius: 30rpx;
   vertical-align:middle;
 }
 .friendRanking{
@@ -188,19 +191,20 @@ page{
         <view class="ranking">第10名</view>
       </view>
       <view class="count">
-        0000000000000000000步
+        00000步
       </view>
+      <view class="steal"></view>
       <view class="like">
         <view class="likeCount">00000</view>
         <view class="likeImg">
-          <image src="/img/index_main.jpg" />
+          <image src="/img/like.png" />
         </view>
       </view>
     </view>
     <view class="myInfo friendRanking">
       <view class="list">
         <view class="rankingImg">
-          <image src="/img/index_main.jpg" />
+          <image src="/img/medalGold.png" />
         </view>
         <view class="userImg">
           <image src="/img/index_main.jpg" />
@@ -209,18 +213,21 @@ page{
           名字名字
         </view>
         <view class="count">
-          0000000000000000000步
+          00000步
+        </view>
+        <view class="steal" @tap="steal">
+          <image src="/img/like.png" />
         </view>
         <view class="like">
           <view class="likeCount">00000</view>
-          <view class="likeImg">
-            <image src="/img/index_main.jpg" />
+          <view class="likeImg" @tap="like">
+            <image src="/img/like.png" />
           </view>
         </view>
       </view>
       <view class="list">
         <view class="rankingImg">
-          <image src="/img/index_main.jpg" />
+          <image src="/img/medalSilver.png" />
         </view>
         <view class="userImg">
           <image src="/img/index_main.jpg" />
@@ -229,18 +236,21 @@ page{
           名字名字
         </view>
         <view class="count">
-          0000000000000000000步
+          00000步
+        </view>
+        <view class="steal" @tap="steal">
+          <image src="/img/like.png" />
         </view>
         <view class="like">
           <view class="likeCount">00000</view>
-          <view class="likeImg">
-            <image src="/img/index_main.jpg" />
+          <view class="likeImg" @tap="like">
+            <image src="/img/like.png" />
           </view>
         </view>
       </view>
       <view class="list">
         <view class="rankingImg">
-          <image src="/img/index_main.jpg" />
+          <image src="/img/medalCopper.png" />
         </view>
         <view class="userImg">
           <image src="/img/index_main.jpg" />
@@ -249,12 +259,36 @@ page{
           名字名字
         </view>
         <view class="count">
-          0000000000000000000步
+          00000步
+        </view>
+        <view class="steal" @tap="steal">
+          <image src="/img/like.png" />
         </view>
         <view class="like">
           <view class="likeCount">00000</view>
-          <view class="likeImg">
-            <image src="/img/index_main.jpg" />
+          <view class="likeImg" @tap="like">
+            <image src="/img/like.png" />
+          </view>
+        </view>
+      </view>
+      <view class="list">
+        <view class="rankingImg">4</view>
+        <view class="userImg">
+          <image src="/img/index_main.jpg" />
+        </view>
+        <view class="user">
+          名字名字
+        </view>
+        <view class="count">
+          00000步
+        </view>
+        <view class="steal" @tap="steal" @tap="steal">
+          <image src="/img/like.png" />
+        </view>
+        <view class="like">
+          <view class="likeCount">00000</view>
+          <view class="likeImg" @tap="like">
+            <image src="/img/like.png" />
           </view>
         </view>
       </view>
@@ -290,5 +324,13 @@ export default class Leaderboard extends wepy.page {
   async onLoad(options) {
   
   };
+  // 偷取步数
+  steal() {
+    console.log('偷取了步数,或者被抓')
+  }
+  // 给好友点赞
+  like() {
+    console.log('点赞')
+  }
 }
 </script>

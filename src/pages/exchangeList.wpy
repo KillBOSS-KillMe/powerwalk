@@ -67,73 +67,73 @@
 <template>
   <view>
     <view class="titleImg">
-      <image src="/img/index_main.jpg" />
+      <image src="/img/exchangeListTitle.png" />
     </view>
     <!-- 商品列表 -->
     <view class="commodityList">
-      <view class="commodity">
+      <view class="commodity" @tap="goCommodity">
         <image class="commodityImg" src="/img/index_main.jpg" />
         <view class="commodityInfo">
           <view class="commodityTitle">手机壳手机壳</view>
           <view class="commodityLave">剩余30件</view>
           <view class="info">
             <view class="beans">
-              <image src="/img/tui.png" />
+              <image src="/img/beans3.png" />
               200
             </view>
             <view class="operating">
-              <image src="/img/tui.png" />
+              <image src="/img/setCart.png" />
               <view>兑换</view>
             </view>
           </view>
         </view>
       </view>
-      <view class="commodity">
+      <view class="commodity" @tap="goCommodity">
         <image class="commodityImg" src="/img/index_main.jpg" />
         <view class="commodityInfo">
           <view class="commodityTitle">手机壳手机壳</view>
           <view class="commodityLave">剩余30件</view>
           <view class="info">
             <view class="beans">
-              <image src="/img/tui.png" />
+              <image src="/img/beans3.png" />
               200
             </view>
             <view class="operating">
-              <image src="/img/tui.png" />
+              <image src="/img/setCart.png" />
               <view>兑换</view>
             </view>
           </view>
         </view>
       </view>
-      <view class="commodity">
+      <view class="commodity" @tap="goCommodity">
         <image class="commodityImg" src="/img/index_main.jpg" />
         <view class="commodityInfo">
           <view class="commodityTitle">手机壳手机壳</view>
           <view class="commodityLave">剩余30件</view>
           <view class="info">
             <view class="beans">
-              <image src="/img/tui.png" />
+              <image src="/img/beans3.png" />
               200
             </view>
             <view class="operating">
-              <image src="/img/tui.png" />
+              <image src="/img/setCart.png" />
               <view>兑换</view>
             </view>
           </view>
         </view>
       </view>
-      <view class="commodity">
+      <view class="commodity" @tap="goCommodity">
         <image class="commodityImg" src="/img/index_main.jpg" />
         <view class="commodityInfo">
           <view class="commodityTitle">手机壳手机壳</view>
           <view class="commodityLave">剩余30件</view>
           <view class="info">
             <view class="beans">
-              <image src="/img/tui.png" />
+              <image src="/img/beans3.png" />
               200
             </view>
             <view class="operating">
-              <image src="/img/tui.png" />
+              <image src="/img/setCart.png" />
               <view>兑换</view>
             </view>
           </view>
@@ -170,5 +170,9 @@ export default class Exchangelist extends wepy.page {
     }
   };
   async onLoad(options) {};
+    // 进入商品详情页
+  goCommodity() {
+    this.$navigate('/pages/commodity')
+  }
 }
 </script>

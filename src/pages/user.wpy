@@ -65,18 +65,21 @@ page{
   // border: 1rpx solid red;
 }
 .userNav .list view:nth-child(1){
-  margin: 30rpx 80rpx;
+  // margin: 30rpx 80rpx;
+  margin: 30rpx 77rpx;
   width: 100rpx;
   height: 100rpx;
   border-radius: 50rpx;
   border: 1rpx solid #eee;
-
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .userNav .list image{
-  width: 100rpx;
-  height: 100rpx;
-  border-radius: 50rpx;
+  width: 50rpx;
+  height: 50rpx;
 }
+
 .userNav .list view:nth-child(2){
   font-size: 30rpx;
   color: #333;
@@ -99,8 +102,8 @@ page{
   align-items: center;
 }
 .features image{
-  width: 60rpx;
-  height: 60rpx;
+  width: 40rpx;
+  height: 40rpx;
   margin-left: 20rpx;
 }
 .features view{
@@ -165,6 +168,20 @@ page{
   text-align: center;
   color: #fff;
 }
+.userNav button{
+  padding:0rpx;
+  background-color:#fff;
+  font-size: 30rpx;
+  line-height: 30rpx;
+}
+.userNav button view:nth-child(1){
+  margin-top: 50rpx !important;
+  // margin:50rpx 80rpx !important;
+}
+// 去掉小程序边框
+.userNav button::after{
+  border:0;
+}
 </style>
 
 <template>
@@ -178,64 +195,65 @@ page{
     </view>
     <view class="userNavT">
       <view>登陆</view>
-      <view>兑换记录</view>
+      <view @tap="goExchangeRecording">兑换记录</view>
     </view>
     <view class="userNav">
       <view class="list" @tap="goCart">
         <view>
-          <image src="/img/index_main.jpg" />
+          <image src="/img/cart.png" />
         </view>
         <view>购物车</view>
       </view>
       <view class="list" @tap="goOrder">
         <view>
-          <image src="/img/index_main.jpg" />
+          <image src="/img/order.png" />
         </view>
         <view>订单</view>
       </view>
       <view class="list" @tap="goSignIn">
         <view>
-          <image src="/img/index_main.jpg" />
+          <image src="/img/signIn.png" />
         </view>
         <view>签到</view>
       </view>
       <view class="list" @tap="goRecharge">
         <view>
-          <image src="/img/index_main.jpg" />
+          <image src="/img/recharge.png" />
         </view>
         <view>充值</view>
       </view>
       <view class="list" @tap="showInvite">
         <view>
-          <image src="/img/index_main.jpg" />
+          <image src="/img/invite.png" />
         </view>
         <view>邀请</view>
       </view>
-      <view class="list" @tap="customerService">
+      <!-- <view class="list" @tap="customerService">
         <view>
           <image src="/img/index_main.jpg" />
         </view>
         <view>客服</view>
-      </view>
+      </view> -->
+      <button class="list" open-type="contact" session-from="weapp">
+        <view>
+          <image src="/img/service.png" />
+        </view>
+        <view>客服</view>
+      </button>
     </view>
     <view class="featuresList">
       <view class="features" @tap="goAddssList">
-        <image src="/img/index_main.jpg" />
+        <image src="/img/addrss.png" />
         <view>地址</view>
-        <image src="/img/index_main.jpg" />
+        <image src="/img/go.png" />
       </view>
-      <view class="features">
-        <image src="/img/index_main.jpg" />
+      <view class="features" @tap="goHelp">
+        <image src="/img/help.png" />
         <view>帮助中心</view>
-        <image src="/img/index_main.jpg" />
-      </view>
-      <view class="features">
-        <image src="/img/index_main.jpg" />
-        <view>帮助中心</view>
-        <image src="/img/index_main.jpg" />
+        <image src="/img/go.png" />
       </view>
     </view>
-    <view class="mask hide">
+    <view class="mask {{invite}}" @tap="hideInvite">
       <view class="bulletBox">
         <view class="bulletBoxTitle">邀请好友得活力豆</view>
         <view class="bulletBoxInfo">每邀请一个好友可获赠100活力豆</view>
@@ -262,7 +280,8 @@ export default class User extends wepy.page {
   };
   // alias example
   data = {
-    userInfo: null
+    userInfo: null,
+    invite: 'hide'
   };
 
   methods = {
@@ -273,6 +292,16 @@ export default class User extends wepy.page {
     }
   };
   async onLoad(options) {};
+  // 显示邀请框
+  showInvite() {
+    this.invite = ''
+    this.$apply()
+  }
+  // 隐藏邀请框
+  hideInvite() {
+    this.invite = 'hide'
+    this.$apply()
+  }
   // 进入兑换记录页
   goExchangeRecording() {
     this.$navigate('/pages/exchangeRecording')
@@ -291,12 +320,7 @@ export default class User extends wepy.page {
   }
   // 充值
   goRecharge() {
-    console.log('暂无充值页')
-  }
-  // 显示邀请框
-  showInvite() {
-    console.log('控制显示邀请框')
-    // this.$navigate('/pages/cart')
+    this.$navigate('/pages/balance')
   }
   // 客服
   customerService() {
@@ -305,6 +329,10 @@ export default class User extends wepy.page {
   // 进入地址列表
   goAddssList() {
     this.$navigate('/pages/addssList')
+  }
+  // 进入帮助中心
+  goHelp() {
+    this.$navigate('/pages/help')
   }
 }
 </script>

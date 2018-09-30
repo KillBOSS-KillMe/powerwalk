@@ -188,7 +188,7 @@ page{
             <view class="delete">×</view>
             <view class="infoCon">
               <view>
-                <image src="/img/index_main.jpg" />
+                <image src="/img/beans3.png" />
                 200
               </view>
               <view>
@@ -215,7 +215,7 @@ page{
             <view class="delete">×</view>
             <view class="infoCon">
               <view>
-                <image src="/img/index_main.jpg" />
+                <image src="/img/beans3.png" />
                 200
               </view>
               <view>
@@ -237,7 +237,7 @@ page{
         <view class="surplus">剩余活力豆:1000</view>
         <view class="operating">
           <view>
-            <image src="/img/index_main.jpg" />
+            <image src="/img/beans3.png" />
           </view>
           <view>200</view>
           <view>兑换</view>

@@ -160,7 +160,7 @@
         <view>收货地址:18888888888收货地址:18888888888收货地址:18888888888收货地址:18888888888收货地址:18888888888收货地址:18888888888</view>
       </view>
       <view class="allAddss">
-        <image src="/img/index_main.jpg" />
+        <image src="/img/go.png" />
       </view>
     </view>
     <view class="cartList">
@@ -177,7 +177,7 @@
             <view class="delete">×</view>
             <view class="infoCon">
               <view>
-                <image src="/img/index_main.jpg" />
+                <image src="/img/beans3.png" />
                 200
               </view>
               <view>

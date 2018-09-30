@@ -136,7 +136,7 @@
           </view>
           <view class="infoTitle">
             步行的力量
-            <image src="/img/tui.png" />
+            <image src="/img/go.png" />
           </view>
           <view class="details">
             <view class="detailsImg">
@@ -144,7 +144,7 @@
             </view>
             <view class="detailsInfo">
               <view>
-                <image src="/img/tui.png" />
+                <image src="/img/beans3.png" />
                 <view>200</view>
               </view>
               <view class="detailsCon">asdfafasdfadsasasdfasdfadsasasdfasdfdfasdasdfafasdfadsasasdfasdfdfasdasdfafasdfadsasasdfasdfadsasasdfasdfdfasdasdfafasdfadsasasdfasdfdfasd</view>

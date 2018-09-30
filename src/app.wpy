@@ -122,7 +122,8 @@ export default class extends wepy.app {
     // imgUrl: 'https://test.beaconway.cn',
     userShopInfo: null,
     shopInfo: null,
-    guangGao: null
+    guangGao: null,
+    navImg: ['home1', 'exchange', 'game', 'user']
   };
 
   testFunctiong() {

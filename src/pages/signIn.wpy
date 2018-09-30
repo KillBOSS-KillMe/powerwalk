@@ -91,10 +91,15 @@ page{
   height: 76rpx;
   border-radius: 38rpx;
   border: 1rpx solid #eee;
+  background-color: #eee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
 }
 .dayShow .list image{
-  width: 76rpx;
-  height: 76rpx;
+  width: 50rpx;
+  height: 50rpx;
   border-radius: 38rpx;
 }
 .dayShow .list view:nth-child(1),.dayShow .list view:nth-child(3){
@@ -107,6 +112,9 @@ page{
 }
 .dayShowSelected view:nth-child(1),.dayShowSelected view:nth-child(3){
   color: #ff8000 !important;
+}
+.dayShowSelected view:nth-child(2){
+  background-color: #ff8000 !important;
 }
 </style>
 
@@ -126,42 +134,42 @@ page{
 			<view class="list dayShowSelected">
 				<view>第1天</view>
         <view>
-          <image src="/img/index_main.jpg" />
+          <image src="/img/beans.png" />
         </view>
         <view>+10</view>
       </view>
 			<view class="list">
 				<view>第1天</view>
         <view>
-          <image src="/img/index_main.jpg" />
+          <image src="/img/beans1.png" />
         </view>
         <view>+10</view>
       </view>
 			<view class="list">
 				<view>第1天</view>
         <view>
-          <image src="/img/index_main.jpg" />
+          <image src="/img/beans1.png" />
         </view>
         <view>+10</view>
       </view>
 			<view class="list">
 				<view>第1天</view>
         <view>
-          <image src="/img/index_main.jpg" />
+          <image src="/img/beans1.png" />
         </view>
         <view>+10</view>
       </view>
 			<view class="list">
 				<view>第1天</view>
         <view>
-          <image src="/img/index_main.jpg" />
+          <image src="/img/beans1.png" />
         </view>
         <view>+10</view>
       </view>
 			<view class="list">
 				<view>第1天</view>
         <view>
-          <image src="/img/index_main.jpg" />
+          <image src="/img/beans1.png" />
         </view>
         <view>+10</view>
       </view>

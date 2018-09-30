@@ -101,25 +101,25 @@
     <view class="footer">
       <view class="ft_item on">
         <view @tap="goIndex">
-          <image src="/img/index_main.jpg" />
+          <image src="/img/{{navImg[0]}}.png" />
           <text class="text">首页</text>
         </view>
       </view>
       <view class="ft_item">
         <view @tap="goExchange">
-          <image src="/img/index_main.jpg" />
+          <image src="/img/{{navImg[1]}}.png" />
           <text class="text">兑换</text>
         </view>
       </view>
       <view class="ft_item">
         <view @tap="goGameList">
-          <image src="/img/index_main.jpg" />
+          <image src="/img/{{navImg[2]}}.png" />
           <text class="text">游戏</text>
         </view>
       </view>
       <view class="ft_item">
         <view @tap="goUser">
-          <image src="/img/index_main.jpg" />
+          <image src="/img/{{navImg[3]}}.png" />
           <text class="text">我的</text>
         </view>
       </view>
@@ -137,25 +137,35 @@ export default class Nav extends wepy.component {
     guangGaoNode: null,
     name: '',
     phone: '',
-    id: ''
+    id: '',
+    navImg: []
   };
   props = {
     
   };
   methods = {
     goIndex() {
+      this.$parent.$parent.globalData.navImg = ['home1', 'exchange', 'game', 'user']
       this.$emit('childFn', '/pages/index')
     },
     goExchange() {
+      this.$parent.$parent.globalData.navImg = ['home', 'exchange1', 'game', 'user']
       this.$emit('childFn', '/pages/exchangeList')
     },
     goGameList() {
+      this.$parent.$parent.globalData.navImg = ['home', 'exchange', 'game1', 'user']
       this.$emit('childFn', '/pages/gameList')
     },
     goUser() {
+      this.$parent.$parent.globalData.navImg = ['home', 'exchange', 'game', 'user1']
       this.$emit('childFn', '/pages/user')
     }
   };
-  onLoad() {};
+  onLoad() {
+    this.navImg = this.$parent.$parent.globalData.navImg
+    console.log(this.navImg)
+    
+    this.$apply()
+  };
 }
 </script>
