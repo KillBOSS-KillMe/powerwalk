@@ -35,7 +35,7 @@ page{
   justify-content: center;
 }
 .listShow image{
-  width: 30rpx;
+  width: 20rpx;
   height: 30rpx;
   margin-left: 20rpx;
 }

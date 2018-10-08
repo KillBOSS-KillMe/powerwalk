@@ -395,12 +395,13 @@ export default class Index extends wepy.page {
     this.$apply()
   }
   async onLoad(options) {
+    // 获取步数
     wx.getWeRunData({
-    success(res) {
+      success(res) {
         const encryptedData = res.encryptedData
-        console.log(encryptedData)
-    }
-})
+        console.log(`获取步数返回结果===========${encryptedData}`)
+      }
+    })
     // 获取用户信息
     this.userInfo = await wepy.getUserInfo()
     this.userInfo = this.userInfo.rawData

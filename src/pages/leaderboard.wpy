@@ -133,6 +133,7 @@ page{
   width: 140rpx;
   height: 70rpx;
   line-height: 70rpx;
+  color: #333;
   overflow:hidden;
   text-overflow:ellipsis;
   white-space:nowrap;
@@ -156,14 +157,26 @@ page{
 .rankingImg image,.steal image{
   width: 60rpx;
   height: 60rpx;
-  // border-radius: 30rpx;
+  border-radius: 30rpx;
   vertical-align:middle;
 }
 .friendRanking{
   margin-top: 20rpx;
 }
+.count{
+  color: #00da40;
+}
+.friendRanking .list:nth-child(1) .count,
+.friendRanking .list:nth-child(2) .count,
+.friendRanking .list:nth-child(3) .count{
+  color: #fd0009;
+}
 .userImg,.user,.count,.like{
   border-bottom: 1rpx solid #dcdcdc;
+}
+
+.signUpTitle view:nth-child(2){
+  
 }
 </style>
 <template>
@@ -216,7 +229,7 @@ page{
           00000步
         </view>
         <view class="steal" @tap="steal">
-          <image src="/img/like.png" />
+          <image src="/img/steal.png" />
         </view>
         <view class="like">
           <view class="likeCount">00000</view>
@@ -239,7 +252,7 @@ page{
           00000步
         </view>
         <view class="steal" @tap="steal">
-          <image src="/img/like.png" />
+          <image src="/img/steal.png" />
         </view>
         <view class="like">
           <view class="likeCount">00000</view>
@@ -262,7 +275,7 @@ page{
           00000步
         </view>
         <view class="steal" @tap="steal">
-          <image src="/img/like.png" />
+          <image src="/img/steal.png" />
         </view>
         <view class="like">
           <view class="likeCount">00000</view>
@@ -283,7 +296,7 @@ page{
           00000步
         </view>
         <view class="steal" @tap="steal" @tap="steal">
-          <image src="/img/like.png" />
+          <image src="/img/steal.png" />
         </view>
         <view class="like">
           <view class="likeCount">00000</view>

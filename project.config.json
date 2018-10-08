@@ -10,6 +10,6 @@
 	"compileType": "miniprogram",
 	"appid": "wx0a291b93d8b80bdb",
 	"projectname": "powerwalk",
-	"miniprogramRoot": "./dist",
+	"miniprogramRoot": "dist/",
 	"condition": {}
 }
