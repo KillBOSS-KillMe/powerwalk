@@ -183,8 +183,9 @@ page{
   // margin:50rpx 80rpx !important;
 }
 // 去掉小程序边框
-.userNav button::after{
+.userNav button::after, .userNavT button::after{
   border:0;
+  color: #333;
 }
 </style>
 
@@ -198,7 +199,9 @@ page{
       <view>ID:3333333333</view>
     </view>
     <view class="userNavT">
-      <view>登陆</view>
+      <!-- <view> -->
+        <button open-type="getUserInfo" id='getUserInfo' lang="zh_CN" @getuserinfo="onGotUserInfo">{{loginName}}</button>
+      <!-- </view> -->
       <view @tap="goExchangeRecording">兑换记录</view>
     </view>
     <view class="userNav">
@@ -285,7 +288,8 @@ export default class User extends wepy.page {
   // alias example
   data = {
     userInfo: null,
-    invite: 'hide'
+    invite: 'hide',
+    loginName: '登陆'
   };
 
   methods = {
@@ -295,7 +299,13 @@ export default class User extends wepy.page {
       this.$redirect(url)
     }
   };
-  async onLoad(options) {};
+  async onLoad(options) {
+    this.openId = this.$parent.globalData.openId
+    if (this.openId) {
+      this.loginName = `已登陆`
+      this.$apply()
+    }
+  };
   // 显示邀请框
   showInvite() {
     this.invite = ''
@@ -305,6 +315,42 @@ export default class User extends wepy.page {
   hideInvite() {
     this.invite = 'hide'
     this.$apply()
+  }
+  // 登陆点击事件
+  async onGotUserInfo() {
+    // 获取用户信息
+    this.userInfo = await wepy.getUserInfo()
+    this.userInfo = this.userInfo.rawData
+    // 判断用户信息是否为空
+    if (this.userInfo) {
+      // 将用户信息字符串转换为josn
+      this.userInfo = JSON.parse(this.userInfo)
+      // 提交用户信息
+      this.setUserInfo(this.userInfo)
+      this.$parent.globalData.userInfo = this.userInfo
+      this.$apply()
+    }
+  }
+  // 提交用户信息
+  async setUserInfo(userInfo) {
+    if (this.openId) {
+      return
+    }
+    // 从组件中获取userInfo
+    await wepy.login().then(res => {
+      this.code = res.code
+    })
+    // 发送请求,存储用户信息
+    await wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/userLogin`,
+      method: 'POST',
+      data: {
+        code: this.code,
+        nick_name: this.userInfo.nickName,
+        avatar: this.userInfo.avatarUrl
+      },
+      success: function (data) {}
+    })
   }
   // 进入兑换记录页
   goExchangeRecording() {

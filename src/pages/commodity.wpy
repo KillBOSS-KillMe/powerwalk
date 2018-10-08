@@ -295,11 +295,36 @@ export default class Commodity extends wepy.page {
     }
   };
   async onLoad(options) {
-    
+    // 获取商品详情
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/goodsList`,
+      method: 'GET',
+      data: {},
+      success: function (data) {
+        console.log(data)
+        // 获取下一页的请求Id
+        // this.nextUrl = data.data.meta.pagination.links.next
+      }
+    })
+  };
+  // 加入购物车
+  setCart() {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/addShoppingCart`,
+      method: 'POST',
+      data: {
+        AuthrizeOpenId: ''
+      },
+      success: function (data) {
+        console.log(data)
+      }
+    })
   };
   // 进入兑换页
   goExchange() {
+    // 在此处将商品信息传入兑换页
     this.$navigate('/pages/exchange')
   }
+  
 }
 </script>

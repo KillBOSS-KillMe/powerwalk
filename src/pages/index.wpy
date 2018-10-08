@@ -352,7 +352,8 @@ export default class Index extends wepy.page {
   // alias example
   data = {
     userInfo: null,
-    authorizationButton: 'hide'
+    authorizationButton: 'hide',
+    nextUrl: ''
   };
 
   methods = {
@@ -405,24 +406,92 @@ export default class Index extends wepy.page {
     // 获取用户信息
     this.userInfo = await wepy.getUserInfo()
     this.userInfo = this.userInfo.rawData
-    this.onGotUserInfo()
-  };
-  onLaunch() {};
-  // 分享页面
-  onShareAppMessage() {
-    let pages = getCurrentPages() // 获取加载的页面
-    let currentPage = pages[pages.length - 1] // 获取当前页面的对象
-    let url = currentPage.route // 当前页面url
-    url = `${url}?share=${this.thisShare}&uuid=${this.uuid}`
-    return {
-      title: '',
-      desc: '',
-      path: url
+    // 判断用户信息是否为空
+    if (this.userInfo) {
+      // 将用户信息字符串转换为josn
+      this.userInfo = JSON.parse(this.userInfo)
+      // 用户登陆
+      this.userLogin(this.userInfo)
+      this.$parent.globalData.userInfo = this.userInfo
+      this.$apply()
     }
-  };
+    // 获取热门推荐商品列表
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/hotGood`,
+      method: 'GET',
+      data: {},
+      success: function (data) {
+        console.log(data)
+        // 获取下一页的请求Id
+        // this.nextUrl = data.data.meta.pagination.links.next
+      }
+    })
+  }
+  // 用户登陆
+  async userLogin(userInfo) {
+    // 从组件中获取userInfo
+    await wepy.login().then(res => {
+      this.code = res.code
+    })
+    // 发送请求,存储用户信息
+    await wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/userLogin`,
+      method: 'POST',
+      data: {
+        code: this.code,
+        nick_name: this.userInfo.nickName,
+        avatar: this.userInfo.avatarUrl
+      },
+      success: function (data) {}
+    })
+  }
+  onLaunch() {};
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  async onReachBottom() {
+    if (!this.nextUrl) {
+      this.prompt = false
+      this.$apply()
+      return
+    }
+    await wepy.login().then(res => {
+      this.code = res.code
+    })
+    await wx.request({
+      url: this.nextUrl,
+      method: 'POST',
+      data: {
+        code: this.code
+      },
+      success: data => {
+        if (data.statusCode === 200) {
+          let withdrawList = data.data.data
+          let allTime = ''
+          // 将新的请求结果加入原有数组  concat连接两个或更多的数组，并返回结果。
+          this.withdrawList = this.withdrawList.concat(withdrawList)
+          this.$apply()
+          // 更新下一页请求地址
+          this.nextUrl = data.data.meta.pagination.links.next
+        }
+      }
+    })
+  }
+  // // 分享页面
+  // onShareAppMessage() {
+  //   let pages = getCurrentPages() // 获取加载的页面
+  //   let currentPage = pages[pages.length - 1] // 获取当前页面的对象
+  //   let url = currentPage.route // 当前页面url
+  //   url = `${url}?share=${this.thisShare}&uuid=${this.uuid}`
+  //   return {
+  //     title: '',
+  //     desc: '',
+  //     path: url
+  //   }
+  // };
   // 控制背景图大小
   autoImage(e) {
-    // 获取图片的狂傲
+    // 获取图片的宽高
     var imgW = e.detail.width
     var imgH = e.detail.height
     // 计算图片比例
@@ -441,37 +510,37 @@ export default class Index extends wepy.page {
       }
     })
   }
-  async setUserInfo(userInfo) {
-    // 从组件中获取userInfo
-    await wepy.login().then(res => {
-      this.code = res.code
-    })
-    // 获取用户信息
-    this.userInfo = JSON.parse(userInfo)
-    this.$parent.globalData.userInfo = JSON.parse(userInfo)
-    // 发送请求,存储用户信息
-    await wx.request({
-      url: `${this.$parent.globalData.requestUrl}/user/store`,
-      method: 'POST',
-      data: {
-        code: this.code,
-        nick_name: this.userInfo.nickName,
-        sex: this.userInfo.gender,
-        avatar: this.userInfo.avatarUrl
-      },
-      success: function (data) {}
-    })
-  }
   // 进入商品详情页
   goCommodity() {
+    if (!this.openId) {
+      wx.showModal({
+        title: '',
+        content: '请进入个人中心登陆'
+      })
+      return
+    }
     this.$navigate('/pages/commodity')
   }
   // 进入好友排行榜页
   goLeaderboard() {
+    if (!this.openId) {
+      wx.showModal({
+        title: '',
+        content: '请进入个人中心登陆'
+      })
+      return
+    }
     this.$navigate('/pages/leaderboard')
   }
   // 进入兑换页
   goExchange() {
+    if (!this.openId) {
+      wx.showModal({
+        title: '',
+        content: '请进入个人中心登陆'
+      })
+      return
+    }
     console.log('进入此页,自动兑换豆子')
     // this.$navigate('/pages/exchange')
   }

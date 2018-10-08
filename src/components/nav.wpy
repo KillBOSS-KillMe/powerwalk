@@ -95,6 +95,9 @@
 .hidden {
   display: none;
 }
+.action{
+  color: #f86e09;
+}
 </style>
 <template>
   <view>
@@ -102,25 +105,25 @@
       <view class="ft_item on">
         <view @tap="goIndex">
           <image src="/img/{{navImg[0]}}.png" />
-          <text class="text">首页</text>
+          <text class="text {{navAction[0]}}">首页</text>
         </view>
       </view>
       <view class="ft_item">
         <view @tap="goExchange">
           <image src="/img/{{navImg[1]}}.png" />
-          <text class="text">兑换</text>
+          <text class="text {{navAction[1]}}">兑换</text>
         </view>
       </view>
       <view class="ft_item">
         <view @tap="goGameList">
           <image src="/img/{{navImg[2]}}.png" />
-          <text class="text">游戏</text>
+          <text class="text {{navAction[2]}}">游戏</text>
         </view>
       </view>
       <view class="ft_item">
         <view @tap="goUser">
           <image src="/img/{{navImg[3]}}.png" />
-          <text class="text">我的</text>
+          <text class="text {{navAction[3]}}">我的</text>
         </view>
       </view>
     </view>
@@ -138,7 +141,8 @@ export default class Nav extends wepy.component {
     name: '',
     phone: '',
     id: '',
-    navImg: []
+    navImg: ['home1', 'exchange', 'game', 'user'],
+    navAction: ['action', 'noAction', 'noAction', 'noAction']
   };
   props = {
     
@@ -146,23 +150,28 @@ export default class Nav extends wepy.component {
   methods = {
     goIndex() {
       this.$parent.$parent.globalData.navImg = ['home1', 'exchange', 'game', 'user']
+      this.$parent.$parent.globalData.navAction = ['action', 'noAction', 'noAction', 'noAction']
       this.$emit('childFn', '/pages/index')
     },
     goExchange() {
       this.$parent.$parent.globalData.navImg = ['home', 'exchange1', 'game', 'user']
+      this.$parent.$parent.globalData.navAction = ['noAction', 'action', 'noAction', 'noAction']
       this.$emit('childFn', '/pages/exchangeList')
     },
     goGameList() {
       this.$parent.$parent.globalData.navImg = ['home', 'exchange', 'game1', 'user']
+      this.$parent.$parent.globalData.navAction = ['noAction', 'noAction', 'action', 'noAction']
       this.$emit('childFn', '/pages/gameList')
     },
     goUser() {
       this.$parent.$parent.globalData.navImg = ['home', 'exchange', 'game', 'user1']
+      this.$parent.$parent.globalData.navAction = ['noAction', 'noAction', 'noAction', 'action']
       this.$emit('childFn', '/pages/user')
     }
   };
   onLoad() {
     this.navImg = this.$parent.$parent.globalData.navImg
+    this.navAction = this.$parent.$parent.globalData.navAction
     this.$apply()
   };
 }

@@ -225,7 +225,21 @@ export default class Exchange extends wepy.page {
   }
   };
   async onLoad(options) {
-  
+    // 显示商品信息及地址
   };
+  // 兑换
+  exchange() {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/redeemNow`,
+      method: 'POST',
+      data: {
+        good_id: 1,
+        shipment_id: 2
+      },
+      success: function (data) {
+        console.log(data)
+      }
+    })
+  }
 }
 </script>

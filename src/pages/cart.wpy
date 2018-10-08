@@ -273,7 +273,76 @@ export default class Cart extends wepy.page {
   }
   };
   async onLoad(options) {
-  
+    // 获取购物车列表
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/getShoppingCart`,
+      method: 'GET',
+      data: {},
+      success: function (data) {
+        console.log(data)
+        // 获取下一页的请求Id
+        // this.nextUrl = data.data.meta.pagination.links.next
+      }
+    })
   };
+  /**
+  * 删除购物车中的商品
+  */
+  deleteCart() {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/getShoppingCart`,
+      method: 'DELETE',
+      data: {},
+      success: function (data) {
+        console.log(data)
+        // 获取下一页的请求Id
+        // this.nextUrl = data.data.meta.pagination.links.next
+      }
+    })
+  }
+  /**
+  * 兑换购物车中的商品
+  */
+  deleteCart() {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/addOrder`,
+      method: 'POST',
+      data: {},
+      success: function (data) {
+        console.log(data)
+      }
+    })
+  }
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  async onReachBottom() {
+    if (!this.nextUrl) {
+      this.prompt = false
+      this.$apply()
+      return
+    }
+    await wepy.login().then(res => {
+      this.code = res.code
+    })
+    await wx.request({
+      url: this.nextUrl,
+      method: 'POST',
+      data: {
+        code: this.code
+      },
+      success: data => {
+        if (data.statusCode === 200) {
+          let withdrawList = data.data.data
+          let allTime = ''
+          // 将新的请求结果加入原有数组  concat连接两个或更多的数组，并返回结果。
+          this.withdrawList = this.withdrawList.concat(withdrawList)
+          this.$apply()
+          // 更新下一页请求地址
+          this.nextUrl = data.data.meta.pagination.links.next
+        }
+      }
+    })
+  }
 }
 </script>

@@ -112,17 +112,18 @@ export default class extends wepy.app {
     testData: 'globalData',
     code: null,
     // 线下
-    requestUrl: 'http://47.97.161.139:8081/api',
+    requestUrl: 'http://140.143.203.12:8090/',
     // 线上
     // requestUrl: 'https://test.beaconway.cn/api',
     // 图片资源--线下
-    imgUrl: 'http://47.97.161.139:8081',
+    imgUrl: 'http://140.143.203.12:8090/',
     // 图片资源--线上
     // imgUrl: 'https://test.beaconway.cn',
     userShopInfo: null,
     shopInfo: null,
     guangGao: null,
-    navImg: ['home1', 'exchange', 'game', 'user']
+    navImg: ['home1', 'exchange', 'game', 'user'],
+    navAction: ['action', 'noAction', 'noAction', 'noAction']
   };
   // 获取用户信息
   getUserInfo(cb) {
