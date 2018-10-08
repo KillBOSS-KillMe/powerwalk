@@ -67,7 +67,7 @@
   color: #333;
 }
 .infoTitle image{
-  width: 30rpx;
+  width: 20rpx;
   height: 30rpx;
 }
 .details{

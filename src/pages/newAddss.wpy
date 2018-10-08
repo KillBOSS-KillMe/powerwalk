@@ -4,13 +4,15 @@ page{
 }
 .setInfo{
   width: 750rpx;
-  height: 700rpx;
+  min-height: 700rpx;
+  height: auto;
   border-radius: 30rpx;
   background-color: #eee;
 }
 .item{
   width: 750rpx;
-  height: 90rpx;
+  min-height: 90rpx;
+  height: auto;
   border-bottom: 1rpx solid #dcdcdc;
   display: flex;
   align-items: center;
@@ -22,26 +24,27 @@ page{
   width: 150rpx;
 }
 .labelCon{
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  // display: flex;
+  // align-items: center;
+  // justify-content: center;
+  // word-wrap:break-word;
+  height: auto;
 }
 .labelCon view{
+  display:inline-block;
   border: 1rpx solid #d5d5d5;
   border-radius: 10rpx;
   padding: 5rpx 10rpx;
-  margin-right: 40rpx;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  margin: 10rpx 10rpx;
 }
 .labelCon .new{
+  margin: 0rpx;
   width: 30rpx;
   height: 30rpx;
   color: #fff;
-  line-height: 2rpx;
+  line-height: 30rpx;
   text-align: center;
-  margin-left: 10rpx;
+  // margin-left: 10rpx;
   border-radius: 15rpx;
   background-color: #777;
   margin-right: 0rpx;
@@ -69,44 +72,122 @@ page{
   align-items: center;
   justify-content: center;
 }
+.bulletBox{
+  width: 660rpx;
+  height: 560rpx;
+  border-radius: 30rpx;
+  background-color: #fff;
+  padding: 30rpx 0;
+  position: relative;
+}
+.bulletBoxTitle{
+  height: 120rpx;
+  line-height: 120rpx;
+  text-align: center;
+  font-size: 40rpx;
+  color: #f96b00;
+  border-bottom: 1rpx solid #e5e5e5;
+}
+.bulletBoxInfo{
+  height: 220rpx;
+  line-height: 220rpx;
+  font-size: 30rpx;
+  color: #333;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.bulletBoxInfo input{
+  color: #333;
+  width: 500rpx;
+  border-bottom: 1rpx solid #666;
+}
+.bulletBoxButton{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bulletBoxButton button{
+  width: 360rpx;
+  height: 70rpx;
+  line-height: 70rpx;
+  border-radius: 35rpx;
+  background-color: #f96b00;
+  font-size: 30rpx;
+  text-align: center;
+  color: #fff;
+}
+.bulletBoxHide{
+  position: absolute;
+  top: 0rpx;
+  right: 0rpx;
+  width: 100rpx;
+  height: 100rpx;
+  line-height: 100rpx;
+  text-align: center;
+  color: #999;
+  font-size: 50rpx;
+}
+.action{
+  border: 1rpx solid #ea6200;
+  background-color: #ea6200;
+  color: #fff;
+}
 </style>
 
 <template>
   <view>
-    <from>
+    <form class="appointment_form" bindsubmit='newAddss'>
       <view class="setInfo">
         <view class="item">
           <view class="label">收货人:</view>
-          <input type="text" />
+          <input type="text" name="receiver" />
         </view>
         <view class="item">
           <view class="label">联系方式:</view>
-          <input type="text" />
+          <input type="text" name="phone" />
         </view>
         <view class="item">
           <view class="label">所在地区:</view>
-          <input type="text" />
+          <input type="text" name="area" />
         </view>
         <view class="item">
           <view class="label">详细地址:</view>
-          <input type="text" />
+          <input type="text" name="address" />
         </view>
         <view class="item">
           <view class="label">标签:</view>
           <view class="labelCon">
-            <view>公司</view>
-            <view>公司</view>
-            <view>
-              公司
+            <block wx:for="{{addressLabel}}" wx:key="{{index}}">
+              <view class="{{labelNum==index?'action':''}}" data-labelNum="{{index}}" @tap="getLabelNum">{{addressLabel[index]}}</view>
+            </block> 
+            <view @tap="hideInvite">
+              自定义
               <view class="new">+</view>
             </view>
           </view>
         </view>
       </view>
       <view class="button">
-        <button>确认</button>
+        <button class="mod_btn" formType="submit">确认</button>
       </view>
-    </from>
+    </form>
+    <view class="mask {{invite}}">
+      <form class="appointment_form" bindsubmit="newAddssLabel">
+        <view class="bulletBox">
+          <view class="bulletBoxTitle">添加自定义标签</view>
+          <view class="bulletBoxHide" @tap="hideInvite">×</view>
+          <view class="bulletBoxInfo">
+            <input type="text" value="{{setLabel}}" name="label" />
+          </view>
+          <view  class="bulletBoxButton">
+            <button formType="submit">添加</button>
+          </view>
+        </view>
+      </form>
+    </view>
     <nav @childFn.user="goPage" />
   </view>
 </template>
@@ -125,18 +206,79 @@ export default class Newaddss extends wepy.page {
   };
   // alias example
   data = {
-    userInfo: null
+    userInfo: null,
+    addressLabel: ['公司','家'],
+    invite: 'hide',
+    setLabel: '',
+    labelNum: 0
   };
 
   methods = {
-  // 底部导航跳转
-  goPage (url, evt) {
-    // 销毁当前页{跳转}
-    this.$redirect(url)
-  }
+    // 底部导航跳转
+    goPage (url, evt) {
+      // 销毁当前页{跳转}
+      this.$redirect(url)
+    },
+    newAddssLabel(e) {
+      // 获取值,并去掉前后空格
+      this.setLabel = e.detail.value.label
+      this.setLabel = this.setLabel.replace(/^(\s|\u00A0)+/,'').replace(/(\s|\u00A0)+$/,'')
+      if (this.setLabel) {
+        // 将新增标签加入数组
+        this.addressLabel.push(this.setLabel)
+        this.$apply()
+        // 隐藏弹出框
+        this.hideInvite()
+      } else {
+        wx.showModal({
+          title: '',
+          content: '不可输入空标签'
+        })
+      }
+    },
+    getLabelNum(e) {
+      // 点击选中标签
+      // 获取数组下标
+      this.labelNum = e.currentTarget.dataset.labelnum
+      this.$apply()
+    },
+    newAddss(e) {
+      let receiver = e.detail.value.receiver
+      let phone = e.detail.value.phone
+      let area = e.detail.value.area
+      let address = e.detail.value.address
+      let label = this.addressLabel[this.labelNum]
+      console.log(receiver)
+      console.log(phone)
+      console.log(area)
+      console.log(address)
+      console.log(label)
+      wx.request({
+        url: `${this.$parent.globalData.requestUrl}/api/addShipment`,
+        method: 'POST',
+        data: {
+          // code: this.code,
+          // nick_name: this.userInfo.nickName,
+          // avatar: this.userInfo.avatarUrl
+        },
+        success: function (data) {}
+      })
+    }
   };
   async onLoad(options) {
-  
+    
   };
+  hideInvite() {
+    if (this.invite) {
+      // 显示弹出框
+      this.invite = ''
+      // 清空文本框中的值
+      this.setLabel = ''
+    } else {
+      this.invite = 'hide'
+    }
+    this.$apply()
+  };
+
 }
 </script>

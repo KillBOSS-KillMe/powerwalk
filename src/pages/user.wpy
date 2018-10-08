@@ -140,6 +140,7 @@ page{
   border-radius: 30rpx;
   background-color: #fff;
   padding: 30rpx 0;
+  position: relative;
 }
 .bulletBoxTitle{
   height: 120rpx;
@@ -172,6 +173,17 @@ page{
   text-align: center;
   color: #fff;
 }
+.bulletBoxHide{
+  position: absolute;
+  top: 0rpx;
+  right: 0rpx;
+  width: 100rpx;
+  height: 100rpx;
+  line-height: 100rpx;
+  text-align: center;
+  color: #999;
+  font-size: 50rpx;
+}
 .userNav button{
   padding:0rpx;
   background-color:#fff;
@@ -186,6 +198,9 @@ page{
 .userNav button::after, .userNavT button::after{
   border:0;
   color: #333;
+}
+.userNavT button{
+  background-color: #fff;
 }
 </style>
 
@@ -260,9 +275,10 @@ page{
         <image class="go" src="/img/go.png" />
       </view>
     </view>
-    <view class="mask {{invite}}" @tap="hideInvite">
+    <view class="mask {{invite}}">
       <view class="bulletBox">
         <view class="bulletBoxTitle">邀请好友得活力豆</view>
+        <view class="bulletBoxHide" @tap="hideInvite">×</view>
         <view class="bulletBoxInfo">每邀请一个好友可获赠100活力豆</view>
         <view  class="bulletBoxButton">
           <view>立即邀请</view>
