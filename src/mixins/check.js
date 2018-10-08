@@ -28,9 +28,10 @@ export default class testMixin extends wepy.mixin {
       duration: 3000
     })
   }
-  // trim (str) {  
-  //   return str.replace(/^(\s|\u00A0)+/,'').replace(/(\s|\u00A0)+$/,'')
-  // }
+
+  trim (str) {
+    return str.replace(/^(\s|\u00A0)+/,'').replace(/(\s|\u00A0)+$/,'')
+  }
   // 数据格式校验
   check = {
     // 是否为空

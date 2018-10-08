@@ -151,7 +151,12 @@ page{
         </view>
         <view class="item">
           <view class="label">所在地区:</view>
-          <input type="text" name="area" />
+          <!-- <input type="text" name="area" /> -->
+          <picker mode="region" @change="bindRegionChange" value="{{region}}" custom-item="{{customItem}}">
+            <view class="picker">
+              {{region[0]}}，{{region[1]}}，{{region[2]}}
+            </view>
+          </picker>
         </view>
         <view class="item">
           <view class="label">详细地址:</view>
@@ -195,7 +200,10 @@ page{
 <script>
 import wepy from 'wepy'
 import nav from '../components/nav' // 底部导航
+import citys from '../mixins/citys'
+import check from '../mixins/check'
 export default class Newaddss extends wepy.page {
+  mixins = [citys,check]
   config = {
     'navigationBarTitleText': '新建地址'
   };
@@ -210,7 +218,9 @@ export default class Newaddss extends wepy.page {
     addressLabel: ['公司','家'],
     invite: 'hide',
     setLabel: '',
-    labelNum: 0
+    labelNum: 0,
+    region: ['', '', '请选择详细地址'],
+    customItem: '全部'
   };
 
   methods = {
@@ -222,7 +232,8 @@ export default class Newaddss extends wepy.page {
     newAddssLabel(e) {
       // 获取值,并去掉前后空格
       this.setLabel = e.detail.value.label
-      this.setLabel = this.setLabel.replace(/^(\s|\u00A0)+/,'').replace(/(\s|\u00A0)+$/,'')
+      // 去前后空格
+      this.setLabel = this.trim(this.setLabel)
       if (this.setLabel) {
         // 将新增标签加入数组
         this.addressLabel.push(this.setLabel)
@@ -242,17 +253,57 @@ export default class Newaddss extends wepy.page {
       this.labelNum = e.currentTarget.dataset.labelnum
       this.$apply()
     },
+    bindRegionChange: function (e) {
+      this.region = e.detail.value
+    },
     newAddss(e) {
+      // 收货人
       let receiver = e.detail.value.receiver
+      // 电话
       let phone = e.detail.value.phone
-      let area = e.detail.value.area
+      // 区域
+      let area = this.region
+      // 详细地址
       let address = e.detail.value.address
+      // 标签
       let label = this.addressLabel[this.labelNum]
       console.log(receiver)
       console.log(phone)
       console.log(area)
       console.log(address)
       console.log(label)
+      if (this.check.isNull(receiver)) {
+        wepy.showModal({
+          title: '',
+          content: '请输入收货人姓名',
+          showCancel: false
+        })
+        return
+      }
+      if (this.check.isPhone(phone)) {
+        wepy.showModal({
+          title: '',
+          content: '请输入正确的电话格式',
+          showCancel: false
+        })
+        return
+      }
+      if (this.check.isNull(area[0])) {
+        wepy.showModal({
+          title: '',
+          content: '请选择地区',
+          showCancel: false
+        })
+        return
+      }
+      if (this.check.isNull(address)) {
+        wepy.showModal({
+          title: '',
+          content: '请输入详细地址',
+          showCancel: false
+        })
+        return
+      }
       wx.request({
         url: `${this.$parent.globalData.requestUrl}/api/addShipment`,
         method: 'POST',
@@ -266,7 +317,7 @@ export default class Newaddss extends wepy.page {
     }
   };
   async onLoad(options) {
-    
+    console.log(this.data)
   };
   hideInvite() {
     if (this.invite) {
