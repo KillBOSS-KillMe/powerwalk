@@ -130,7 +130,7 @@
   margin-top: 25rpx;
   margin-bottom: 130rpx;
   word-wrap: break-word;
-  display: inline-flex;
+  display: inline-block;
 }
 .commodity{
   display:inline-block;
@@ -200,11 +200,11 @@
     <view class="stepCount">
       <view class="stepCountInfo">
         <view class="stepCountTitle">进入步数</view>
-        <view class="stepCountCon">00000</view>
+        <view class="stepCountCon">{{todayStep}}</view>
         <view class="stepCountPrompt">每日24点清零</view>
       </view>
     </view>
-    <image class="stepCountBg" src="/img/index_main.jpg" />
+    <image class="stepCountBg" src="/img/homeBg.png" />
     <view class="stepPrompt">今日的公益金额已对完,明天早点来哦!</view>
     <!-- 操作按钮 -->
     <view class="operateButton">
@@ -215,74 +215,26 @@
     <view class="listTitle">热门商品兑换</view>
     <!-- 商品列表 -->
     <view class="commodityList">
-      <view class="commodity" @tap="goCommodity">
-        <image class="commodityImg" src="/img/index_main.jpg" />
-        <view class="commodityInfo">
-          <view class="commodityTitle">手机壳手机壳</view>
-          <view class="commodityLave">剩余30件</view>
-          <view class="info">
-            <view class="beans">
-              <image src="/img/beans3.png" />
-              200
-            </view>
-            <view class="operating">
-              <image src="/img/setCart.png" />
-              <view>兑换</view>
-            </view>
-          </view>
-        </view>
-      </view>
-      <view class="commodity">
-        <image class="commodityImg" src="/img/index_main.jpg" />
-        <view class="commodityInfo">
-          <view class="commodityTitle">手机壳手机壳</view>
-          <view class="commodityLave">剩余30件</view>
-          <view class="info">
-            <view class="beans">
-              <image src="/img/beans3.png" />
-              200
-            </view>
-            <view class="operating">
-              <image src="/img/setCart.png" />
-              <view>兑换</view>
+      <block wx:for="{{commodityList}}" key="index" index="index" item="item">
+        <view class="commodity" data-id="{{item.id}}" @tap="goCommodity">
+          <image class="commodityImg" src="{{item.img}}" />
+          <view class="commodityInfo">
+            <view class="commodityTitle">{{item.name}}</view>
+            <view class="commodityLave">剩余{{item.cost_beans}}件</view>
+            <view class="info">
+              <view class="beans">
+                <image src="/img/beans3.png" />
+                {{item.price}}
+              </view>
+              <view class="operating">
+                <image src="/img/setCart.png" />
+                <view>兑换</view>
+              </view>
             </view>
           </view>
         </view>
-      </view>
-      <view class="commodity">
-        <image class="commodityImg" src="/img/index_main.jpg" />
-        <view class="commodityInfo">
-          <view class="commodityTitle">手机壳手机壳</view>
-          <view class="commodityLave">剩余30件</view>
-          <view class="info">
-            <view class="beans">
-              <image src="/img/beans3.png" />
-              200
-            </view>
-            <view class="operating">
-              <image src="/img/setCart.png" />
-              <view>兑换</view>
-            </view>
-          </view>
-        </view>
-      </view>
-      <view class="commodity">
-        <image class="commodityImg" src="/img/index_main.jpg" />
-        <view class="commodityInfo">
-          <view class="commodityTitle">手机壳手机壳</view>
-          <view class="commodityLave">剩余30件</view>
-          <view class="info">
-            <view class="beans">
-              <image src="/img/beans3.png" />
-              200
-            </view>
-            <view class="operating">
-              <image src="/img/setCart.png" />
-              <view>兑换</view>
-            </view>
-          </view>
-        </view>
-      </view>
+      </block> 
+      <view class="dataNullTitle" wx:if="{{commodityList.length==0}}">暂无列表数据</view>
     </view>
     <!-- 授权按钮部分 -->
     <view>
@@ -352,8 +304,14 @@ export default class Index extends wepy.page {
   // alias example
   data = {
     userInfo: null,
+    openId: null,
     authorizationButton: 'hide',
-    nextUrl: ''
+    nextUrl: '',
+    commodityList: [],
+    encryptedData: null,
+    iv: null,
+    code: null,
+    todayStep: 0
   };
 
   methods = {
@@ -395,17 +353,10 @@ export default class Index extends wepy.page {
     this.$parent.globalData.userInfo = this.userInfo
     this.$apply()
   }
+  /**
+   * onLoad
+   */
   async onLoad(options) {
-    await wepy.login().then(res => {
-      console.log(res.code)
-    })
-    // 获取步数
-    wx.getWeRunData({
-      success(res) {
-        const encryptedData = res.encryptedData
-        console.log(`获取步数返回结果===========${encryptedData}`)
-      }
-    })
     // 获取用户信息
     this.userInfo = await wepy.getUserInfo()
     this.userInfo = this.userInfo.rawData
@@ -424,9 +375,44 @@ export default class Index extends wepy.page {
       method: 'GET',
       data: {},
       success: data => {
-        console.log(data)
-        // 获取下一页的请求Id
-        // this.nextUrl = data.data.meta.pagination.links.next
+        if (data.data.success) {
+          data = data.data.data.goods
+          this.commodityList = data.data
+          // 获取下一页的请求Id
+          this.nextUrl = data.meta.pagination.links
+          if (this.nextUrl.length !== 0) {
+            this.nextUrl = data.meta.pagination.links.next
+          }
+          this.$apply()
+        }
+      }
+    })
+    // 获取步数
+    await wx.getWeRunData({
+      success: res => {
+        console.log(res)
+        let encryptedData = res.encryptedData
+        let iv = res.iv
+        wepy.login().then(res => {
+          let code = res.code
+          // 提交步数(未解密)
+          wx.request({
+            url: `${this.$parent.globalData.requestUrl}/api/getStepInformation`,
+            method: 'POST',
+            data: {
+              code: code,
+              encryptedData: encryptedData,
+              iv: iv
+            },
+            success: data => {
+              console.log(data)
+              if (data.data.success) {
+                this.todayStep = data.data.data.today_step
+                this.$apply()
+              }
+            }
+          })
+        })
       }
     })
   }
@@ -449,8 +435,10 @@ export default class Index extends wepy.page {
         if (data.data.success) {
           // 获取用户信息,及openID  并存入全局
           this.userInfo = data.data.data.user
+          this.openId = this.userInfo.open_id
           this.$parent.globalData.userInfo = this.userInfo
-          this.$parent.globalData.openId = this.userInfo.open_id
+          this.$parent.globalData.openId = this.openId
+          this.$apply()
         }
       }
     })
@@ -470,19 +458,23 @@ export default class Index extends wepy.page {
     })
     await wx.request({
       url: this.nextUrl,
-      method: 'POST',
+      method: 'GET',
       data: {
         code: this.code
       },
       success: data => {
-        if (data.statusCode === 200) {
-          let withdrawList = data.data.data
-          let allTime = ''
+        if (data.data.success) {
+          data = data.data.data.goods
+          let commodityList = data.data
           // 将新的请求结果加入原有数组  concat连接两个或更多的数组，并返回结果。
-          this.withdrawList = this.withdrawList.concat(withdrawList)
-          this.$apply()
+          this.commodityList = this.commodityList.concat(commodityList)
           // 更新下一页请求地址
-          this.nextUrl = data.data.meta.pagination.links.next
+          // 获取下一页的请求Id
+          this.nextUrl = data.meta.pagination.links
+          if (this.nextUrl.length !== 0) {
+            this.nextUrl = data.meta.pagination.links.next
+          }
+          this.$apply()
         }
       }
     })
@@ -521,7 +513,7 @@ export default class Index extends wepy.page {
     })
   }
   // 进入商品详情页
-  goCommodity() {
+  goCommodity(e) {
     if (!this.openId) {
       wx.showModal({
         title: '',
@@ -529,7 +521,8 @@ export default class Index extends wepy.page {
       })
       return
     }
-    this.$navigate('/pages/commodity')
+    let id = e.currentTarget.dataset.id
+    this.$navigate(`/pages/commodity?id=${id}`)
   }
   // 进入好友排行榜页
   goLeaderboard() {
@@ -542,7 +535,7 @@ export default class Index extends wepy.page {
     }
     this.$navigate('/pages/leaderboard')
   }
-  // 进入兑换页
+  // 兑换步数
   goExchange() {
     if (!this.openId) {
       wx.showModal({
@@ -551,8 +544,36 @@ export default class Index extends wepy.page {
       })
       return
     }
-    console.log('进入此页,自动兑换豆子')
-    // this.$navigate('/pages/exchange')
+    if (this.todayStep === 0) {
+      wx.showModal({
+        title: '',
+        content: '步数不足，无法兑换'
+      })
+      return
+    }
+    wx.showModal({
+      title: '',
+      content: `确认将${this.todayStep}步兑换为活力豆`,
+      success: res => {
+        if (res.cancel) {
+          // 点击取消
+        } else {
+          // 点击确定
+          wx.request({
+            url: `${this.$parent.globalData.requestUrl}/api/test`,
+            method: 'POST',
+            data: {
+              code: this.code
+            },
+            success: data => {
+              if (data.data.success) {
+                this.$apply()
+              }
+            }
+          })
+        }
+      }
+    })
   }
 }
 </script>

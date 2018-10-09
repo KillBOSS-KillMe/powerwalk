@@ -295,9 +295,10 @@ export default class Commodity extends wepy.page {
     }
   };
   async onLoad(options) {
+    console.log(options)
     // 获取商品详情
     wx.request({
-      url: `${this.$parent.globalData.requestUrl}/api/goodsList`,
+      url: `${this.$parent.globalData.requestUrl}/api/goodsList/${options.id}`,
       method: 'GET',
       data: {},
       success: function (data) {

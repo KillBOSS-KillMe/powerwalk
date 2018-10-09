@@ -49,6 +49,14 @@
   background-color: #fff;
   padding: 30rpx 0;
 }
+.dataNullTitle{
+  width: 750rpx;
+  height: 300rpx;
+  line-height: 300rpx;
+  text-align: center;
+  color: #333;
+  font-size: 40rpx;
+}
 // 弹出框部分---结束
 </style>
 // 此处应该为此框架的基础包
@@ -113,7 +121,7 @@ export default class extends wepy.app {
     openId: null,
     code: null,
     // 线下
-    requestUrl: 'http://140.143.203.12:8090/',
+    requestUrl: 'http://140.143.203.12:8090',
     // 线上
     // requestUrl: 'https://test.beaconway.cn/api',
     // 图片资源--线下
