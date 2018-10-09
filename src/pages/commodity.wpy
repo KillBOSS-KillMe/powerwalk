@@ -337,12 +337,22 @@ export default class Commodity extends wepy.page {
     wx.request({
       url: `${this.$parent.globalData.requestUrl}/api/addShoppingCart`,
       method: 'POST',
-      data: {
+      header:{
         AuthrizeOpenId: this.$parent.globalData.openId
-
+      },
+      data: {
+        good_id: this.id,
+        num: this.buyQuantity
       },
       success: data => {
-        console.log(data)
+        if (data.data.success) {
+          wx.showToast({
+            title: '添加成功',
+            duration: 2000,
+            mask:true,
+            icon:'success'
+          })
+        }
       }
     })
   };
