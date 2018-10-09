@@ -178,16 +178,16 @@
             <view class="infoCon">
               <view>
                 <image src="/img/beans3.png" />
-                200
+                {{price}}
               </view>
               <view>
-                asdadsfadsfadsfasdfasdfadsfadsf
+                {{name}}
               </view>
             </view>
             <view>
-              <view>-</view>
-              <view>2222</view>
-              <view>+</view>
+              <view @tap="quantityDown">-</view>
+              <view>{{buyQuantity}}</view>
+              <view @tap="quantityUp">+</view>
             </view>
           </view>
         </view>
@@ -214,18 +214,48 @@ export default class Exchange extends wepy.page {
   };
   // alias example
   data = {
-    userInfo: null
+    id: null,
+    name: null,
+    buyQuantity: null,
+    price: null,
+    costBeans: null
   };
 
   methods = {
-  // 底部导航跳转
-  goPage (url, evt) {
-    // 销毁当前页{跳转}
-    this.$redirect(url)
-  }
+    // 底部导航跳转
+    goPage (url, evt) {
+      // 销毁当前页{跳转}
+      this.$redirect(url)
+    },
+    // 增加数量
+    quantityUp() {
+      if (this.buyQuantity >= this.costBeans) {
+        wx.showModal({
+          title: '',
+          content: '剩余商品不足'
+        })
+        return
+      }
+      this.buyQuantity += 1
+      this.$apply()
+    },
+    // 减少数量
+    quantityDown() {
+      if (this.buyQuantity === 1) {
+        return
+      }
+      this.buyQuantity -= 1
+      this.$apply()
+    }
   };
   async onLoad(options) {
-    // 显示商品信息及地址
+    console.log(options)
+    this.id = options.id
+    this.name = options.name
+    this.buyQuantity = parseInt(options.buyQuantity)
+    this.costBeans = parseInt(options.costBeans)
+    this.price = options.price
+    this.$apply()
   };
   // 兑换
   exchange() {

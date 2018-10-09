@@ -144,9 +144,7 @@ export default class Nav extends wepy.component {
     navImg: ['home1', 'exchange', 'game', 'user'],
     navAction: ['action', 'noAction', 'noAction', 'noAction']
   };
-  props = {
-    
-  };
+  props = {};
   methods = {
     goIndex() {
       this.$parent.$parent.globalData.navImg = ['home1', 'exchange', 'game', 'user']

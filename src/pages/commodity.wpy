@@ -192,28 +192,28 @@ page{
 </style>
 <template>
   <view>
-    <view class="commdoity">
+    <view class="commdoity" data-id="{{commodity.id}}">
         <!-- 顶部商品图 -->
       <view class="commdoityImgCon">
-        <image class="commdoityImg" src="/img/index_main.jpg" />
+        <image class="commdoityImg" src="{{commodity.img}}" />
       </view>
       <!-- 商品信息 -->
       <view class="commdoityInfo">
-        <view class="commdoityTitle">商品名称商品名称商品名称商品名称商品名称商品名称商品名称商品名称</view>
-        <view class="commdoityType">型号：型号型号型号型号型号</view>
+        <view class="commdoityTitle">{{commodity.name}}</view>
+        <view class="commdoityType">销量:{{commodity.sale_count}}</view>
         <view class="commdoityInfoCon">
           <view class="price">
             <image src="/img/beans3.png" />
-            200
+            {{commodity.price}}
           </view>
-          <view class="lave">剩余12件</view>
+          <view class="lave">剩余{{commodity.cost_beans}}件</view>
         </view>
       </view>
       <view class="quantity">
         数量：
-        <view class="set">-</view>
-        <view class="quantityShow">1222</view>
-        <view class="set">+</view>
+        <view class="set" @tap="quantityDown">-</view>
+        <view class="quantityShow">{{buyQuantity}}</view>
+        <view class="set" @tap="quantityUp">+</view>
       </view>
     </view>
     <view class="descriptionCon">
@@ -252,7 +252,7 @@ page{
       </view>
     </view>
     <view class="buy">
-      <view class="shoppCart">加入购物车</view>
+      <view class="shoppCart" @tap="setShopCart">加入购物车</view>
       <view class="price">
         <image src="/img/beans1.png" />
         200
@@ -262,9 +262,6 @@ page{
       </view>
       <view class="exchange" @tap="goExchange">立即兑换</view>
     </view>
-    
-
-
     <nav @childFn.user="goPage" />
   </view>
 </template>
@@ -284,7 +281,10 @@ export default class Commodity extends wepy.page {
   };
   // alias example
   data = {
-    userInfo: null
+    userInfo: null,
+    commodity: null,
+    buyQuantity: 1,
+    id: null
   };
 
   methods = {
@@ -292,31 +292,56 @@ export default class Commodity extends wepy.page {
     goPage (url, evt) {
       // 销毁当前页{跳转}
       this.$redirect(url)
+    },
+    quantityUp() {
+      if (this.buyQuantity >= this.commodity.cost_beans) {
+        wx.showModal({
+          title: '',
+          content: '剩余商品不足'
+        })
+        return
+      }
+      this.buyQuantity += 1
+      this.$apply()
+    },
+    quantityDown() {
+      if (this.buyQuantity === 1) {
+        return
+      }
+      this.buyQuantity -= 1
+      this.$apply()
     }
   };
   async onLoad(options) {
     console.log(options)
+    this.id = options.id
     // 获取商品详情
     wx.request({
-      url: `${this.$parent.globalData.requestUrl}/api/goodsList/${options.id}`,
+      url: `${this.$parent.globalData.requestUrl}/api/goodDetail/${options.id}`,
       method: 'GET',
       data: {},
-      success: function (data) {
+      success: data => {
         console.log(data)
-        // 获取下一页的请求Id
-        // this.nextUrl = data.data.meta.pagination.links.next
+        
+        if (data.data.success) {
+          data = data.data.data
+          this.commodity = data.good
+          console.log(this.commodity)
+          this.$apply()
+        }
       }
     })
   };
   // 加入购物车
-  setCart() {
+  setShopCart() {
     wx.request({
       url: `${this.$parent.globalData.requestUrl}/api/addShoppingCart`,
       method: 'POST',
       data: {
-        AuthrizeOpenId: ''
+        AuthrizeOpenId: this.$parent.globalData.openId
+
       },
-      success: function (data) {
+      success: data => {
         console.log(data)
       }
     })
@@ -324,8 +349,7 @@ export default class Commodity extends wepy.page {
   // 进入兑换页
   goExchange() {
     // 在此处将商品信息传入兑换页
-    this.$navigate('/pages/exchange')
+    this.$navigate(`/pages/exchange?id=${this.id}&price=${this.commodity.price}&name=${this.commodity.name}&buyQuantity=${this.buyQuantity}&costBeans=${this.commodity.cost_beans}`)
   }
-  
 }
 </script>
