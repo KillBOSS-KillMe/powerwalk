@@ -390,7 +390,6 @@ export default class Index extends wepy.page {
     // 获取步数
     await wx.getWeRunData({
       success: res => {
-        console.log(res)
         let encryptedData = res.encryptedData
         let iv = res.iv
         wepy.login().then(res => {
@@ -405,7 +404,6 @@ export default class Index extends wepy.page {
               iv: iv
             },
             success: data => {
-              console.log(data)
               if (data.data.success) {
                 this.todayStep = data.data.data.today_step
                 this.$apply()

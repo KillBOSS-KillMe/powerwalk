@@ -273,7 +273,7 @@ export default class Exchange extends wepy.page {
         // 地址Id
         shipment_id: ''
       },
-      success: function (data) {
+      success: data => {
         console.log(data)
       }
     })

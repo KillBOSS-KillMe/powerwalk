@@ -154,7 +154,8 @@ page{
           <!-- <input type="text" name="area" /> -->
           <picker mode="region" @change="bindRegionChange" value="{{region}}" custom-item="{{customItem}}">
             <view class="picker">
-              {{region[0]}}，{{region[1]}}，{{region[2]}}
+              {{region}}
+              <!-- {{region[0]}}{{region[1]}}{{region[2]}} -->
             </view>
           </picker>
         </view>
@@ -203,7 +204,7 @@ import nav from '../components/nav' // 底部导航
 import citys from '../mixins/citys'
 import check from '../mixins/check'
 export default class Newaddss extends wepy.page {
-  mixins = [citys,check]
+  mixins = [citys, check]
   config = {
     'navigationBarTitleText': '新建地址'
   };
@@ -215,11 +216,11 @@ export default class Newaddss extends wepy.page {
   // alias example
   data = {
     userInfo: null,
-    addressLabel: ['公司','家'],
+    addressLabel: ['公司', '家'],
     invite: 'hide',
     setLabel: '',
     labelNum: 0,
-    region: ['', '', '请选择详细地址'],
+    region: '请选择详细地址',
     customItem: '全部'
   };
 
@@ -255,6 +256,13 @@ export default class Newaddss extends wepy.page {
     },
     bindRegionChange: function (e) {
       this.region = e.detail.value
+      let area = ''
+      for (let i in this.region) {
+        if (this.region[i] !== '全部' && this.region[i] !== '请选择详细地址') {
+          area += this.region[i]
+        }
+      }
+      this.region = area
     },
     newAddss(e) {
       // 收货人
@@ -266,12 +274,7 @@ export default class Newaddss extends wepy.page {
       // 详细地址
       let address = e.detail.value.address
       // 标签
-      let label = this.addressLabel[this.labelNum]
-      console.log(receiver)
-      console.log(phone)
-      console.log(area)
-      console.log(address)
-      console.log(label)
+      let labelData = this.addressLabel[this.labelNum]
       if (this.check.isNull(receiver)) {
         wepy.showModal({
           title: '',
@@ -288,7 +291,7 @@ export default class Newaddss extends wepy.page {
         })
         return
       }
-      if (this.check.isNull(area[0])) {
+      if (this.check.isNull(area) || area === '请选择详细地址') {
         wepy.showModal({
           title: '',
           content: '请选择地区',
@@ -307,12 +310,34 @@ export default class Newaddss extends wepy.page {
       wx.request({
         url: `${this.$parent.globalData.requestUrl}/api/addShipment`,
         method: 'POST',
-        data: {
-          // code: this.code,
-          // nick_name: this.userInfo.nickName,
-          // avatar: this.userInfo.avatarUrl
+        header: {
+          AuthrizeOpenId: this.$parent.globalData.openId
         },
-        success: function (data) {}
+        data: {
+          // 收货人
+          username: receiver,
+          // 电话
+          mobile: phone,
+          // 区域
+          area: area,
+          // 详细地址
+          detail: address,
+          // 标签
+          tag: labelData
+        },
+        success: data => {
+          if (data.data.success) {
+            wx.showToast({
+              title: '添加成功',
+              duration: 2000,
+              mask: true,
+              icon: 'success'
+            })
+            setTimeout(function() {
+              wx.navigateBack({ changed: true })
+            }, 2000)
+          }
+        }
       })
     }
   };
@@ -330,6 +355,5 @@ export default class Newaddss extends wepy.page {
     }
     this.$apply()
   };
-
 }
 </script>
