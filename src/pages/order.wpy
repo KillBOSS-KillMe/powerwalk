@@ -172,7 +172,7 @@ export default class Order extends wepy.page {
   };
   // alias example
   data = {
-    userInfo: null
+    orderList: null
   };
 
   methods = {
@@ -183,7 +183,54 @@ export default class Order extends wepy.page {
   }
   };
   async onLoad(options) {
-  
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/orderList`,
+      method: 'GET',
+      header: {
+        AuthrizeOpenId: this.$parent.globalData.openId
+      },
+      data: {},
+      success: data => {
+        if (data.data.success) {
+          let orders = data.data.data.orders
+          this.orderList = orders.data
+          // 获取下一页的请求Id
+          this.nextUrl = orders.meta.pagination.links
+          if (this.nextUrl.length !== 0) {
+            this.nextUrl = orders.meta.pagination.links.next
+          }
+          this.$apply()
+        }
+      }
+    })
   };
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  async onReachBottom() {
+    if (!this.nextUrl) {
+      return
+    }
+    await wx.request({
+      url: this.nextUrl,
+      method: 'GET',
+      header: {
+        AuthrizeOpenId: this.$parent.globalData.openId
+      },
+      success: data => {
+        if (data.data.success) {
+          let orders = data.data.data.orders
+          this.orderList = orders.data
+          this.orderList = this.orderList.concat(orders.data)
+          // 获取下一页的请求Id
+          this.nextUrl = orders.meta.pagination.links
+          if (this.nextUrl.length !== 0) {
+            this.nextUrl = orders.meta.pagination.links.next
+          }
+          this.$apply()
+        }
+      }
+    })
+  }
 }
 </script>

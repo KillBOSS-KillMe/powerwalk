@@ -341,9 +341,7 @@ export default class Newaddss extends wepy.page {
       })
     }
   };
-  async onLoad(options) {
-    console.log(this.data)
-  };
+  async onLoad(options) {};
   hideInvite() {
     if (this.invite) {
       // 显示弹出框
