@@ -170,76 +170,74 @@ page{
   background-color: #fe5600;
   border-radius: 10rpx;
 }
+checkbox .wx-checkbox-input{
+   border-radius: 50%;/* 圆角 */
+   width: 40rpx; /* 背景的宽 */
+   height: 40rpx; /* 背景的高 */
+}
+checkbox .wx-checkbox-input.wx-checkbox-input-checked{
+   border: none;
+   background: #fc6800;
+}
+checkbox .wx-checkbox-input.wx-checkbox-input-checked::before{
+   border-radius: 50%;/* 圆角 */
+   width: 40rpx;/* 选中后对勾大小，不要超过背景的尺寸 */
+   height: 40rpx;/* 选中后对勾大小，不要超过背景的尺寸 */
+   line-height: 40rpx;
+   text-align: center;
+   font-size:30rpx; /* 对勾大小 30rpx */
+   color:#fff; /* 对勾颜色 白色 */
+   background: transparent;
+   transform:translate(-50%, -50%) scale(1);
+   -webkit-transform:translate(-50%, -50%) scale(1);
+}
+
 </style>
 
 <template>
   <view>
     <view class="cartList">
-
-      <view class="list">
-        <view class="listCon">
-          <view class="select">
-            <radio/>
-          </view>
-          <view class="img">
-            <image src="/img/index_main.jpg" />
-          </view>
-          <view class="info">
-            <view class="delete">×</view>
-            <view class="infoCon">
-              <view>
-                <image src="/img/beans3.png" />
-                200
+      <checkbox-group bindchange="selCommodity" data-index="{{index}}" data-checks="{{item.checks}}">
+        <block wx:for="{{cartList}}" key="index" index="index" item="item">
+          <view class="list">
+            <view class="listCon">
+              <view class="select">
+                <checkbox data-index="{{index}}" id="2" value="{{index}}" checked="{{item.checks}}"/>
               </view>
-              <view>
-                asdadsfadsfadsfasdfasdfadsfadsf
+              <view class="img">
+                <image src="{{item.good_information.img}}" />
               </view>
-            </view>
-            <view>
-              <view>-</view>
-              <view>2222</view>
-              <view>+</view>
-            </view>
-          </view>
-        </view>
-      </view>
-      <view class="list">
-        <view class="listCon">
-          <view class="select">
-            <radio/>
-          </view>
-          <view class="img">
-            <image src="/img/index_main.jpg" />
-          </view>
-          <view class="info">
-            <view class="delete">×</view>
-            <view class="infoCon">
-              <view>
-                <image src="/img/beans3.png" />
-                200
-              </view>
-              <view>
-                asdadsfadsfadsfasdfasdfadsfadsf
+              <view class="info">
+                <view class="delete" data-id="{{item.good_id}}">×</view>
+                <view class="infoCon">
+                  <view>
+                    <image src="/img/beans3.png" />
+                    {{item.good_information.price}}
+                  </view>
+                  <view>
+                    {{item.good_information.name}}
+                  </view>
+                </view>
+                <view>
+                  <view data-index="{{index}}" data-num="{{item.num}}" data-storage="{{item.good_information.storage}}" @tap="quantityDown">-</view>
+                  <view>{{item.num}}</view>
+                  <view data-index="{{index}}" data-num="{{item.num}}" data-storage="{{item.good_information.storage}}" @tap="quantityUp">+</view>
+                </view>
               </view>
             </view>
-            <view>
-              <view>-</view>
-              <view>2222</view>
-              <view>+</view>
-            </view>
           </view>
-        </view>
-      </view>
+        </block> 
+      </checkbox-group>
     </view>
     <view class="selected">
-      <view class="count">已选：1</view>
+      <view class="count">已选：{{cartIndex.length}}</view>
       <view class="assets">
         <view class="surplus">剩余活力豆:1000</view>
         <view class="operating">
           <view>
             <image src="/img/beans3.png" />
           </view>
-          <view>200</view>
+          <view>{{allPrice}}</view>
           <view>兑换</view>
         </view>
       </view>
@@ -262,26 +260,81 @@ export default class Cart extends wepy.page {
   };
   // alias example
   data = {
-    userInfo: null
+    userInfo: null,
+    cartList: null,
+    cartIndex: [],
+    allPrice: 0
   };
 
   methods = {
-  // 底部导航跳转
-  goPage (url, evt) {
-    // 销毁当前页{跳转}
-    this.$redirect(url)
-  }
+    // 底部导航跳转
+    goPage (url, evt) {
+      // 销毁当前页{跳转}
+      this.$redirect(url)
+    },
+    quantityUp(e) {
+      // 剩余商品数量
+      let storage = e.currentTarget.dataset.storage
+      // 商品数量
+      let num = e.currentTarget.dataset.num
+      // 下标
+      let index = e.currentTarget.dataset.index
+      if (num >= storage) {
+        wx.showModal({
+          title: '',
+          content: '剩余商品不足'
+        })
+        return
+      }
+      this.cartList[index].num += 1
+      this.$apply()
+    },
+    quantityDown(e) {
+      // 剩余商品数量
+      let storage = e.currentTarget.dataset.storage
+      // 商品数量
+      let num = e.currentTarget.dataset.num
+      // 下标
+      let index = e.currentTarget.dataset.index
+      if (num === 1) {
+        return
+      }
+      this.cartList[index].num -= 1
+      this.$apply()
+    },
+    // 选择购物车商品,获取商品在数组中的下标
+    selCommodity(e) {
+      this.cartIndex = e.detail.value
+      let allPrice = 0
+      let index = this.cartIndex
+      let allListData = this.cartList
+      for (var i in index) {
+        allPrice += allListData[index[i]].num * allListData[index[i]].good_information.price
+      }
+      this.allPrice = allPrice
+    }
   };
   async onLoad(options) {
     // 获取购物车列表
     wx.request({
       url: `${this.$parent.globalData.requestUrl}/api/getShoppingCart`,
       method: 'GET',
-      data: {},
-      success: function (data) {
-        console.log(data)
-        // 获取下一页的请求Id
-        // this.nextUrl = data.data.meta.pagination.links.next
+      header: {
+        AuthrizeOpenId: this.$parent.globalData.openId
+      },
+      success: data => {
+        if (data.data.success) {
+          let cart = data.data.data.shopping_cart
+          this.cartList = cart.list
+          console.log(this.cartList)
+          this.$apply()
+          // 获取下一页的请求Id
+          this.nextUrl = cart.meta.pagination.links
+          if (this.nextUrl.length !== 0) {
+            this.nextUrl = cart.meta.pagination.links.next
+          }
+          
+        }
       }
     })
   };
