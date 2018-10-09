@@ -208,7 +208,17 @@ export default class Signin extends wepy.page {
   }
   };
   async onLoad(options) {
-  
+    // 签到信息查询
+    await wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/userSignInformation`,
+      method: 'GET',
+      data: {
+        code: this.code,
+        nick_name: this.userInfo.nickName,
+        avatar: this.userInfo.avatarUrl
+      },
+      success: function (data) {}
+    })
   };
 }
 </script>

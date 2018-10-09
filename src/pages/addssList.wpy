@@ -15,7 +15,13 @@
 }
 .radio{
   width: 90rpx;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.radio image{
+  width: 50rpx;
+  height: 50rpx;
 }
 .con{
   color: #333;
@@ -24,6 +30,7 @@
   height: auto;
   word-break:break-all;
 }
+
 .newAddss{
   display: flex;
   align-items: center;
@@ -46,8 +53,8 @@
   <view>
     <view class="list">
       <view class="listCon">
-        <view class="radio">
-          <radio />
+        <view class="radio" @tap="deleteAddss">
+          <image src="/img/delete.png" />
         </view>
         <view class="con">
           <text>asdfasdfasdfasdfasdf</text>
@@ -55,7 +62,7 @@
       </view>
       <view class="listCon">
         <view class="radio">
-          <radio />
+          <image src="/img/delete.png" />
         </view>
         <view class="con">
           <text>asdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdf</text>
@@ -63,7 +70,7 @@
       </view>
       <view class="listCon">
         <view class="radio">
-          <radio />
+          <image src="/img/delete.png" />
         </view>
         <view class="con">
           <text>asdfasdfasdfasdfasdf</text>
@@ -104,6 +111,10 @@ export default class Addsslist extends wepy.page {
   async onLoad(options) {
   
   };
+  // 删除地址
+  deleteAddss() {
+    console.log('删除地址')
+  }
   // 进入新建地址
   goNewAddsst() {
     this.$navigate('/pages/newAddss')

@@ -110,7 +110,7 @@ export default class extends wepy.app {
   // 全局变量
   globalData = {
     userInfo: null,
-    testData: 'globalData',
+    openId: null,
     code: null,
     // 线下
     requestUrl: 'http://140.143.203.12:8090/',

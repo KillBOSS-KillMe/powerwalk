@@ -208,10 +208,10 @@ page{
   <view>
     <view class="userShow">
       <view>
-        <image src="/img/index_main.jpg" />
+        <image src="{{userInfo.profile}}" />
       </view>
-      <view>名字名字名字名字</view>
-      <view>ID:3333333333</view>
+      <view>{{userInfo.name}}</view>
+      <view>ID:{{userInfo.id}}</view>
     </view>
     <view class="userNavT">
       <!-- <view> -->
@@ -250,12 +250,6 @@ page{
         </view>
         <view>邀请</view>
       </view>
-      <!-- <view class="list" @tap="customerService">
-        <view>
-          <image src="/img/index_main.jpg" />
-        </view>
-        <view>客服</view>
-      </view> -->
       <button class="list" open-type="contact" session-from="weapp">
         <view>
           <image src="/img/service.png" />
@@ -304,6 +298,7 @@ export default class User extends wepy.page {
   // alias example
   data = {
     userInfo: null,
+    openId: null,
     invite: 'hide',
     loginName: '登陆'
   };
@@ -316,6 +311,7 @@ export default class User extends wepy.page {
     }
   };
   async onLoad(options) {
+    this.userInfo = this.$parent.globalData.userInfo
     this.openId = this.$parent.globalData.openId
     if (this.openId) {
       this.loginName = `已登陆`
@@ -362,8 +358,8 @@ export default class User extends wepy.page {
       method: 'POST',
       data: {
         code: this.code,
-        nick_name: this.userInfo.nickName,
-        avatar: this.userInfo.avatarUrl
+        name: this.userInfo.nickName,
+        profile: this.userInfo.avatarUrl
       },
       success: function (data) {}
     })
