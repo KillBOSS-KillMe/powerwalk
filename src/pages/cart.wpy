@@ -173,6 +173,45 @@ page{
   background-color: #fe5600;
   border-radius: 10rpx;
 }
+.addss{
+  width: 750rpx;
+  min-height: 150rpx;
+  // padding-left: 30rpx;
+  background-color: #fff;
+  border-bottom: 1rpx solid #d2d2d2;
+  display: flex;
+}
+.addssInfo view:nth-child(1), .addss view:nth-child(2){
+  margin-left: 30rpx;
+  width: 650rpx;
+  min-height: 60rpx;
+  height: auto;
+  line-height: 60rpx;
+}
+.addssInfo view:nth-child(1){
+  font-size: 30rpx;
+  color: #333;
+}
+.addssInfo view:nth-child(2){
+  font-size: 28rpx;
+  color: #666;
+}
+.allAddss{
+  margin-left:0rpx !important;
+  vertical-align:middle;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.addss image{
+  width: 15rpx;
+  height: 30rpx;
+  vertical-align:middle;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 checkbox .wx-checkbox-input{
    border-radius: 50%;/* 圆角 */
    width: 40rpx; /* 背景的宽 */
@@ -211,7 +250,7 @@ checkbox .wx-checkbox-input.wx-checkbox-input-checked::before{
                 <image src="{{item.good_information.img}}" />
               </view>
               <view class="info">
-                <view class="delete" data-id="{{item.good_id}}">×</view>
+                <view class="delete" data-id="{{item.good_id}}" @tap="deleteCart">×</view>
                 <view class="infoCon">
                   <view>
                     <image src="/img/beans3.png" />
@@ -231,6 +270,16 @@ checkbox .wx-checkbox-input.wx-checkbox-input-checked::before{
           </view>
         </block> 
       </checkbox-group>
+    </view>
+    <!-- 收货地址显示 -->
+    <view class="addss">
+      <view class="addssInfo">
+        <view>{{addss.username}}:{{addss.mobile}}</view>
+        <view>{{addss.detail}}</view>
+      </view>
+      <view class="allAddss" @tap="selectAddss">
+        <image src="/img/go.png" />
+      </view>
     </view>
     <view class="selected">
       <view class="count">已选：{{cartIndex.length}}</view>
@@ -266,7 +315,10 @@ export default class Cart extends wepy.page {
     userInfo: null,
     cartList: null,
     cartIndex: [],
-    allPrice: 0
+    allPrice: 0,
+    addssList: null,
+    addss: null,
+    defaultAddssId: null
   };
 
   methods = {
@@ -318,46 +370,53 @@ export default class Cart extends wepy.page {
       this.cartIndex = e.detail.value
       this.allPrice = this.getAllPrice()
     },
+    selectAddss(){
+      this.$navigate('/pages/addssList?type=select')
+    },
     // 兑换
     exchange(){
-      // if (this.allPrice > this.userInfo.beans) {
-      //   wx.showModal({
-      //     title: '',
-      //     content: '余额不足'
-      //   })
-      //   return
-      // }
-      let exchange_list = []
+      if (this.allPrice > this.userInfo.beans) {
+        wx.showModal({
+          title: '',
+          content: '余额不足'
+        })
+        return
+      }
+      let addssId = this.addss.id
+      let exchangeList = []
       let index = this.cartIndex
       let allListData = this.cartList
-      // console.log(index)
-      // console.log(allListData)
       let indexExchange = {}
+      // 获取选中商品ID及数量
       for (var i in index) {
         indexExchange = {}
         indexExchange['good_id'] = allListData[index[i]].good_id
         indexExchange['num'] = allListData[index[i]].num
-        exchange_list.push(indexExchange)
+        exchangeList.push(indexExchange)
       }
-      console.log(exchange_list)
       // 发送兑换请求
-      // wx.request({
-      //   url: `${this.$parent.globalData.requestUrl}/api/addOrder`,
-      //   method: 'GET',
-      //   header: {
-      //     AuthrizeOpenId: this.$parent.globalData.openId
-      //   },
-      //   data: {
-
-      //   },
-      //   success: data => {
-      //     if (data.data.success) {
-      //       let cart = data.data.data.shopping_cart
-      //       this.cartList = cart.list
-      //       this.$apply()
-      //     }
-      //   }
-      // })
+      wx.request({
+        url: `${this.$parent.globalData.requestUrl}/api/addOrder`,
+        method: 'POST',
+        header: {
+          AuthrizeOpenId: this.$parent.globalData.openId
+        },
+        data: {
+          exchange_list: exchangeList,
+          shipment_id: addssId
+        },
+        success: data => {
+          if (data.data.success) {
+            wx.showToast({
+              title: '兑换成功',
+              duration: 2000,
+              mask: true,
+              icon: 'success'
+            })
+            this.onLoad()
+          }
+        }
+      })
     }
   };
   getAllPrice() {
@@ -370,10 +429,20 @@ export default class Cart extends wepy.page {
     return allPrice
   }
   async onLoad(options) {
+    this.cartIndex = []
+    this.allPrice = 0
     // 获取用户信息
     this.userInfo = this.$parent.globalData.userInfo
-    console.log(this.userInfo)
     this.$apply()
+    // 获取购物车列表
+    this.getShopCartList()
+    // 获取地址列表
+    this.getAddssList()
+  };
+  onShow() {
+    this.extractAddss()
+  }
+  getShopCartList() {
     // 获取购物车列表
     wx.request({
       url: `${this.$parent.globalData.requestUrl}/api/getShoppingCart`,
@@ -389,32 +458,63 @@ export default class Cart extends wepy.page {
         }
       }
     })
-  };
-  /**
-  * 删除购物车中的商品
-  */
-  deleteCart() {
+  }
+  getAddssList() {
+    // 获取购物车列表
     wx.request({
-      url: `${this.$parent.globalData.requestUrl}/api/getShoppingCart`,
-      method: 'DELETE',
-      data: {},
-      success: function (data) {
-        console.log(data)
-        // 获取下一页的请求Id
-        // this.nextUrl = data.data.meta.pagination.links.next
+      url: `${this.$parent.globalData.requestUrl}/api/shipmentList`,
+      method: 'GET',
+      header: {
+        AuthrizeOpenId: this.$parent.globalData.openId
+      },
+      success: data => {
+        if (data.data.success) {
+          data = data.data.data.user_shipments
+          this.addssList = data.data
+          // this.addss = data.data[0]
+          this.extractAddss()
+          this.$apply()
+        }
       }
     })
   }
-  /**
-  * 兑换购物车中的商品
-  */
-  deleteCart() {
+  extractAddss() {
+    this.defaultAddssId = this.$parent.globalData.defaultAddssId
+    if (this.defaultAddssId === undefined) {
+      this.addss = this.addssList[0]
+      this.$apply()
+      return
+    }
+    for (var i in this.addssList) {
+      if (this.addssList[i].id === this.defaultAddssId) {
+        this.addss = this.addssList[i]
+      }
+    }
+    this.$apply()
+  }
+  // 删除购物车中的商品
+  deleteCart(e) {
+    let id = e.currentTarget.dataset.id
     wx.request({
-      url: `${this.$parent.globalData.requestUrl}/api/addOrder`,
-      method: 'POST',
-      data: {},
-      success: function (data) {
-        console.log(data)
+      url: `${this.$parent.globalData.requestUrl}/api/deleteShoppingCart`,
+      method: 'DELETE',
+      header: {
+        AuthrizeOpenId: this.$parent.globalData.openId
+      },
+      data: {
+        good_ids: [id]
+      },
+      success: data => {
+        if (data.data.success) {
+          wx.showToast({
+            title: '兑换成功',
+            duration: 2000,
+            mask: true,
+            icon: 'success'
+          })
+          // 刷新购物车商品列表
+          this.getShopCartList()
+        }
       }
     })
   }

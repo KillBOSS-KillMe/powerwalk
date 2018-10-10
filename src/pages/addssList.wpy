@@ -52,30 +52,17 @@
 <template>
   <view>
     <view class="list">
-      <view class="listCon">
-        <view class="radio" @tap="deleteAddss">
-          <image src="/img/delete.png" />
+      <!-- addssList -->
+      <block wx:for="{{addssList}}" key="index" index="index" item="item">
+        <view class="listCon">
+          <view class="radio">
+            <image src="/img/delete.png" data-id="{{item.id}}" @tap="delAddss" />
+          </view>
+          <view class="con" data-id="{{item.id}}" @tap="selAddss">
+            <text>{{item.username}},{{item.mobile}},{{item.detail}}</text>
+          </view>
         </view>
-        <view class="con">
-          <text>asdfasdfasdfasdfasdf</text>
-        </view>
-      </view>
-      <view class="listCon">
-        <view class="radio">
-          <image src="/img/delete.png" />
-        </view>
-        <view class="con">
-          <text>asdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdf</text>
-        </view>
-      </view>
-      <view class="listCon">
-        <view class="radio">
-          <image src="/img/delete.png" />
-        </view>
-        <view class="con">
-          <text>asdfasdfasdfasdfasdf</text>
-        </view>
-      </view>
+      </block>
     </view>
     <view class="newAddss" @tap="goNewAddsst">
       <view>+ 新建地址</view>
@@ -98,23 +85,48 @@ export default class Addsslist extends wepy.page {
   };
   // alias example
   data = {
-    userInfo: null
+    addssList: null,
+    pageType: ''
   };
 
   methods = {
-  // 底部导航跳转
-  goPage (url, evt) {
-    // 销毁当前页{跳转}
-    this.$redirect(url)
-  }
+    // 底部导航跳转
+    goPage (url, evt) {
+      // 销毁当前页{跳转}
+      this.$redirect(url)
+    },
+    // 选择地址
+    selAddss(e) {
+      if (!this.pageType) {
+        return
+      }
+      // 获取选中地址的Id,并存入全局变量
+      this.$parent.globalData.defaultAddssId = e.currentTarget.dataset.id
+      wx.navigateBack({ changed: true })
+    },
+    // 删除地址
+    delAddss(e) {
+      let addssId = e.currentTarget.dataset.id
+      console.log(`delAddss----${addssId}`)
+    }
   };
   async onLoad(options) {
-  
+    this.pageType = options.type
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/shipmentList`,
+      method: 'GET',
+      header: {
+        AuthrizeOpenId: this.$parent.globalData.openId
+      },
+      success: data => {
+        if (data.data.success) {
+          data = data.data.data.user_shipments
+          this.addssList = data.data
+          this.$apply()
+        }
+      }
+    })
   };
-  // 删除地址
-  deleteAddss() {
-    console.log('删除地址')
-  }
   // 进入新建地址
   goNewAddsst() {
     this.$navigate('/pages/newAddss')

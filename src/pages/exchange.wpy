@@ -156,10 +156,10 @@
   <view>
     <view class="addss">
       <view class="addssInfo">
-        <view>枫叶:18888888888</view>
-        <view>收货地址:18888888888收货地址:18888888888收货地址:18888888888收货地址:18888888888收货地址:18888888888收货地址:18888888888</view>
+        <view>{{addss.username}}:{{addss.mobile}}</view>
+        <view>{{addss.detail}}</view>
       </view>
-      <view class="allAddss">
+      <view class="allAddss" @tap="selectAddss">
         <image src="/img/go.png" />
       </view>
     </view>
@@ -218,7 +218,10 @@ export default class Exchange extends wepy.page {
     name: null,
     buyQuantity: null,
     price: null,
-    costBeans: null
+    costBeans: null,
+    defaultAddssId: null,
+    addssList: null,
+    addss: null
   };
 
   methods = {
@@ -246,6 +249,9 @@ export default class Exchange extends wepy.page {
       }
       this.buyQuantity -= 1
       this.$apply()
+    },
+    selectAddss(){
+      this.$navigate('/pages/addssList?type=select')
     }
   };
   async onLoad(options) {
@@ -256,7 +262,33 @@ export default class Exchange extends wepy.page {
     this.costBeans = parseInt(options.costBeans)
     this.price = options.price
     this.$apply()
+    // 获取地址列表
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/shipmentList`,
+      method: 'GET',
+      header: {
+        AuthrizeOpenId: this.$parent.globalData.openId
+      },
+      success: data => {
+        if (data.data.success) {
+          data = data.data.data.user_shipments
+          this.addssList = data.data
+          this.addss = data.data[0]
+          this.$apply()
+        }
+      }
+    })
   };
+  onShow() {
+    this.defaultAddssId = this.$parent.globalData.defaultAddssId
+    console.log(this.defaultAddssId)
+    for (var i in this.addssList) {
+      if (this.addssList[i].id === this.defaultAddssId) {
+        this.addss = this.addssList[i]
+      }
+    }
+    this.$apply()
+  }
   // 兑换
   exchange() {
     wx.request({
