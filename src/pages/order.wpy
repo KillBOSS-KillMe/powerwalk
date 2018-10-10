@@ -197,7 +197,6 @@ export default class Order extends wepy.page {
       header: {
         AuthrizeOpenId: this.$parent.globalData.openId
       },
-      data: {},
       success: data => {
         if (data.data.success) {
           let orders = data.data.data.orders
@@ -242,16 +241,31 @@ export default class Order extends wepy.page {
   }
   // 再次购买
   againBuy(e) {
+    wx.showModal({
+      title: '',
+      content: '再次购买收货地址为默认地址'
+    })
     // 获取订单列表数据数组下标
     let index = e.currentTarget.dataset.index
+    // 在所有订单数据中拿出当前当前点击的订单数据
     let thisOrderData = this.orderList[index]
+    // 获取地址ID
     let addssId = thisOrderData
+    // 提取商品数据
     thisOrderData = thisOrderData.order_good
     console.log(thisOrderData);
-    // let data
+    // 商品数据拼装
+    let exchangeList = []
+    let indexExchange = {}
     for (let i in thisOrderData) {
-
+      thisOrderData[i].num
+      indexExchange = {}
+      indexExchange['good_id'] = thisOrderData[i].good.id
+      indexExchange['num'] = thisOrderData[i].num
+      exchangeList.push(indexExchange)
     }
+    console.log(exchangeList)
+    // 此处需要获取当前订单的收货地址，或者获取默认地址
   }
   // 进入商品详情
   goCommodity(e) {

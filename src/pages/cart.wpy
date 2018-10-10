@@ -506,6 +506,7 @@ export default class Cart extends wepy.page {
     })
   }
   extractAddss() {
+    // 根据在地址列表选中的地址返回地址
     this.defaultAddssId = this.$parent.globalData.defaultAddssId
     if (this.defaultAddssId === undefined) {
       this.addss = this.addssList[0]
