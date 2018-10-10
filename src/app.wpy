@@ -86,7 +86,7 @@ export default class extends wepy.app {
   config = {
     pages: [
       'pages/index', // 首页
-      'pages/exchangeList', // 爱心捐赠
+      'pages/exchangeList', // 兑换页商品列表
       'pages/challenge', // 步数挑战
       'pages/rule', // 答题规则
       'pages/topic', // 选择题
@@ -131,6 +131,7 @@ export default class extends wepy.app {
     userShopInfo: null,
     shopInfo: null,
     guangGao: null,
+    defaultAddssId: null,
     navImg: ['home1', 'exchange', 'game', 'user'],
     navAction: ['action', 'noAction', 'noAction', 'noAction']
   };

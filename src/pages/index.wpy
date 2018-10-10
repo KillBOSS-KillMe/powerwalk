@@ -362,7 +362,6 @@ export default class Index extends wepy.page {
     this.userInfo = await wepy.getUserInfo()
     this.userInfo = this.userInfo.rawData
     // 判断用户信息是否为空
-    console.log(!this.userInfo)
     if (this.userInfo) {
       // 将用户信息字符串转换为josn
       this.userInfo = JSON.parse(this.userInfo)
