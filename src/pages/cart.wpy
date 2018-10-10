@@ -268,7 +268,8 @@ checkbox .wx-checkbox-input.wx-checkbox-input-checked::before{
               </view>
             </view>
           </view>
-        </block> 
+        </block>
+        <view class="dataNullTitle" wx:if="{{cartList.length==0}}">暂无列表数据</view>
       </checkbox-group>
     </view>
     <!-- 收货地址显示 -->
@@ -372,6 +373,32 @@ export default class Cart extends wepy.page {
     },
     selectAddss(){
       this.$navigate('/pages/addssList?type=select')
+    },
+    // 删除购物车中的商品
+    deleteCart(e) {
+      let id = e.currentTarget.dataset.id
+      wx.request({
+        url: `${this.$parent.globalData.requestUrl}/api/deleteShoppingCart`,
+        method: 'DELETE',
+        header: {
+          AuthrizeOpenId: this.$parent.globalData.openId
+        },
+        data: {
+          good_ids: [id]
+        },
+        success: data => {
+          if (data.data.success) {
+            wx.showToast({
+              title: '兑换成功',
+              duration: 2000,
+              mask: true,
+              icon: 'success'
+            })
+            // 刷新购物车商品列表
+            this.getShopCartList()
+          }
+        }
+      })
     },
     // 兑换
     exchange(){
@@ -491,32 +518,6 @@ export default class Cart extends wepy.page {
       }
     }
     this.$apply()
-  }
-  // 删除购物车中的商品
-  deleteCart(e) {
-    let id = e.currentTarget.dataset.id
-    wx.request({
-      url: `${this.$parent.globalData.requestUrl}/api/deleteShoppingCart`,
-      method: 'DELETE',
-      header: {
-        AuthrizeOpenId: this.$parent.globalData.openId
-      },
-      data: {
-        good_ids: [id]
-      },
-      success: data => {
-        if (data.data.success) {
-          wx.showToast({
-            title: '兑换成功',
-            duration: 2000,
-            mask: true,
-            icon: 'success'
-          })
-          // 刷新购物车商品列表
-          this.getShopCartList()
-        }
-      }
-    })
   }
   /**
    * 页面上拉触底事件的处理函数

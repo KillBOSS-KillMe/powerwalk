@@ -63,6 +63,7 @@
           </view>
         </view>
       </block>
+      <view class="dataNullTitle" wx:if="{{addssList.length==0}}">暂无列表数据</view>
     </view>
     <view class="newAddss" @tap="goNewAddsst">
       <view>+ 新建地址</view>
@@ -108,10 +109,35 @@ export default class Addsslist extends wepy.page {
     delAddss(e) {
       let addssId = e.currentTarget.dataset.id
       console.log(`delAddss----${addssId}`)
+      wx.request({
+        url: `${this.$parent.globalData.requestUrl}/api/deleteShipment/${addssId}`,
+        method: 'DELETE',
+        header: {
+          AuthrizeOpenId: this.$parent.globalData.openId
+        },
+        success: data => {
+          if (data.data.success) {
+            wx.showToast({
+              title: '删除成功',
+              duration: 2000,
+              mask: true,
+              icon: 'success'
+            })
+            this.getAddssList()
+          }
+        }
+      })
     }
   };
   async onLoad(options) {
     this.pageType = options.type
+    this.getAddssList()
+  };
+  onShow() {
+    this.getAddssList()
+  };
+  // 获取地址列表
+  getAddssList() {
     wx.request({
       url: `${this.$parent.globalData.requestUrl}/api/shipmentList`,
       method: 'GET',
@@ -126,7 +152,7 @@ export default class Addsslist extends wepy.page {
         }
       }
     })
-  };
+  }
   // 进入新建地址
   goNewAddsst() {
     this.$navigate('/pages/newAddss')
