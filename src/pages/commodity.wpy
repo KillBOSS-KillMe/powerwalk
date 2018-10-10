@@ -313,7 +313,6 @@ export default class Commodity extends wepy.page {
     }
   };
   async onLoad(options) {
-    console.log(options)
     this.id = options.id
     // 获取商品详情
     wx.request({
