@@ -178,7 +178,7 @@
             <view class="infoCon">
               <view>
                 <image src="/img/beans3.png" />
-                {{price}}
+                {{allPrice}}
               </view>
               <view>
                 {{name}}
@@ -193,7 +193,7 @@
         </view>
       </view>
     </view>
-    <view class="exchange">
+    <view class="exchange" @tap="exchange">
       <view>兑换</view>
     </view>
     <nav @childFn.user="goPage" />
@@ -217,7 +217,8 @@ export default class Exchange extends wepy.page {
     id: null,
     name: null,
     buyQuantity: null,
-    price: null,
+    price: 0,
+    allPrice: 0,
     costBeans: null,
     defaultAddssId: null,
     addssList: null,
@@ -240,6 +241,7 @@ export default class Exchange extends wepy.page {
         return
       }
       this.buyQuantity += 1
+      this.allPrice = this.buyQuantity * this.price
       this.$apply()
     },
     // 减少数量
@@ -255,12 +257,12 @@ export default class Exchange extends wepy.page {
     }
   };
   async onLoad(options) {
-    console.log(options)
     this.id = options.id
     this.name = options.name
     this.buyQuantity = parseInt(options.buyQuantity)
     this.costBeans = parseInt(options.costBeans)
-    this.price = options.price
+    this.allPrice = parseInt(options.allPrice)
+    this.price = parseInt(options.price)
     this.$apply()
     // 获取地址列表
     wx.request({
@@ -281,7 +283,6 @@ export default class Exchange extends wepy.page {
   };
   onShow() {
     this.defaultAddssId = this.$parent.globalData.defaultAddssId
-    console.log(this.defaultAddssId)
     for (var i in this.addssList) {
       if (this.addssList[i].id === this.defaultAddssId) {
         this.addss = this.addssList[i]
@@ -303,10 +304,18 @@ export default class Exchange extends wepy.page {
         // 数量
         num: this.buyQuantity,
         // 地址Id
-        shipment_id: ''
+        shipment_id: this.addss.id
       },
       success: data => {
         console.log(data)
+        if (data.data.success) {
+          wx.showToast({
+            title: '兑换成功',
+            duration: 2000,
+            mask: true,
+            icon: 'success'
+          })
+        }
       }
     })
   }
