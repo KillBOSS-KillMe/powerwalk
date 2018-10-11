@@ -498,8 +498,12 @@ export default class Cart extends wepy.page {
         if (data.data.success) {
           data = data.data.data.user_shipments
           this.addssList = data.data
-          // this.addss = data.data[0]
-          this.extractAddss()
+          for (let i in this.addssList) {
+            if (this.addssList[i].status === '默认地址') {
+              this.addss = this.addssList[i]
+              break
+            }
+          }
           this.$apply()
         }
       }
@@ -508,11 +512,6 @@ export default class Cart extends wepy.page {
   extractAddss() {
     // 根据在地址列表选中的地址返回地址
     this.defaultAddssId = this.$parent.globalData.defaultAddssId
-    if (this.defaultAddssId === undefined) {
-      this.addss = this.addssList[0]
-      this.$apply()
-      return
-    }
     for (var i in this.addssList) {
       if (this.addssList[i].id === this.defaultAddssId) {
         this.addss = this.addssList[i]
