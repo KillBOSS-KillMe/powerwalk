@@ -197,6 +197,13 @@ export default class Addsslist extends wepy.page {
         if (data.data.success) {
           data = data.data.data.user_shipments
           this.addssList = data.data
+          // 筛选默认地址，并给予选中状态
+          for (let i in this.addssList) {
+            if (this.addssList[i].status === '默认地址') {
+              this.addssList[i].checks = true
+              break
+            }
+          }
           this.$apply()
         }
       }
