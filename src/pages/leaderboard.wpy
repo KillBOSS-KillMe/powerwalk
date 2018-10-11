@@ -4,14 +4,13 @@ page{
   background-color: #efefef;
 }
 .leaderboardTitle{
-  height: 200rpx;
+  height: 300rpx;
   line-height: 200rxp;
   background-color: #fff;
   text-align: center;
   border: 1rpx solid #e5e5e5;
 }
 .leaderboardTop{
-  margin-top: 30rpx;
   width: 340rpx;
   height: 80rpx;
   border: 1rpx solid #dcdcdc;
@@ -25,6 +24,25 @@ page{
   line-height: 76rpx;
   border-radius: 100rpx;
   border: 1rpx solid #f09247;
+  display:inline-block;
+  vertical-align:middle;
+}
+.addFriend{
+  margin-top: 30rpx;
+  width: 220rpx;
+  height: 60rpx;
+  border: 1rpx solid #dcdcdc;
+  border-radius: 100rpx;
+  display:inline-block;
+  vertical-align:middle;
+}
+.addFriend2{
+  width: 200rpx;
+  height: 56rpx;
+  line-height: 56rpx;
+  border-radius: 100rpx;
+  border: 1rpx solid #f09247;
+  font-size: 20rpx;
   display:inline-block;
   vertical-align:middle;
 }
@@ -186,6 +204,10 @@ page{
         <view class="leaderboardTop2">好友排行榜</view>
       </view>
       <view class="leadtitle">越多好友,步数提升越快.</view>
+      
+      <view class="addFriend" @tap="goAddFriend">
+        <view class="addFriend2">添加好友</view>
+      </view>
     </view>
     <view class="friendsNumber">
       <view class="left"></view>
@@ -328,14 +350,41 @@ export default class Leaderboard extends wepy.page {
   };
 
   methods = {
-  // 底部导航跳转
-  goPage (url, evt) {
-    // 销毁当前页{跳转}
-    this.$redirect(url)
-  }
+    // 底部导航跳转
+    goPage (url, evt) {
+      // 销毁当前页{跳转}
+      this.$redirect(url)
+    },
+    goAddFriend() {
+      // 进入添加好友页面
+      this.$navigate('/pages/addFriend')
+    }
   };
   async onLoad(options) {
-  
+    // 获取用户信息
+    this.userInfo = this.$parent.globalData.userInfo
+    // 获取我的好友，排名
+    wx.request({
+        url: `${this.$parent.globalData.requestUrl}/api/myfriend`,
+        method: 'GET',
+        header: {
+          AuthrizeOpenId: this.$parent.globalData.openId
+        },
+        success: data => {
+          console.log(data)
+          if (data.data.success) {
+            // wx.showToast({
+            //   title: '添加成功',
+            //   duration: 2000,
+            //   mask: true,
+            //   icon: 'success'
+            // })
+            // setTimeout(function() {
+            //   wx.navigateBack({ changed: true })
+            // }, 2000)
+          }
+        }
+      })
   };
   // 偷取步数
   steal() {

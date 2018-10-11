@@ -40,23 +40,13 @@
   line-height: 90rpx;
   text-align: center;
 }
-// .listCon view{
-//   width: 214rpx;
-// }
-// .listCon view:nth-child(1), .head2 view:nth-child(1){
-//   text-align: left;
-// }
-// .listCon view:nth-child(3), .head2 view:nth-child(3){
-//   text-align: right;
-// }
 </style>
-
 <template>
   <view>
     <view class="head">
-      <view class="action">兑换商品</view>
+      <view class="action">动力豆</view>
       <view>兑换商品</view>
-      <view>兑换商品</view>
+      <view>中奖纪录</view>
     </view>
     <view class="list">
       <view class="head2">

@@ -380,8 +380,7 @@ export default class Index extends wepy.page {
           data = data.data.data.goods
           this.commodityList = data.data
           // 获取下一页的请求Id
-          this.nextUrl = data.meta.pagination.links
-          if (this.nextUrl.length !== 0) {
+          if (data.meta.pagination.links.length !== 0) {
             this.nextUrl = data.meta.pagination.links.next
           }
           this.$apply()

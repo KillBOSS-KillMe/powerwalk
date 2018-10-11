@@ -105,6 +105,7 @@ export default class extends wepy.app {
       'pages/donation', // 爱心捐赠详情
       'pages/donationList', // 爱心捐赠列表
       'pages/leaderboard', // 好友排行榜
+      'pages/addFriend', // 添加好友
       'pages/commodity' // 商品详情
     ],
     window: {

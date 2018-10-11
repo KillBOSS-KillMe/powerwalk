@@ -125,7 +125,7 @@ page{
 				<view>纪念您与步行的力量每一天</view>
 				<view class="day">
 					连续签到
-					<view>222</view>
+					<view>{{continuousDays}}</view>
 					天
 				</view>
 			</view>
@@ -177,7 +177,7 @@ page{
 		
 		<view class="button">
 			<!-- 删除already属性，即为可点击状态 -->
-			<view class="already">今日已成功签到</view>
+			<view class="already" @tap="signin">今日已成功签到</view>
 		</view>
     <nav @childFn.user="goPage" />
   </view>
@@ -197,7 +197,8 @@ export default class Signin extends wepy.page {
   };
   // alias example
   data = {
-    userInfo: null
+    userInfo: null,
+    continuousDays: 0
   };
 
   methods = {
@@ -205,17 +206,28 @@ export default class Signin extends wepy.page {
     goPage (url, evt) {
       // 销毁当前页{跳转}
       this.$redirect(url)
+    },
+    // 签到
+    signin() {
+
     }
   };
   async onLoad(options) {
+    this.userInfo = this.$parent.globalData.userInfo
     // 签到信息查询
     await wx.request({
-      url: `${this.$parent.globalData.requestUrl}/api/userSignInformation`,
-      method: 'GET',
+      url: `${this.$parent.globalData.requestUrl}/api/userSignin`,
+      method: 'PUT',
       header: {
         AuthrizeOpenId: this.$parent.globalData.openId
       },
-      success: function (data) {}
+      success: data => {
+        console.log(data)
+        if (data.data.success) {
+          this.continuousDays = data.data.data.continuous_days
+          this.$apply()
+        }
+      }
     })
   };
 }
