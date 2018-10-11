@@ -47,22 +47,49 @@
   background-color: #e3e3e3;
   border-radius: 10rpx;
 }
+
+checkbox .wx-checkbox-input{
+   border-radius: 50%;/* 圆角 */
+   width: 40rpx; /* 背景的宽 */
+   height: 40rpx; /* 背景的高 */
+}
+checkbox .wx-checkbox-input.wx-checkbox-input-checked{
+   border: none;
+   background: #fc6800;
+}
+checkbox .wx-checkbox-input.wx-checkbox-input-checked::before{
+   border-radius: 50%;/* 圆角 */
+   width: 40rpx;/* 选中后对勾大小，不要超过背景的尺寸 */
+   height: 40rpx;/* 选中后对勾大小，不要超过背景的尺寸 */
+   line-height: 40rpx;
+   text-align: center;
+   font-size:30rpx; /* 对勾大小 30rpx */
+   color:#fff; /* 对勾颜色 白色 */
+   background: transparent;
+   transform:translate(-50%, -50%) scale(1);
+   -webkit-transform:translate(-50%, -50%) scale(1);
+}
 </style>
 
 <template>
   <view>
     <view class="list">
       <!-- addssList -->
+      <radio-group bindchange="setDefaultAddress" data-index="{{index}}" data-checks="{{item.checks}}">
       <block wx:for="{{addssList}}" key="index" index="index" item="item">
         <view class="listCon">
           <view class="radio">
-            <image src="/img/delete.png" data-id="{{item.id}}" @tap="delAddss" />
+            <radio data-index="{{index}}" value="{{index}}" checked="{{item.checks}}"/>
           </view>
           <view class="con" data-id="{{item.id}}" @tap="selAddss">
             <text>{{item.username}},{{item.mobile}},{{item.detail}}</text>
           </view>
+          <view class="radio">
+            <image src="/img/delete.png" data-id="{{item.id}}" @tap="delAddss" />
+          </view>
         </view>
       </block>
+      </radio-group>
       <view class="dataNullTitle" wx:if="{{addssList.length==0}}">暂无列表数据</view>
     </view>
     <view class="newAddss" @tap="goNewAddsst">
@@ -124,6 +151,28 @@ export default class Addsslist extends wepy.page {
               icon: 'success'
             })
             this.getAddssList()
+          }
+        }
+      })
+    },
+    // 设置默认地址
+    setDefaultAddress(e) {
+      let addssListIndex = e.detail.value
+      let selectedAddssId = this.addssList[addssListIndex].id
+      wx.request({
+        url: `${this.$parent.globalData.requestUrl}/api/setDefaultShipment/${selectedAddssId}`,
+        method: 'PUT',
+        header: {
+          AuthrizeOpenId: this.$parent.globalData.openId
+        },
+        success: data => {
+          if (data.data.success) {
+            wx.showToast({
+              title: '默认地址设置成功',
+              duration: 2000,
+              mask: true,
+              icon: 'success'
+            })
           }
         }
       })

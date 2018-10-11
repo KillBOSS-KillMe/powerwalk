@@ -147,7 +147,7 @@ page{
         </view>
         <view class="item">
           <view class="label">联系方式:</view>
-          <input type="text" name="phone" />
+          <input type="digit" name="phone" />
         </view>
         <view class="item">
           <view class="label">所在地区:</view>
