@@ -180,6 +180,7 @@ export default class Order extends wepy.page {
   };
   // alias example
   data = {
+    userInfo: null,
     orderList: null,
     addssList: null,
     addssId: ''
@@ -193,6 +194,8 @@ export default class Order extends wepy.page {
   }
   };
   async onLoad(options) {
+    // 获取用户信息
+    this.userInfo = this.$parent.globalData.userInfo
     wx.request({
       url: `${this.$parent.globalData.requestUrl}/api/orderList`,
       method: 'GET',
@@ -295,19 +298,29 @@ export default class Order extends wepy.page {
     // let addssId = this.getaddssId()
     // 提取商品数据
     thisOrderData = thisOrderData.order_good
-    console.log(thisOrderData);
     // 商品数据拼装
     let exchangeList = []
     let indexExchange = {}
+    let allPrice = 0
     for (let i in thisOrderData) {
-      thisOrderData[i].num
+      // 获取当前商品总价，并加给订单总价
+      allPrice += thisOrderData[i].total_beans
+      // 清空上一个商品的信息
       indexExchange = {}
+      // 赋值商品ID和数量
       indexExchange['good_id'] = thisOrderData[i].good.id
       indexExchange['num'] = thisOrderData[i].num
+      // josn数组追加值
       exchangeList.push(indexExchange)
     }
-    console.log(exchangeList)
-    console.log(this.addssId)
+    // 订单价格和余额对比
+    if (allPrice > this.userInfo.beans) {
+      wx.showModal({
+        title: '',
+        content: '余额不足'
+      })
+      return
+    }
     // 发送兑换请求
     wx.request({
       url: `${this.$parent.globalData.requestUrl}/api/addOrder`,
