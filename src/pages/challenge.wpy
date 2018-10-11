@@ -272,10 +272,11 @@
       <image src="/img/index_main.jpg" />
     </view>
     <view class="gradeSel">
-      <view class="action">3000步</view>
-      <view>3000步</view>
-      <view>3000步</view>
-      <view>30000步</view>
+      <!-- <view class="action" @tap="levelSel">3000步</view> -->
+      <view class="{{level === '1'?'action':''}}" data-level="1" @tap="levelSel">3000步</view>
+      <view class="{{level === '2'?'action':''}}" data-level="2" @tap="levelSel">3000步</view>
+      <view class="{{level === '3'?'action':''}}" data-level="3" @tap="levelSel">3000步</view>
+      <view class="{{level === '4'?'action':''}}" data-level="4" @tap="levelSel">30000步</view>
     </view>
     <view class="container">
       <view class="signUp showContainer">
@@ -369,7 +370,8 @@ export default class Challenge extends wepy.page {
   };
   // alias example
   data = {
-    userInfo: null
+    userInfo: null,
+    level: '1'
   };
 
   methods = {
@@ -380,5 +382,11 @@ export default class Challenge extends wepy.page {
     }
   };
   async onLoad(options) {};
+  // 等级选择
+  levelSel(e) {
+    let level = e.currentTarget.dataset.level
+    this.level = level
+    this.$apply()
+  }
 }
 </script>

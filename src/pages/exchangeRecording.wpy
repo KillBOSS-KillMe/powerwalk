@@ -44,11 +44,25 @@
 <template>
   <view>
     <view class="head">
-      <view class="action">动力豆</view>
-      <view>兑换商品</view>
-      <view>中奖纪录</view>
+      <view class="{{selShowData === 'beans'?'action':''}}" data-sel="beans" @tap="selShow">动力豆</view>
+      <view class="{{selShowData === 'exchange'?'action':''}}" data-sel="exchange" @tap="selShow">兑换商品</view>
+      <view class="{{selShowData === 'winning'?'action':''}}" data-sel="winning" @tap="selShow">中奖纪录</view>
     </view>
-    <view class="list">
+    <!-- 动力豆 -->
+    <view class="list" wx:if="{{selShowData === 'beans'}}">
+      <view class="head2">
+        <view>动力豆</view>
+        <view>动力豆</view>
+        <view>动力豆</view>
+      </view>
+      <view class="listCon">
+        <view>10000</view>
+        <view>100</view>
+        <view>0000000000</view>
+      </view>
+    </view>
+    <!-- 兑换商品 -->
+    <view class="list" wx:if="{{selShowData === 'exchange'}}">
       <view class="head2">
         <view>兑换商品</view>
         <view>兑换商品</view>
@@ -59,10 +73,13 @@
         <view>100</view>
         <view>0000000000</view>
       </view>
-      <view class="listCon">
-        <view>10000</view>
-        <view>100</view>
-        <view>0000000000</view>
+    </view>
+    <!-- 中奖纪录 -->
+    <view class="list" wx:if="{{selShowData === 'winning'}}">
+      <view class="head2">
+        <view>中奖纪录</view>
+        <view>中奖纪录</view>
+        <view>中奖纪录</view>
       </view>
       <view class="listCon">
         <view>10000</view>
@@ -88,7 +105,8 @@ export default class Cart extends wepy.page {
   };
   // alias example
   data = {
-    userInfo: null
+    userInfo: null,
+    selShowData: 'beans'
   };
 
   methods = {
@@ -101,5 +119,11 @@ export default class Cart extends wepy.page {
   async onLoad(options) {
   
   };
+  // 显示类别切换
+  selShow(e) {
+    let sel = e.currentTarget.dataset.sel
+    this.selShowData = sel
+    this.$apply()
+  }
 }
 </script>

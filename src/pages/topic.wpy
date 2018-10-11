@@ -247,6 +247,11 @@
   background-color: #f39900;
   color: #fff;
 }
+.start{
+  width: 356rpx !important;
+  border-radius: 35rpx !important;
+  text-align: center !important;
+}
 </style>
 <template>
   <view>
@@ -255,7 +260,9 @@
         <view>10s倒计时:</view>
         <view>{{time}}</view>
       </view>
-      <view class="time" wx:if="{{!startStatus}}" @tap="start">开始答题</view>
+      <view class="time" wx:if="{{!startStatus}}" @tap="start">
+        <view class="start">开始答题</view>
+      </view>
       <view class="grade">
         <view>
           <image src="/img/star.png" />
@@ -439,6 +446,11 @@ export default class Challenge extends wepy.page {
         }
       }
     })
+  }
+  // 页面隐藏
+  onHide() {
+    // 清理定时器
+    clearInterval(this.countdown)
   }
 }
 </script>

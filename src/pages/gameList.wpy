@@ -150,7 +150,7 @@
         <view>50</view>
         <view>点击获取答题资格</view>
       </view>
-      <image src="/img/index_main.jpg" />
+      <image src="/img/answerBg.png" />
     </view>
     <view class="titleImg challenge">
       <view class="info" @tap="goRule">查看规则</view>

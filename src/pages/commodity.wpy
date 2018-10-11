@@ -218,13 +218,13 @@ page{
     </view>
     <view class="descriptionCon">
       <view class="description">
-        <view class="action">商品详情</view>
-        <view class="action">兑换记录</view>
+        <view class="{{selShowData === 'details'?'action':''}}" data-sel="details" @tap="selShow">商品详情</view>
+        <view class="{{selShowData === 'recording'?'action':''}}" data-sel="recording" @tap="selShow">兑换记录</view>
       </view>
-      <view class="descriptionInfo hide">
-        商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情商品详情
+      <view class="descriptionInfo" wx:if="{{selShowData === 'details'}}">
+        {{commodity.description}}
       </view>
-      <view class="descriptionList">
+      <view class="descriptionList" wx:if="{{selShowData === 'recording'}}">
         <view class="list">
           <view class="user">
             <image src="/img/index_main.jpg" />
@@ -285,7 +285,8 @@ export default class Commodity extends wepy.page {
     commodity: null,
     buyQuantity: 1,
     id: null,
-    allPrice: 0
+    allPrice: 0,
+    selShowData: 'details'
   };
 
   methods = {
@@ -369,6 +370,12 @@ export default class Commodity extends wepy.page {
     }
     // 在此处将商品信息传入兑换页
     this.$navigate(`/pages/exchange?id=${this.id}&allPrice=${this.allPrice}&price=${this.commodity.price}&name=${this.commodity.name}&buyQuantity=${this.buyQuantity}&costBeans=${this.commodity.cost_beans}`)
+  }
+  // 等级选择
+  selShow(e) {
+    let sel = e.currentTarget.dataset.sel
+    this.selShowData = sel
+    this.$apply()
   }
 }
 </script>
