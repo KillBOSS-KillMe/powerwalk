@@ -236,6 +236,7 @@ export default class Order extends wepy.page {
           this.orderList = this.orderList.concat(orders.data)
           // 获取下一页的请求Id
           // this.nextUrl = orders.meta.pagination.links
+          this.nextUrl = ''
           if (orders.meta.pagination.links.length !== 0) {
             this.nextUrl = orders.meta.pagination.links.next
           }

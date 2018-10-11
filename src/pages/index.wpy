@@ -468,8 +468,8 @@ export default class Index extends wepy.page {
           this.commodityList = this.commodityList.concat(commodityList)
           // 更新下一页请求地址
           // 获取下一页的请求Id
-          this.nextUrl = data.meta.pagination.links
-          if (this.nextUrl.length !== 0) {
+          this.nextUrl = ''
+          if (data.meta.pagination.links.length !== 0) {
             this.nextUrl = data.meta.pagination.links.next
           }
           this.$apply()

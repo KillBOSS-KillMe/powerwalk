@@ -307,7 +307,6 @@ export default class Exchange extends wepy.page {
         shipment_id: this.addss.id
       },
       success: data => {
-        console.log(data)
         if (data.data.success) {
           wx.showToast({
             title: '兑换成功',

@@ -76,12 +76,12 @@
         <view class="commodity" data-id="{{item.id}}" @tap="goCommodity">
           <image class="commodityImg" src="{{item.img}}" />
           <view class="commodityInfo">
-            <view class="commodityTitle">手机壳手机壳</view>
+            <view class="commodityTitle">{{item.name}}</view>
             <view class="commodityLave">剩余{{item.cost_beans}}件</view>
             <view class="info">
               <view class="beans">
                 <image src="/img/beans3.png" />
-                200
+                {{item.price}}
               </view>
               <view class="operating">
                 <image src="/img/setCart.png" />
@@ -132,8 +132,6 @@ export default class Exchangelist extends wepy.page {
         if (data.data.success) {
           data = data.data.data.goods
           this.commodityList = data.data
-          console.log(this.commodityList)
-          
           // 获取下一页的请求Id
           this.nextUrl = data.meta.pagination.links
           if (this.nextUrl.length !== 0) {
@@ -163,6 +161,7 @@ export default class Exchangelist extends wepy.page {
           // 将新的请求结果加入原有数组  concat连接两个或更多的数组，并返回结果。
           this.commodityList = this.commodityList.concat(commodityList)
           this.$apply()
+          this.nextUrl = ''
           // 更新下一页请求地址
           if (data.meta.pagination.links.length !== 0) {
             this.nextUrl = data.meta.pagination.links.next

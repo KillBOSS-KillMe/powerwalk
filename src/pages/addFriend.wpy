@@ -242,25 +242,22 @@ export default class Addfriend extends wepy.page {
    */
   async onReachBottom() {
     if (!this.nextUrl) {
-      this.prompt = false
       this.$apply()
       return
     }
-    await wepy.login().then(res => {
-      this.code = res.code
-    })
     await wx.request({
       url: this.nextUrl,
       method: 'GET',
-      data: {
-        code: this.code
+      header: {
+        AuthrizeOpenId: this.$parent.globalData.openId
       },
       success: data => {
         if (data.data.success) {
-          data = data.data.data.goods
+          data = data.data.data.users
           // let commodityList = data.data
           // 将新的请求结果加入原有数组  concat连接两个或更多的数组，并返回结果。
-          this.userList = this.commodityList.concat(data.data)
+          this.userList = this.userList.concat(data.data)
+          this.nextUrl = ''
           // 获取下一页的请求Id
           if (data.next_page_url) {
             this.nextUrl = data.next_page_url

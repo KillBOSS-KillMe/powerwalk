@@ -544,8 +544,11 @@ export default class Cart extends wepy.page {
           // 将新的请求结果加入原有数组  concat连接两个或更多的数组，并返回结果。
           this.withdrawList = this.withdrawList.concat(withdrawList)
           this.$apply()
+          this.nextUrl = ''
           // 更新下一页请求地址
-          this.nextUrl = data.data.meta.pagination.links.next
+          if (data.data.meta.pagination.links.length !== 0) {
+            this.nextUrl = data.data.meta.pagination.links.next
+          }
         }
       }
     })
