@@ -82,9 +82,48 @@ page{
   border-bottom: 1rpx solid #dcdcdc;
 }
 
+.search{
+  position:fixed;
+top:0rpx;
+white-space:nowrap;
+  width: 750rpx;
+  height: 100rpx;
+  border-radius: 50rpx;
+  background-color: #696969;
+  display: flex;
+}
+.search view{
+  flex:2;
+}
+.search image{
+  width:60rpx;
+  height:60rpx;
+  vertical-align:middle;
+}
+.search input{
+  width:300rpx;
+  height: 100rpx;
+}
+.search button
+// 去掉按钮边框
+button::after{
+  border:0;
+}
 </style>
 <template>
   <view>
+    <!-- <view class="search">
+      <form class="appointment_form" bindsubmit='searchUser'>
+        <view>
+          <input type="text" name="" value="adsfadsf" />
+        </view>
+        <view>
+          <button class="" formType="submit">
+            <image src="/img/steal.png" />
+          </button>
+        </view>
+      </form>
+    </view> -->
     <view class="myInfo friendRanking">
       <block wx:for="{{userList}}" key="index" index="index" item="item">
         <view class="list">
@@ -107,10 +146,12 @@ page{
 <script>
 import wepy from 'wepy'
 import nav from '../components/nav' // 底部导航
+import check from '../mixins/check'
 export default class Addfriend extends wepy.page {
   config = {
     'navigationBarTitleText': '添加好友'
   };
+  mixins = [check]
   // 生命组件ID
   components = {
   // 底部导航
@@ -187,6 +228,14 @@ export default class Addfriend extends wepy.page {
         }
       }
     })
+  }
+  // 搜索用户
+  searchUser() {
+    // 获取值,并去掉前后空格
+    this.setLabel = e.detail.value.ssss
+    // 去前后空格
+    this.setLabel = this.trim(this.setLabel)
+    // 请求
   }
   /**
    * 页面上拉触底事件的处理函数
