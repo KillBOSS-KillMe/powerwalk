@@ -147,7 +147,7 @@
         <view>
           <image src="/img/beans3.png" />
         </view>
-        <view>50</view>
+        <view>{{costBeans}}</view>
         <view>点击获取答题资格</view>
       </view>
       <image src="/img/answerBg.png" />
@@ -195,7 +195,8 @@ export default class Gamelist extends wepy.page {
   };
   // alias example
   data = {
-    userInfo: null
+    userInfo: null,
+    costBeans: 100
   };
 
   methods = {
@@ -205,13 +206,43 @@ export default class Gamelist extends wepy.page {
       this.$redirect(url)
     }
   };
-  async onLoad(options) {};
+  async onLoad(options) {
+    // 获取用户信息
+    this.userInfo = this.$parent.globalData.userInfo
+    console.log(this.userInfo);
+    
+  };
   // 进入游戏规则页
   goRule() {
     this.$navigate('/pages/rule')
   }
   // 进入答题页
   goTopic() {
+    if (this.costBeans > this.userInfo.beans) {
+      wx.showModal({
+        title: '',
+        content: '活力豆不足'
+      })
+      return
+    }
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/getChallengeRegistration`,
+      method: 'POST',
+      header: {
+        AuthrizeOpenId: this.$parent.globalData.openId
+      },
+      data: {
+        cost_beans: this.costBeans
+      },
+      success: data => {
+        if (data.data.success) {
+          this.topicList = data.data.data.question_list
+          // 获取题目难度等级，并返回控制显示的字符串
+          this.getDiffcult()
+          this.$apply()
+        }
+      }
+    })
     this.$navigate('/pages/topic')
   }
   // 进入步数挑战页

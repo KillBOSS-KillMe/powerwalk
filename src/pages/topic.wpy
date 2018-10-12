@@ -50,6 +50,9 @@
   align-items: center;
   justify-content: center;
 }
+.grade view:last-of-type{
+  display: none
+}
 .grade view:nth-child(2n) {
   width: 72rpx;
   height: 2rpx;
@@ -126,10 +129,6 @@
   overflow:hidden;
   text-overflow:ellipsis;
   white-space:nowrap;
-}
-.articleCon .action{
-  background-color: #fe5600;
-  color: #fff;
 }
 
 .mask{
@@ -252,6 +251,22 @@
   border-radius: 35rpx !important;
   text-align: center !important;
 }
+// .articleCon .action{
+//   background-color: #fe5600;
+//   color: #fff;
+// }
+// 答对状态
+.articleCon .correctStatus{
+  background-color: #00fe0d;
+  border: 1rpx solid #00fe0d;
+  color: #fff;
+}
+// 答错状态
+.articleCon .errorStatus{
+  background-color: rgb(255, 0, 0);
+  border: 1rpx solid rgb(255, 0, 0);
+  color: #fff;
+}
 </style>
 <template>
   <view>
@@ -264,25 +279,28 @@
         <view class="start">开始答题</view>
       </view>
       <view class="grade">
-        <view>
-          <image src="/img/star.png" />
-        </view>
-        <view></view>
-        <view>
-          <image src="/img/star1.png" />
-        </view>
-        <view></view>
-        <view>
-          <image src="/img/star1.png" />
-        </view>
-        <view></view>
-        <view>
-          <image src="/img/star1.png" />
-        </view>
-        <view></view>
-        <view>
-          <image src="/img/star1.png" />
-        </view>
+        <!-- diffcultShowData -->
+        <block wx:for="{{diffcultShowData}}" key="index" index="index" item="item">
+          <view>
+            <image src="/img/star{{item}}.png" />
+          </view>
+          <view></view>
+          <!-- <view>
+            <image src="/img/star1.png" />
+          </view>
+          <view></view>
+          <view>
+            <image src="/img/star1.png" />
+          </view>
+          <view></view>
+          <view>
+            <image src="/img/star1.png" />
+          </view>
+          <view></view>
+          <view>
+            <image src="/img/star1.png" />
+          </view> -->
+        </block>
       </view>
       <view class="number">
         <view></view>
@@ -294,11 +312,12 @@
       <view class="articleCon">
         <view class="articleConTitle">{{topicList[index].description}}</view>
         <view class="select">
-          <!-- <view class="action" data-answer="A" @tap="reply">A:7个</view> -->
-          <view data-sel="A" @tap="reply">A:{{topicList[index].answer_list[0].A}}</view>
-          <view data-sel="B" @tap="reply">B:{{topicList[index].answer_list[1].B}}</view>
-          <view data-sel="C" @tap="reply">C:{{topicList[index].answer_list[2].C}}</view>
-          <view data-sel="D" @tap="reply">D:{{topicList[index].answer_list[3].D}}</view>
+          <!-- errorStatus
+          correctStatus -->
+          <view class="{{'A' === answer?correctStatus:errorStatus}}" data-sel="A" @tap="reply">A:{{topicList[index].answer_list[0].A}}</view>
+          <view class="{{'B' === answer?correctStatus:errorStatus}}" data-sel="B" @tap="reply">B:{{topicList[index].answer_list[1].B}}</view>
+          <view class="{{'C' === answer?correctStatus:errorStatus}}" data-sel="C" @tap="reply">C:{{topicList[index].answer_list[2].C}}</view>
+          <view class="{{'D' === answer?correctStatus:errorStatus}}" data-sel="D" @tap="reply">D:{{topicList[index].answer_list[3].D}}</view>
         </view>
       </view>
     </view>
@@ -322,7 +341,7 @@
           <image src="/img/congratulations1.png" />
         </view>
         <view class="congCon">再接再厉</view>
-        <view class="congCons">200活力豆已经发放</view>
+        <view class="congCons">20活力豆已经发放</view>
         <view  class="comeOnBotton">
           <view @tap="nextQuestion">下一题</view>
         </view>
@@ -353,8 +372,14 @@ export default class Challenge extends wepy.page {
     error: false, // 错误
     index: 0, // 题目下标
     time: 10, // 定时器显示时间
-    constTime: 10, //常量时间
-    startStatus: false
+    constTime: 10, // 常量时间
+    startStatus: false,
+    correctStatus: '', // 答对样式
+    errorStatus: '', // 答错样式
+    answer: '', // 答案
+    diffcultShowData: '00000', // 控制题目难度等级字符串
+    correctNumber: 0, // 答对题目个数
+    submitStatus: false // 分数是否提交
   };
 
   methods = {
@@ -384,6 +409,16 @@ export default class Challenge extends wepy.page {
   }
   // 回答题目点击选项事件
   reply(e) {
+    // 判断答题是否开始答题
+    if (!this.startStatus) {
+      return
+    }
+    // 判断是否在显示对错
+    if (this.ShowStatus) {
+      return
+    }
+    // 显示对错状态判断值
+    this.ShowStatus = true
     // 清理定时器
     clearInterval(this.countdown)
     // 重置时间
@@ -392,12 +427,23 @@ export default class Challenge extends wepy.page {
     let selAnswer = e.currentTarget.dataset.sel
     // 获取正确答案
     let answer = this.topicList[this.index].answer
+    this.answer = this.topicList[this.index].answer
+    this.correctStatus = 'correctStatus' // 答对样式
+    this.errorStatus = 'errorStatus' // 答错样式
+    this.$apply()
     if (selAnswer === answer) {
       // 正确
-      this.correct = true
+      setTimeout( e => {
+        this.correct = true
+        this.$apply()
+      }, 2000)
+      this.correctNumber += 1
     } else {
       // 错了
-      this.error = true
+      setTimeout( e => {
+        this.error = true
+        this.$apply()
+      }, 2000)
     }
     this.$apply()
   }
@@ -406,8 +452,15 @@ export default class Challenge extends wepy.page {
     // 清空正确错误状态
     this.correct = false
     this.error = false
+    // 显示对错状态判断值
+    this.ShowStatus = false
+    this.correctStatus = '' // 答对样式
+    this.errorStatus = '' // 答错样式
+    this.$apply()
     if (this.index < this.topicList.length -1) {
       this.index += 1
+      // 获取题目难度等级，并返回控制显示的字符串
+      this.getDiffcult()
       // 重置时间
       this.time = this.constTime
       // 启动定时器
@@ -417,6 +470,8 @@ export default class Challenge extends wepy.page {
         title: '',
         content: '题目已答完'
       })
+      // 提交答题结果
+      this.submitResult()
     }
   }
   // 倒计时
@@ -434,6 +489,39 @@ export default class Challenge extends wepy.page {
       this.$apply()
     }, 100)
   }
+  // 获取题目难度等级，并返回控制显示的字符串
+  getDiffcult() {
+    // 获取当前题目难度等级
+    let diffcultData = this.topicList[this.index].diffcult
+    let str = ''
+    // 字符串拼接
+    for (let i = 0; i < diffcultData; i++) {
+      str += '1'
+    }
+    // 字符串补全
+    str = str.padEnd(5, '0')
+    this.diffcultShowData = str
+    this.$apply()
+  }
+  // 提交答题结果
+  submitResult() {
+    // 判断成绩是否提交
+    if (this.submitStatus) {
+      return
+    }
+    this.submitStatus = true
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/answerFeedBack`,
+      method: 'POST',
+      header: {
+        AuthrizeOpenId: this.$parent.globalData.openId
+      },
+      data: {
+        right_answers: this.correctNumber
+      },
+      success: data => {}
+    })
+  }
   // 获取题目数据列表
   getTopicList() {
     wx.request({
@@ -442,6 +530,8 @@ export default class Challenge extends wepy.page {
       success: data => {
         if (data.data.success) {
           this.topicList = data.data.data.question_list
+          // 获取题目难度等级，并返回控制显示的字符串
+          this.getDiffcult()
           this.$apply()
         }
       }
@@ -451,6 +541,17 @@ export default class Challenge extends wepy.page {
   onHide() {
     // 清理定时器
     clearInterval(this.countdown)
+    // 提交答题结果
+    this.submitResult()
+  }
+  /**
+  * 生命周期函数--监听页面卸载
+  */
+  onUnload() {
+    // 清理定时器
+    clearInterval(this.countdown)
+    // 提交答题结果
+    this.submitResult()
   }
 }
 </script>
