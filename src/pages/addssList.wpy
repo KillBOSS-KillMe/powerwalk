@@ -76,19 +76,19 @@ checkbox .wx-checkbox-input.wx-checkbox-input-checked::before{
     <view class="list">
       <!-- addssList -->
       <radio-group bindchange="setDefaultAddress" data-index="{{index}}" data-checks="{{item.checks}}">
-      <block wx:for="{{addssList}}" key="index" index="index" item="item">
-        <view class="listCon">
-          <view class="radio">
-            <radio data-index="{{index}}" value="{{index}}" checked="{{item.checks}}"/>
+        <block wx:for="{{addssList}}" key="index" index="index" item="item">
+          <view class="listCon">
+            <view class="radio">
+              <radio data-index="{{index}}" value="{{index}}" checked="{{item.checks}}"/>
+            </view>
+            <view class="con" data-id="{{item.id}}" @tap="selAddss">
+              <text>{{item.username}},{{item.mobile}},{{item.detail}}</text>
+            </view>
+            <view class="radio">
+              <image src="/img/delete.png" data-id="{{item.id}}" @tap="delAddss" />
+            </view>
           </view>
-          <view class="con" data-id="{{item.id}}" @tap="selAddss">
-            <text>{{item.username}},{{item.mobile}},{{item.detail}}</text>
-          </view>
-          <view class="radio">
-            <image src="/img/delete.png" data-id="{{item.id}}" @tap="delAddss" />
-          </view>
-        </view>
-      </block>
+        </block>
       </radio-group>
       <view class="dataNullTitle" wx:if="{{addssList.length==0}}">暂无列表数据</view>
     </view>

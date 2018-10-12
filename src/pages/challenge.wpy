@@ -273,28 +273,31 @@
     </view>
     <view class="gradeSel">
       <!-- <view class="action" @tap="levelSel">3000步</view> -->
-      <view class="{{level === '1'?'action':''}}" data-level="1" @tap="levelSel">3000步</view>
+      <block wx:for="{{challengeList}}" key="index" index="index" item="item">
+        <view class="{{level === '1'?'action':''}}" data-level="{{item.id}}" @tap="levelSel">{{item.min_step}}步</view>
+      </block>
+      <!-- <view class="{{level === '1'?'action':''}}" data-level="1" @tap="levelSel">3000步</view>
       <view class="{{level === '2'?'action':''}}" data-level="2" @tap="levelSel">3000步</view>
       <view class="{{level === '3'?'action':''}}" data-level="3" @tap="levelSel">3000步</view>
-      <view class="{{level === '4'?'action':''}}" data-level="4" @tap="levelSel">30000步</view>
+      <view class="{{level === '4'?'action':''}}" data-level="4" @tap="levelSel">30000步</view> -->
     </view>
     <view class="container">
       <view class="signUp showContainer">
         <view class="signUpTitle">
-          <view>【2018年8月28日/周三】3000步数挑战活动</view>
+          <view>【{{year}}年{{month}}月{{date}}日/周{{day}}】{{challengeList[index].min_step}}步数挑战活动</view>
           <view>报名</view>
         </view>
-        <view class="timeShow">倒计时24时0分0秒</view>
+        <view class="timeShow">倒计时{{remainingTimes}}</view>
         <view class="setSignUp">
           <view>报名</view>
         </view>
         <view class="infoContainer">
           <view class="info">
-            <view class="count">300</view>
+            <view class="count">{{challengeList[index].get_bean}}</view>
             <view class="unit">动力豆</view>
             <view class="description">
-              <view>达到3000步即可评分奖金</view>
-              <view>50动力豆报名,已有2人参与</view>
+              <view>达到{{challengeList[index].min_step}}步即可评分奖金</view>
+              <view>{{challengeList[index].cost_bean}}动力豆报名,已有2人参与</view>
             </view>
           </view>
         </view>
@@ -371,8 +374,19 @@ export default class Challenge extends wepy.page {
   // alias example
   data = {
     userInfo: null,
-    level: '1'
+    level: '1',
+    challengeList: null,
+    index: 0,
+    year: 0,
+    month: 0,
+    date: 0,
+    day: 0,
+    remainingTimes: '0小时0分钟0秒'
   };
+  // this.year = timeData.getYear()
+  //   this.month = timeData.getMonth()
+  //   this.date = timeData.getDate()
+  //   this.day = timeData.getDay()
 
   methods = {
     // 底部导航跳转
@@ -384,7 +398,80 @@ export default class Challenge extends wepy.page {
   async onLoad(options) {
     // 获取用户信息
     this.userInfo = this.$parent.globalData.userInfo
+    // 获取挑战等级及相关数据
+    this.getChallengeList()
+    // 获取当天时间详情
+    let timeData = new Date()
+    this.year = timeData.getFullYear()
+    this.month = timeData.getMonth() + 1
+    this.date = timeData.getDate()
+    this.day = timeData.getDay()
+    if (this.day === 0) {
+      this.day = '日'
+    }
+    this.$apply()
+    // 剩余时间计算
+    this.remainingTime()
   };
+  // 剩余时间计算(毫秒)
+  remainingTime() {
+    let timeData = new Date()
+    let hours = timeData.getHours()
+    hours = hours * 60 * 60 * 1000
+    let minutes = timeData.getMinutes()
+    minutes = minutes * 60 * 1000
+    let seconds = timeData.getSeconds()
+    seconds = seconds * 1000
+    let milliseconds = timeData.getMilliseconds()
+    milliseconds += hours + minutes + seconds
+    let times = 86400000 - milliseconds
+    this.time(times)
+  }
+  // 获取挑战等级及相关数据
+  getChallengeList() {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/challegeList`,
+      method: 'GET',
+      success: data => {
+        console.log(data)
+        if (data.data.success) {
+          // data = data.data.data.challeges
+          this.challengeList = data.data.data.challeges
+          // "id": 1,
+          // "min_step": 10000,达标步数
+          // "get_bean": 1000,达标后可获得活力豆
+          // "status": "启用",状态
+          // "cost_bean": 500,报名费用(活力豆)
+          console.log(this.challengeList)
+          this.$apply()
+        }
+      }
+    })
+  }
+  time(times) {
+    let timer = null
+    timer=setInterval( e => {
+    let day=0
+    let hour=0
+    let minute=0
+    let second=0
+    if(times > 0){
+      hour = parseInt(times / 1000 / 60 / 60 % 24, 10)
+      minute = parseInt(times / 1000 / 60 % 60, 10)
+      second = parseInt(times / 1000 % 60, 10)
+    }
+    // if (day <= 9) day = '0' + day
+    if (hour <= 9) hour = '0' + hour
+    if (minute <= 9) minute = '0' + minute
+    if (second <= 9) second = '0' + second
+      this.remainingTimes = `${hour}小时${minute}分钟${second}秒`
+      this.$apply()
+      times -= 1000;
+    }, 1000);
+    if(times<=0){
+      clearInterval(timer);
+    }
+  }
   // 等级选择
   levelSel(e) {
     let level = e.currentTarget.dataset.level
