@@ -37,11 +37,14 @@
   background-color: #eee;
   border-radius: 0 40rpx 40rpx 0;
 }
+.donationSearch .image{
+    display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .donationSearch image{
-  margin-top: 10rpx; 
-  width: 80rpx;
-  height: 60rpx;
-  vertical-align:middle;
+  width: 50rpx;
+  height: 50rpx;
 }
 .list{
   margin-bottom: 130rpx;
@@ -106,8 +109,8 @@
     <!-- search -->
     <view class="donationSearch">
       <input type="text"  placeholder="查询公益项目" />
-      <view>
-        <image src="/img/tui.png" />
+      <view class="image">
+        <image src="/img/search.png" />
       </view>
     </view>
     <view class="list">

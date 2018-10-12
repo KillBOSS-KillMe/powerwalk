@@ -269,7 +269,7 @@
 <template>
   <view>
     <view class="titleImg">
-      <image src="/img/index_main.jpg" />
+      <image src="/img/challengeTitle.png" />
     </view>
     <view class="gradeSel">
       <!-- <view class="action" @tap="levelSel">3000步</view> -->
@@ -381,7 +381,10 @@ export default class Challenge extends wepy.page {
       this.$redirect(url)
     }
   };
-  async onLoad(options) {};
+  async onLoad(options) {
+    // 获取用户信息
+    this.userInfo = this.$parent.globalData.userInfo
+  };
   // 等级选择
   levelSel(e) {
     let level = e.currentTarget.dataset.level

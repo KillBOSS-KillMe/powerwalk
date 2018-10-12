@@ -209,8 +209,6 @@ export default class Gamelist extends wepy.page {
   async onLoad(options) {
     // 获取用户信息
     this.userInfo = this.$parent.globalData.userInfo
-    console.log(this.userInfo);
-    
   };
   // 进入游戏规则页
   goRule() {

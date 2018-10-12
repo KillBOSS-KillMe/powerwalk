@@ -220,6 +220,24 @@ page{
       <view @tap="goExchangeRecording">兑换记录</view>
     </view>
     <view class="userNav">
+      <view class="list" @tap="goAddFriend">
+        <view>
+          <image src="/img/cart.png" />
+        </view>
+        <view>添加好友</view>
+      </view>
+      <view class="list" @tap="goFriendApplyFor">
+        <view>
+          <image src="/img/cart.png" />
+        </view>
+        <view>好友申请({{applyFor}})</view>
+      </view>
+      <view class="list" @tap="goFriendList">
+        <view>
+          <image src="/img/cart.png" />
+        </view>
+        <view>好友列表</view>
+      </view>
       <view class="list" @tap="goCart">
         <view>
           <image src="/img/cart.png" />
@@ -300,7 +318,8 @@ export default class User extends wepy.page {
     userInfo: null,
     openId: null,
     invite: 'hide',
-    loginName: '登陆'
+    loginName: '登陆',
+    applyFor: 0
   };
 
   methods = {
@@ -317,6 +336,7 @@ export default class User extends wepy.page {
       this.loginName = `已登陆`
       this.$apply()
     }
+    this.getApplyFor()
   };
   // 显示邀请框
   showInvite() {
@@ -327,6 +347,23 @@ export default class User extends wepy.page {
   hideInvite() {
     this.invite = 'hide'
     this.$apply()
+  }
+  // 请求好友申请个数
+  getApplyFor() {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/myFriendRequstCount`,
+      method: 'GET',
+      header: {
+        AuthrizeOpenId: this.$parent.globalData.openId
+      },
+      success: data => {
+        console.log(data)
+        if (data.data.success) {
+          this.applyFor = data.data.data.friend_request_count
+          this.$apply()
+        }
+      }
+    })
   }
   // 登陆点击事件
   async onGotUserInfo() {
@@ -365,6 +402,19 @@ export default class User extends wepy.page {
       },
       success: function (data) {}
     })
+  }
+
+  // 添加好友
+  goAddFriend() {
+    this.$navigate('/pages/addFriend')
+  }
+  // 好友申请
+  goFriendApplyFor() {
+    this.$navigate('/pages/friendApplyFor')
+  }
+  // 好友列表
+  goFriendList() {
+    this.$navigate('/pages/friendList')
   }
   // 进入兑换记录页
   goExchangeRecording() {
