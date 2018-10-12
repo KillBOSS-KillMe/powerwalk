@@ -237,96 +237,33 @@ page{
       </view>
     </view>
     <view class="myInfo friendRanking">
-      <view class="list">
-        <view class="rankingImg">
-          <image src="/img/medalGold.png" />
-        </view>
-        <view class="userImg">
-          <image src="/img/index_main.jpg" />
-        </view>
-        <view class="user">
-          名字名字
-        </view>
-        <view class="count">
-          00000步
-        </view>
-        <view class="steal" @tap="steal">
-          <image src="/img/steal.png" />
-        </view>
-        <view class="like">
-          <view class="likeCount">00000</view>
-          <view class="likeImg" @tap="like">
-            <image src="/img/like.png" />
+      <block wx:for="{{userList}}" key="index" index="index" item="item">
+        <view class="list">
+          <view class="rankingImg">
+            <!-- <text wx:if="{{index > 3}}">{{item.img}}</text> -->
+            <text wx:if="{{index >= 3}}">{{index}}</text>
+            <image wx:if="{{index < 3}}" src="/img/medal{{index}}.png" />
+          </view>
+          <view class="userImg">
+            <image src="{{item.user.profile}}" />
+          </view>
+          <view class="user">
+            {{item.user.nick_name}}
+          </view>
+          <view class="count">
+            {{item.step}}步
+          </view>
+          <view class="steal">
+            <image src="/img/steal.png" data-userid="{{item.user.open_id}}" @tap="steal" />
+          </view>
+          <view class="like">
+            <view class="likeCount">00000</view>
+            <view class="likeImg" @tap="like">
+              <image src="/img/like.png" />
+            </view>
           </view>
         </view>
-      </view>
-      <view class="list">
-        <view class="rankingImg">
-          <image src="/img/medalSilver.png" />
-        </view>
-        <view class="userImg">
-          <image src="/img/index_main.jpg" />
-        </view>
-        <view class="user">
-          名字名字
-        </view>
-        <view class="count">
-          00000步
-        </view>
-        <view class="steal" @tap="steal">
-          <image src="/img/steal.png" />
-        </view>
-        <view class="like">
-          <view class="likeCount">00000</view>
-          <view class="likeImg" @tap="like">
-            <image src="/img/like.png" />
-          </view>
-        </view>
-      </view>
-      <view class="list">
-        <view class="rankingImg">
-          <image src="/img/medalCopper.png" />
-        </view>
-        <view class="userImg">
-          <image src="/img/index_main.jpg" />
-        </view>
-        <view class="user">
-          名字名字
-        </view>
-        <view class="count">
-          00000步
-        </view>
-        <view class="steal" @tap="steal">
-          <image src="/img/steal.png" />
-        </view>
-        <view class="like">
-          <view class="likeCount">00000</view>
-          <view class="likeImg" @tap="like">
-            <image src="/img/like.png" />
-          </view>
-        </view>
-      </view>
-      <view class="list">
-        <view class="rankingImg">4</view>
-        <view class="userImg">
-          <image src="/img/index_main.jpg" />
-        </view>
-        <view class="user">
-          名字名字
-        </view>
-        <view class="count">
-          00000步
-        </view>
-        <view class="steal" @tap="steal" @tap="steal">
-          <image src="/img/steal.png" />
-        </view>
-        <view class="like">
-          <view class="likeCount">00000</view>
-          <view class="likeImg" @tap="like">
-            <image src="/img/like.png" />
-          </view>
-        </view>
-      </view>
+      </block>
     </view>
     <nav @childFn.user="goPage" />
   </view>
@@ -346,7 +283,8 @@ export default class Leaderboard extends wepy.page {
   };
   // alias example
   data = {
-    userInfo: null
+    userInfo: null,
+    userList: null
   };
 
   methods = {
@@ -365,30 +303,131 @@ export default class Leaderboard extends wepy.page {
     this.userInfo = this.$parent.globalData.userInfo
     // 获取我的好友，排名
     wx.request({
-        url: `${this.$parent.globalData.requestUrl}/api/myfriend`,
-        method: 'GET',
-        header: {
-          AuthrizeOpenId: this.$parent.globalData.openId
-        },
-        success: data => {
-          console.log(data)
-          if (data.data.success) {
-            // wx.showToast({
-            //   title: '添加成功',
-            //   duration: 2000,
-            //   mask: true,
-            //   icon: 'success'
-            // })
-            // setTimeout(function() {
-            //   wx.navigateBack({ changed: true })
-            // }, 2000)
-          }
+      url: `${this.$parent.globalData.requestUrl}/api/friendLeaderBoard`,
+      method: 'GET',
+      header: {
+        AuthrizeOpenId: this.$parent.globalData.openId
+      },
+      success: data => {
+        data.data = {
+                    "success": true,
+                    "errcode": 0,
+                    "errmsg": "",
+                    "data": {
+                        "user_day_step": {
+                            "data": [
+                                {
+                                    "step": 300,
+                                    "date": "2018-10-11",
+                                    "user": {
+                                        "id": 3,
+                                        "name": "Zhangyiqing3",
+                                        "profile": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1539347720598&di=a473abbe89ca43f99dc0204945ac9ba3&imgtype=0&src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fq_70%2Cc_zoom%2Cw_640%2Fimages%2F20180614%2Fc99482ef82ba4328a5b01d42e5ec5ec4.jpeg",
+                                        "nick_name": "联盟英雄",
+                                        "beans": 500,
+                                        "recommender_id": 0,
+                                        "open_id": "oL3IY4yhFmFbco9NEjagastFd21p",
+                                        "created_at": "2018-10-11 00:00:00",
+                                        "updated_at": "2018-10-11 00:00:00",
+                                        "can_answer": 0
+                                    }
+                                },
+                                {
+                                    "step": 300,
+                                    "date": "2018-10-11",
+                                    "user": {
+                                        "id": 3,
+                                        "name": "Zhangyiqing3",
+                                        "profile": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1539347720598&di=a473abbe89ca43f99dc0204945ac9ba3&imgtype=0&src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fq_70%2Cc_zoom%2Cw_640%2Fimages%2F20180614%2Fc99482ef82ba4328a5b01d42e5ec5ec4.jpeg",
+                                        "nick_name": "联盟英雄",
+                                        "beans": 500,
+                                        "recommender_id": 0,
+                                        "open_id": "oL3IY4yhFmFbco9NEjagastFd21p",
+                                        "created_at": "2018-10-11 00:00:00",
+                                        "updated_at": "2018-10-11 00:00:00",
+                                        "can_answer": 0
+                                    }
+                                },
+                                {
+                                    "step": 300,
+                                    "date": "2018-10-11",
+                                    "user": {
+                                        "id": 3,
+                                        "name": "Zhangyiqing3",
+                                        "profile": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1539347720598&di=a473abbe89ca43f99dc0204945ac9ba3&imgtype=0&src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fq_70%2Cc_zoom%2Cw_640%2Fimages%2F20180614%2Fc99482ef82ba4328a5b01d42e5ec5ec4.jpeg",
+                                        "nick_name": "联盟英雄",
+                                        "beans": 500,
+                                        "recommender_id": 0,
+                                        "open_id": "oL3IY4yhFmFbco9NEjagastFd21p",
+                                        "created_at": "2018-10-11 00:00:00",
+                                        "updated_at": "2018-10-11 00:00:00",
+                                        "can_answer": 0
+                                    }
+                                },
+                                {
+                                    "step": 300,
+                                    "date": "2018-10-11",
+                                    "user": {
+                                        "id": 3,
+                                        "name": "Zhangyiqing3",
+                                        "profile": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1539347720598&di=a473abbe89ca43f99dc0204945ac9ba3&imgtype=0&src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fq_70%2Cc_zoom%2Cw_640%2Fimages%2F20180614%2Fc99482ef82ba4328a5b01d42e5ec5ec4.jpeg",
+                                        "nick_name": "联盟英雄",
+                                        "beans": 500,
+                                        "recommender_id": 0,
+                                        "open_id": "oL3IY4yhFmFbco9NEjagastFd21p",
+                                        "created_at": "2018-10-11 00:00:00",
+                                        "updated_at": "2018-10-11 00:00:00",
+                                        "can_answer": 0
+                                    }
+                                }
+                            ],
+                            "meta": {
+                                "pagination": {
+                                    "total": 2,
+                                    "count": 2,
+                                    "per_page": 10,
+                                    "current_page": 1,
+                                    "total_pages": 1,
+                                    "links": []
+                                }
+                            }
+                        }
+                    }
+                }
+        if (data.data.success) {
+          this.userList = data.data.data.user_day_step.data
+          this.$apply()
+          // 获取下一页的请求Id
+          this.nextUrl = ''
+          // 更新下一页请求地址
+          // if (data.meta.pagination.links.length !== 0) {
+          //   this.nextUrl = data.meta.pagination.links.next
+          // }
         }
-      })
+      }
+    })
   };
   // 偷取步数
-  steal() {
-    console.log('偷取了步数,或者被抓')
+  steal(e) {
+    let userId = e.currentTarget.dataset.userid
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/theifStep`,
+      method: 'POST',
+      header: {
+        AuthrizeOpenId: this.$parent.globalData.openId
+      },
+      data: {
+        theifed_open_id: userId
+      },
+      success: data => {
+        if (data.data.success) {
+          wx.showModal({
+            title: '',
+            content: data.data.data.message
+          })
+        }
+      }
+    })
   }
   // 给好友点赞
   like() {

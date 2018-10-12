@@ -88,15 +88,15 @@ page{
       <block wx:for="{{userList}}" key="index" index="index" item="item">
         <view class="list">
           <view class="userImg">
-            <image src="{{item.profile}}" />
+            <image src="{{item.from.profile}}" />
           </view>
           <view class="user">
-            {{item.name}}
+            {{item.from.nick_name}}
           </view>
-          <view class="steal" data-id="{{item.id}}" data-status="refuse" @tap="applyOperating">
+          <view class="steal" data-id="{{item.from.id}}" data-status="disagree" @tap="applyOperating">
             <image src="/img/delete.png" />
           </view>
-          <view class="steal" data-id="{{item.id}}" data-status="agree" @tap="applyOperating">
+          <view class="steal" data-id="{{item.from.id}}" data-status="agree" @tap="applyOperating">
             <image src="/img/invite.png" />
           </view>
         </view>
@@ -140,9 +140,9 @@ export default class Friendapplyfor extends wepy.page {
       let status = e.currentTarget.dataset.status
       let statusShow = ''
       if (status === 'agree') {
-        statusShow = '通过申请'
+        statusShow = '通过申请操作成功'
       } else {
-        statusShow = '拒绝申请'
+        statusShow = '拒绝申请操作成功'
       }
       console.log(userId)
       wx.request({
@@ -162,6 +162,8 @@ export default class Friendapplyfor extends wepy.page {
               title: '',
               content: statusShow
             })
+            // 获取用户列表
+            this.getApplyForList()
           } else {
             wx.showModal({
               title: '',
@@ -188,7 +190,6 @@ export default class Friendapplyfor extends wepy.page {
         AuthrizeOpenId: this.$parent.globalData.openId
       },
       success: data => {
-        console.log(data)
         if (data.data.success) {
           // data = data.data.data.users
           data = data.data.data.add_friend_notices
@@ -200,7 +201,6 @@ export default class Friendapplyfor extends wepy.page {
           if (data.meta.pagination.links.length !== 0) {
             this.nextUrl = data.meta.pagination.links.next
           }
-          
         }
       }
     })
