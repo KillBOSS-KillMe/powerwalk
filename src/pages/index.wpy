@@ -357,6 +357,9 @@ export default class Index extends wepy.page {
    * onLoad
    */
   async onLoad(options) {
+    if (options.openId) {
+      // 此处请求接口，为分享功能辅助，添加活力豆
+    }
     // 获取用户信息
     // this.userInfo = await wepy.getUserInfo().then(console.log('aaa')).catch(console.log('bbb'))
     this.userInfo = await wepy.getUserInfo()
@@ -477,18 +480,6 @@ export default class Index extends wepy.page {
       }
     })
   }
-  // // 分享页面
-  // onShareAppMessage() {
-  //   let pages = getCurrentPages() // 获取加载的页面
-  //   let currentPage = pages[pages.length - 1] // 获取当前页面的对象
-  //   let url = currentPage.route // 当前页面url
-  //   url = `${url}?share=${this.thisShare}&uuid=${this.uuid}`
-  //   return {
-  //     title: '',
-  //     desc: '',
-  //     path: url
-  //   }
-  // };
   // 控制背景图大小
   autoImage(e) {
     // 获取图片的宽高

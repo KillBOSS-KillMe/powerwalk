@@ -76,20 +76,6 @@ page{
             <view class="listShowSon">{{item.articleCon}}</view>
           </view>
         </block>
-        <!-- <view class="con listHide" data-id="2" @tap="selShow">
-          <view class="listShow">
-            <view>余额用途余额用途</view>
-            <image src="/img/go.png" />
-          </view>
-          <view class="listShowSon">asdfasd</view>
-        </view>
-        <view class="con listHide" data-id="3" @tap="selShow">
-          <view class="listShow">
-            <view>余额用途余额用途</view>
-            <image src="/img/go.png" />
-          </view>
-          <view class="listShowSon">afdsasdf</view>
-        </view> -->
       </view>
     </view>
     <nav @childFn.user="goPage" />
