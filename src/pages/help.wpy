@@ -21,6 +21,8 @@ page{
   width: 750rpx;
   height: auto;
   background-color: #fff;
+}.con image{
+  transform:rotate(90deg);
 }
 
 .listShow{
@@ -52,6 +54,9 @@ page{
 .listHide .listShowSon{
   display: none;
 }
+.listHide image{
+  transform:rotate(0deg) !important;
+}
 </style>
 
 <template>
@@ -62,27 +67,29 @@ page{
     <view class="list">
       <view class="listCon">
         <!-- ===================列表中加入listHide  描述信息隐藏====================== -->
-        <view class="con listHide">
+        <block wx:for="{{helpData}}" key="index" index="index" item="item">
+          <view class="con {{selId === item.id?'':'listHide'}}" data-id="{{item.id}}" @tap="selShow">
+            <view class="listShow">
+              <view>{{item.name}}</view>
+              <image src="/img/go.png" />
+            </view>
+            <view class="listShowSon">{{item.articleCon}}</view>
+          </view>
+        </block>
+        <!-- <view class="con listHide" data-id="2" @tap="selShow">
           <view class="listShow">
             <view>余额用途余额用途</view>
             <image src="/img/go.png" />
           </view>
-          <view class="listShowSon">余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途</view>
+          <view class="listShowSon">asdfasd</view>
         </view>
-        <view class="con">
+        <view class="con listHide" data-id="3" @tap="selShow">
           <view class="listShow">
             <view>余额用途余额用途</view>
             <image src="/img/go.png" />
           </view>
-          <view class="listShowSon">余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途</view>
-        </view>
-        <view class="con">
-          <view class="listShow">
-            <view>余额用途余额用途</view>
-            <image src="/img/go.png" />
-          </view>
-          <view class="listShowSon">余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途余额用途</view>
-        </view>
+          <view class="listShowSon">afdsasdf</view>
+        </view> -->
       </view>
     </view>
     <nav @childFn.user="goPage" />
@@ -103,9 +110,25 @@ export default class Help extends wepy.page {
   };
   // alias example
   data = {
-    userInfo: null
+    helpData:[
+      {
+        'id': 1,
+        'name': 'topic',
+        'articleCon': '答题答题答题答题答题答题答题答题答题答题答题答题答题答题答题'
+      },
+      {
+        'id': 2,
+        'name': 'challenge',
+        'articleCon': '挑战挑战挑战挑战挑战挑战挑战挑战挑战挑战挑战挑战'
+      },
+      {
+        'id': 3,
+        'name': 'turntable',
+        'articleCon': '转盘转盘转盘转盘转盘转盘转盘转盘转盘转盘转盘转盘转盘'
+      }
+    ],
+    selId: null
   };
-
   methods = {
     // 底部导航跳转
     goPage (url, evt) {
@@ -114,5 +137,9 @@ export default class Help extends wepy.page {
     }
   };
   async onLoad(options) {};
+  selShow(e) {
+    this.selId = e.currentTarget.dataset.id
+    this.$apply()
+  }
 }
 </script>

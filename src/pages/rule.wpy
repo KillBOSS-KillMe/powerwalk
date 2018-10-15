@@ -79,13 +79,10 @@ export default class Rule extends wepy.page {
   };
   async onLoad(options) {
     let types = options.type
-    console.log(types)
     for (let i in this.ruleData) {
       if (types === this.ruleData[i].name) {
         this.showData = this.ruleData[i]
         this.$apply()
-        console.log(this.showData);
-        
       }
     }
   };
