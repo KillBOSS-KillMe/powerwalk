@@ -27,19 +27,10 @@
 <template>
   <view>
     <view class="titleImg">
-      <image src="/img/index_main.jpg" />
+      <image src="{{showData.img}}" />
     </view>
     <view class="article">
-      <view class="articleCon">
-        寻寻觅觅，冷冷清清，凄凄惨惨戚戚。乍暖还寒时候，最难将息。三杯两盏淡酒，怎敌他、晚来风急？雁过也，正伤心，却是旧时相识。
-满地黄花堆积。憔悴损，如今有谁堪摘？守着窗儿，独自怎生得黑？梧桐更兼细雨，到黄昏、点点滴滴。这次第，怎一个愁字了得！
-寻寻觅觅，冷冷清清，凄凄惨惨戚戚。乍暖还寒时候，最难将息。三杯两盏淡酒，怎敌他、晚来风急？雁过也，正伤心，却是旧时相识。
-满地黄花堆积。憔悴损，如今有谁堪摘？守着窗儿，独自怎生得黑？梧桐更兼细雨，到黄昏、点点滴滴。这次第，怎一个愁字了得！
-寻寻觅觅，冷冷清清，凄凄惨惨戚戚。乍暖还寒时候，最难将息。三杯两盏淡酒，怎敌他、晚来风急？雁过也，正伤心，却是旧时相识。
-满地黄花堆积。憔悴损，如今有谁堪摘？守着窗儿，独自怎生得黑？梧桐更兼细雨，到黄昏、点点滴滴。这次第，怎一个愁字了得！
-寻寻觅觅，冷冷清清，凄凄惨惨戚戚。乍暖还寒时候，最难将息。三杯两盏淡酒，怎敌他、晚来风急？雁过也，正伤心，却是旧时相识。
-满地黄花堆积。憔悴损，如今有谁堪摘？守着窗儿，独自怎生得黑？梧桐更兼细雨，到黄昏、点点滴滴。这次第，怎一个愁字了得！
-      </view>
+      <view class="articleCon">{{showData.articleCon}}</view>
     </view>
     <nav @childFn.user="goPage" />
   </view>
@@ -48,8 +39,7 @@
 <script>
 import wepy from 'wepy'
 import nav from '../components/nav' // 底部导航
-// import author from '../components/author' // 授权按钮
-export default class Challenge extends wepy.page {
+export default class Rule extends wepy.page {
   config = {
     'navigationBarTitleText': '答题规则'
   };
@@ -60,7 +50,24 @@ export default class Challenge extends wepy.page {
   };
   // alias example
   data = {
-    userInfo: null
+    ruleData:[
+      {
+        'name': 'topic',
+        'img': '/img/index_main.jpg',
+        'articleCon': '答题答题答题答题答题答题答题答题答题答题答题答题答题答题答题'
+      },
+      {
+        'name': 'challenge',
+        'img': '/img/index_main.jpg',
+        'articleCon': '挑战挑战挑战挑战挑战挑战挑战挑战挑战挑战挑战挑战'
+      },
+      {
+        'name': 'turntable',
+        'img': '/img/index_main.jpg',
+        'articleCon': '转盘转盘转盘转盘转盘转盘转盘转盘转盘转盘转盘转盘转盘'
+      }
+    ],
+    showData: null
   };
 
   methods = {
@@ -70,6 +77,17 @@ export default class Challenge extends wepy.page {
       this.$redirect(url)
     }
   };
-  async onLoad(options) {};
+  async onLoad(options) {
+    let types = options.type
+    console.log(types)
+    for (let i in this.ruleData) {
+      if (types === this.ruleData[i].name) {
+        this.showData = this.ruleData[i]
+        this.$apply()
+        console.log(this.showData);
+        
+      }
+    }
+  };
 }
 </script>
