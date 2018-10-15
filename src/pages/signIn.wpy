@@ -215,9 +215,24 @@ export default class Signin extends wepy.page {
   async onLoad(options) {
     this.userInfo = this.$parent.globalData.userInfo
     // 签到信息查询
+    // userSignInformation签到？
     await wx.request({
       url: `${this.$parent.globalData.requestUrl}/api/userSignin`,
       method: 'PUT',
+      header: {
+        AuthrizeOpenId: this.$parent.globalData.openId
+      },
+      success: data => {
+        console.log(data)
+        if (data.data.success) {
+          this.continuousDays = data.data.data.continuous_days
+          this.$apply()
+        }
+      }
+    })
+    await wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/userSignInformation`,
+      method: 'GET',
       header: {
         AuthrizeOpenId: this.$parent.globalData.openId
       },

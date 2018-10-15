@@ -38,7 +38,7 @@
   text-align: center;
   color: #333;
 }
-.sel view:nth-child(4){
+.sel view:last-of-type{
   border-right: 1rpx solid #fff;
 }
 .sel .action{
@@ -111,6 +111,164 @@
   color: #fff;
   background-color: #f39900;
 }
+
+
+
+
+
+/* 转盘 */
+.canvas-container ul,
+.canvas-container li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.canvas-container {
+  margin: 0 auto;
+  position: relative;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  /*border: 2px solid #E44025;*/
+  box-shadow: 0 2px 3px #333, 0 0 2px #000;
+}
+.canvas-content {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1;
+  display: block;
+  width: 300px;
+  height: 300px;
+  border-radius: inherit;
+  background-clip: padding-box;
+  background-color: #ffcb3f;
+}
+.canvas-element {
+  position: relative;
+  z-index: 1;
+  width: inherit;
+  height: inherit;
+  border-radius: 50%;
+}
+.canvas-list {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: inherit;
+  height: inherit;
+  z-index: 9999;
+}
+.canvas-item {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  color: #e4370e;
+  font-weight: bold;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.6);
+}
+.canvas-item-text {
+  position: relative;
+  display: block;
+  padding-top: 20px;
+  /* width: 50px; */
+  margin: 0 auto;
+  text-align: center;
+  -webkit-transform-origin: 50% 150px;
+  transform-origin: 50% 150px;
+}
+
+/* 分隔线 */
+.canvas-line {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: inherit;
+  height: inherit;
+  z-index: 99;
+}
+.canvas-litem {
+  position: absolute;
+  left: 150px;
+  top: 0;
+  width: 1px;
+  height: 150px;
+  background-color: rgba(228, 55, 14, 0.4);
+  overflow: hidden;
+  -webkit-transform-origin: 50% 150px;
+  transform-origin: 50% 150px;
+}
+
+.canvas-btn {
+  position: absolute;
+  left: 110px;
+  top: 110px;
+  z-index: 400;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  color: #f4e9cc;
+  background-color: #e44025;
+  line-height: 80px;
+  text-align: center;
+  font-size: 20px;
+  text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.6);
+  text-decoration: none;
+}
+.canvas-btn::after {
+  position: absolute;
+  display: block;
+  content: ' ';
+  left: 10px;
+  top: -46px;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  border-width: 30px;
+  border-style: solid;
+  border-color: transparent;
+  border-bottom-color: #e44025;
+}
+.canvas-btn.disabled {
+  pointer-events: none;
+  background: #b07a7b;
+  color: #ccc;
+}
+.canvas-btn.disabled::after {
+  border-bottom-color: #b07a7b;
+}
+
+.gb-run {
+  -webkit-transition: all 6s ease;
+  transition: all 6s ease;
+}
+
+/* 查看中奖 */
+.main-container {
+  margin: 1rem 2rem;
+}
+
+.main-container-rule {
+  padding: 1rem 0;
+}
+.main-rule-title {
+  display: block;
+  padding: 4px 0;
+  font-size: 16px;
+  font-weight: bold;
+}
+.main-rule-item {
+  display: block;
+  padding: 2px 0;
+}
+.activity{
+  position: absolute;
+  z-index: -10;
+}
 </style>
 <template>
   <view>
@@ -120,13 +278,34 @@
     <view class="turntable">
       <view class="turntableTitle">请选择摇奖区域:</view>
       <view class="sel">
-        <view class="action">1000</view>
-        <view>1000</view>
-        <view>1000</view>
-        <view>1000</view>
+        <block wx:for="{{turntableList}}" key="index" index="index" item="item">
+          <view class="{{level === item.id?'action':''}}" data-index="{{index}}" @tap="selTurntable">{{item.cost_beans}}步</view>
+        </block>
+      </view>
+      <view class="main">
+        <view class="canvas-container">
+          <view animation="{{animationData}}" class="canvas-content">
+            <canvas style="width: 300px; height: 300px;" class="canvas-element" canvas-id="lotteryCanvas"></canvas>
+
+            <view class="canvas-line">
+              <repeat for="{{awardsList}}" key="index" index="index" item="item">
+                <view class="canvas-litem" style="-webkit-transform: rotate({{item.lineTurn}});transform: rotate({{item.lineTurn}})">{{item.lineTurn}}</view>
+              </repeat>
+            </view>
+
+            <view class="canvas-list">
+              <repeat for="{{awardsList}}" key="index" index="index" item="item" class="canvas-item">
+                <view class="canvas-item">
+                  <view class="canvas-item-text" style="-webkit-transform: rotate({{item.turn}});transform: rotate({{item.turn}})">{{item.award}}</view>
+                </view>
+              </repeat>
+            </view>
+          </view>
+          <view @tap="clickLottery" class="canvas-btn {{btnDisabled}}">抽奖</view>
+        </view>
       </view>
     </view>
-
+    
     <view class="mask hide">
       <view class="congratulations">
         <view class="congsTitleImg">
@@ -160,7 +339,21 @@ export default class Game extends wepy.page {
   };
   // alias example
   data = {
-    userInfo: null
+    userInfo: null,
+    turntableList: null,
+    level: null,
+    index: 0,
+    animationData: {},
+    awardsList:[],
+    awardsConfig: {
+      chance: true,
+      // 转盘选项
+      awards: null
+    },
+    runDegs: 0,
+    btnDisabled: '',
+    lottery: null,
+    lotterySta: 0
   };
 
   methods = {
@@ -170,6 +363,160 @@ export default class Game extends wepy.page {
       this.$redirect(url)
     }
   };
-  async onLoad(options) {};
+  async onLoad(options) {
+    // 获取用户信息
+    this.userInfo = this.$parent.globalData.userInfo
+    this.getTurntableList()
+  };
+  // 获取不同区间大转盘列表
+  getTurntableList() {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/getBigTurnTableWithInterval`,
+      method: 'GET',
+      header: {
+        AuthrizeOpenId: this.$parent.globalData.openId
+      },
+      success: data => {
+        console.log(data)
+        if (data.data.success) {
+          this.turntableList = data.data.data.big_turn_tables.data
+          this.level = this.turntableList[0].id
+          this.$apply()
+          this.getTurntableData(this.level)
+        }
+      }
+    })
+  }
+  // 选择转盘
+  selTurntable(e) {
+    this.index = e.currentTarget.dataset.index
+    this.level = this.turntableList[this.index].id
+    this.$apply()
+    this.getTurntableData(this.level)
+  }
+  // 获取转盘详细数据
+  getTurntableData(id) {
+    console.log(id)
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/bigTurnTablePrize/${id}`,
+      method: 'GET',
+      // header: {
+      //   AuthrizeOpenId: this.$parent.globalData.openId
+      // },
+      success: data => {
+        console.log(data)
+        if (data.data.success) {
+          this.turntableData = data.data.data.big_turn_table_prizes
+          console.log(this.turntableData)
+          // 获取到的数据拼装成转盘要求的数据
+          let awardsData = {}
+          for (let i = 0; i < this.turntableData.length; i++) {
+            awardsData.index = this.turntableData[i].id
+            awardsData.name = this.turntableData[i].name
+            this.awardsList.push(awardsData)
+          }
+          // console.log(this.awardsList)
+          this.awardsConfig.awards = this.awardsList
+          this.$apply()
+          this.onRun()
+        }
+      }
+    })
+  }
+  clickLottery() {
+    // 生成结果 0到6的随机数{后面通过传至或者在此处请求转盘结果控制}
+    var awardIndex = (Math.random() * 6) >>> 0
+    // 装盘结果
+    // var awardIndex = this.lottery
+    if (awardIndex == null) {
+      return
+    }
+    // 获取奖品配置
+    var awardsConfig = this.awardsConfig
+    var runNum = 8
+    // awardIndex未转盘结果ID
+    if (awardIndex < 2) awardsConfig.chance = false
+    // 旋转抽奖  runDegs：旋转角度
+    this.runDegs = this.runDegs || 0
+    // runDegs：旋转角度
+    this.runDegs = this.runDegs + (360 - this.runDegs % 360) + (360 * runNum - awardIndex * (360 / 6))
+    var animationRun = wx.createAnimation({
+      duration: 4000,
+      timingFunction: 'ease'
+    })
+    this.animationRun = animationRun
+    animationRun.rotate(this.runDegs).step()
+    this.animationData = animationRun.export()
+    this.btnDisabled = 'disabled'
+
+    // 记录奖品
+    var winAwards = wx.getStorageSync('winAwards') || {
+      data: []
+    }
+    winAwards.data.push(awardsConfig.awards[awardIndex].name + '1个')
+    wx.setStorageSync('winAwards', winAwards)
+
+    // 中奖提示
+    setTimeout(function() {
+      wx.showModal({
+        title: '恭喜',
+        content: '获得' + awardsConfig.awards[awardIndex].name + '请到个人中心查看',
+        showCancel: false
+      })
+      if (awardsConfig.chance) {
+        this.btnDisabled = ''
+      }
+    }, 4000)
+  }
+  onRun(e) {
+    var awardsConfig = this.awardsConfig
+    var len = awardsConfig.awards.length
+    var rotateDeg = 360 / len / 2 + 90
+    var html = []
+    // 文字旋转 turn 值
+    var turnNum = 1 / len
+    this.btnDisabled = awardsConfig.chance ? '' : 'disabled'
+    var ctx = wepy.createContext()
+
+    for (var i = 0; i < len; i++) {
+      // 保存当前状态
+      ctx.save()
+      // 开始一条新路径
+      ctx.beginPath()
+      // 位移到圆心，下面需要围绕圆心旋转
+      ctx.translate(150, 150)
+      // 从(0, 0)坐标开始定义一条新的子路径
+      ctx.moveTo(0, 0)
+      // 旋转弧度,需将角度转换为弧度,使用 degrees * Math.PI/180 公式进行计算。
+      ctx.rotate((360 / len * i - rotateDeg) * Math.PI / 180)
+      // 绘制圆弧
+      ctx.arc(0, 0, 150, 0, 2 * Math.PI / len, false)
+
+      // 颜色间隔
+      if (i % 2 === 0) {
+        ctx.setFillStyle('rgba(255,184,32,.1)')
+      } else {
+        ctx.setFillStyle('rgba(255,203,63,.1)')
+      }
+
+      // 填充扇形
+      ctx.fill()
+      // 绘制边框
+      ctx.setLineWidth(0.5)
+      ctx.setStrokeStyle('rgba(228,55,14,.1)')
+      ctx.stroke()
+
+      // 恢复前一个状态
+      ctx.restore()
+      // 奖项列表
+      html.push({
+        turn: i * turnNum + 'turn',
+        lineTurn: i * turnNum + turnNum / 2 + 'turn',
+        award: awardsConfig.awards[i].name
+      })
+    }
+    // 将获取到装盘的数据存入Data
+    this.awardsList = html
+  }
 }
 </script>

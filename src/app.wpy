@@ -90,7 +90,7 @@ export default class extends wepy.app {
       'pages/challenge', // 步数挑战
       'pages/rule', // 答题规则
       'pages/topic', // 选择题
-      'pages/game', // 游戏
+      'pages/game', // 转盘
       'pages/gameList', // 游戏列表
       'pages/help', // 帮助中心
       'pages/balance', // 我的余额
