@@ -26,6 +26,7 @@
 .sel{
   width: 100%;
   height: 54rpx;
+  margin-bottom: 100rpx;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -160,6 +161,9 @@
   height: inherit;
   z-index: 9999;
 }
+// .con .canvas-item:nth-child(2){
+//   background-color: #000;
+// }
 .canvas-item {
   position: absolute;
   left: 0;
@@ -282,7 +286,7 @@
           <view class="{{level === item.id?'action':''}}" data-index="{{index}}" @tap="selTurntable">{{item.cost_beans}}步</view>
         </block>
       </view>
-      <view class="main">
+      <view class="main" wx:if="{{turntableData.length != 0}}">
         <view class="canvas-container">
           <view animation="{{animationData}}" class="canvas-content">
             <canvas style="width: 300px; height: 300px;" class="canvas-element" canvas-id="lotteryCanvas"></canvas>
@@ -301,9 +305,11 @@
               </repeat>
             </view>
           </view>
-          <view @tap="clickLottery" class="canvas-btn {{btnDisabled}}">抽奖</view>
+          <!-- <view @tap="clickLottery" class="canvas-btn {{btnDisabled}}">抽奖</view> -->
+          <view @tap="lottery" class="canvas-btn {{btnDisabled}}">抽奖</view>
         </view>
       </view>
+      <view class="dataNullTitle" wx:if="{{turntableData.length==0}}">该抽奖无转盘数据</view>
     </view>
     
     <view class="mask hide">
@@ -339,6 +345,7 @@ export default class Game extends wepy.page {
   };
   // alias example
   data = {
+    turntableData: null,
     userInfo: null,
     turntableList: null,
     level: null,
@@ -377,7 +384,6 @@ export default class Game extends wepy.page {
         AuthrizeOpenId: this.$parent.globalData.openId
       },
       success: data => {
-        console.log(data)
         if (data.data.success) {
           this.turntableList = data.data.data.big_turn_tables.data
           this.level = this.turntableList[0].id
@@ -396,33 +402,59 @@ export default class Game extends wepy.page {
   }
   // 获取转盘详细数据
   getTurntableData(id) {
-    console.log(id)
     wx.request({
       url: `${this.$parent.globalData.requestUrl}/api/bigTurnTablePrize/${id}`,
       method: 'GET',
-      // header: {
-      //   AuthrizeOpenId: this.$parent.globalData.openId
-      // },
       success: data => {
         console.log(data)
         if (data.data.success) {
           this.turntableData = data.data.data.big_turn_table_prizes
-          console.log(this.turntableData)
+          this.$apply()
           // 获取到的数据拼装成转盘要求的数据
           let awardsData = {}
+          let awards = []
           for (let i = 0; i < this.turntableData.length; i++) {
+            awardsData = {}
             awardsData.index = this.turntableData[i].id
             awardsData.name = this.turntableData[i].name
-            this.awardsList.push(awardsData)
+            awards.push(awardsData)
           }
-          // console.log(this.awardsList)
-          this.awardsConfig.awards = this.awardsList
+          this.awardsConfig.awards = awards
           this.$apply()
           this.onRun()
         }
       }
     })
   }
+  lottery() {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/lottery/${this.level}`,
+      method: 'GET',
+      header: {
+        AuthrizeOpenId: this.$parent.globalData.openId
+      },
+      success: data => {
+        console.log(data)
+        // if (data.data.success) {
+        //   this.turntableData = data.data.data.big_turn_table_prizes
+        //   console.log(this.turntableData)
+        //   // 获取到的数据拼装成转盘要求的数据
+        //   let awardsData = {}
+        //   let awards = []
+        //   for (let i = 0; i < this.turntableData.length; i++) {
+        //     awardsData = {}
+        //     awardsData.index = this.turntableData[i].id
+        //     awardsData.name = this.turntableData[i].name
+        //     awards.push(awardsData)
+        //   }
+        //   this.awardsConfig.awards = awards
+        //   this.$apply()
+        //   this.onRun()
+        // }
+      }
+    })
+  }
+
   clickLottery() {
     // 生成结果 0到6的随机数{后面通过传至或者在此处请求转盘结果控制}
     var awardIndex = (Math.random() * 6) >>> 0
@@ -494,9 +526,11 @@ export default class Game extends wepy.page {
 
       // 颜色间隔
       if (i % 2 === 0) {
-        ctx.setFillStyle('rgba(255,184,32,.1)')
+        ctx.setFillStyle('#e44025')
+        // ctx.setFillStyle('rgba(255,184,32,.1)')
       } else {
-        ctx.setFillStyle('rgba(255,203,63,.1)')
+        // ctx.setFillStyle('rgba(255,203,63,.1)')
+        ctx.setFillStyle('#e44025')
       }
 
       // 填充扇形
@@ -517,6 +551,7 @@ export default class Game extends wepy.page {
     }
     // 将获取到装盘的数据存入Data
     this.awardsList = html
+    this.$apply()
   }
 }
 </script>
