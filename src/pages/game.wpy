@@ -161,9 +161,7 @@
   height: inherit;
   z-index: 9999;
 }
-// .con .canvas-item:nth-child(2){
-//   background-color: #000;
-// }
+
 .canvas-item {
   position: absolute;
   left: 0;
@@ -526,18 +524,19 @@ export default class Game extends wepy.page {
 
       // 颜色间隔
       if (i % 2 === 0) {
-        ctx.setFillStyle('#e44025')
+        ctx.setFillStyle('#000')
         // ctx.setFillStyle('rgba(255,184,32,.1)')
       } else {
         // ctx.setFillStyle('rgba(255,203,63,.1)')
-        ctx.setFillStyle('#e44025')
+        ctx.setFillStyle('#000')
       }
 
       // 填充扇形
       ctx.fill()
       // 绘制边框
       ctx.setLineWidth(0.5)
-      ctx.setStrokeStyle('rgba(228,55,14,.1)')
+      // ctx.setStrokeStyle('rgba(228,55,14,.1)')
+      ctx.setStrokeStyle('#fff')
       ctx.stroke()
 
       // 恢复前一个状态
