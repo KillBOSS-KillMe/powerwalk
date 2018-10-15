@@ -285,21 +285,6 @@
             <image src="/img/star{{item}}.png" />
           </view>
           <view></view>
-          <!-- <view>
-            <image src="/img/star1.png" />
-          </view>
-          <view></view>
-          <view>
-            <image src="/img/star1.png" />
-          </view>
-          <view></view>
-          <view>
-            <image src="/img/star1.png" />
-          </view>
-          <view></view>
-          <view>
-            <image src="/img/star1.png" />
-          </view> -->
         </block>
       </view>
       <view class="number">
