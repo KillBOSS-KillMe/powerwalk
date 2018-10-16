@@ -37,7 +37,7 @@ page{
   align-items: center;
   justify-content: center;
 }
-.headCon view:nth-child(3) view{
+.headCon view:nth-child(3) button{
   width: 200rpx;
   height: 60rpx;
   line-height: 60rpx;
@@ -86,12 +86,28 @@ page{
   <view>
     <view class="head">
       <view class="headCon">
-        <view>账户余额(元)</view>
-        <view>0.00</view>
-        <view>
-          <view>立即充值</view>
-        </view>
+        <form bindsubmit='upDataMoney'>
+          <view>账户余额(元)</view>
+          <view>
+            <input class="inputs" type='digit' name="upDataM" placeholder="输入充值金额" />
+          </view>
+          <view>
+            <!-- <view>立即充值</view> -->
+            <button formType="submit" class="btn">充值</button>
+          </view>
+        </form>
       </view>
+      <!-- <form bindsubmit='upDataMoney'>
+          <view class="money">
+              ￥
+              <input class="inputs" type='digit' name="upDataM" placeholder="输入充值金额" />
+          </view>
+          <view class="balance">
+              当前余额
+              <text class="money_text">{{balance}}</text>元
+          </view>
+          <button formType="submit" class="btn">充值</button>
+        </form> -->
     </view>
     <view class="description">
       <view class="descriptionCon">
@@ -124,7 +140,10 @@ page{
 <script>
 import wepy from 'wepy'
 import nav from '../components/nav' // 底部导航
+// 校验封装
+import check from '../mixins/check'
 export default class Balance extends wepy.page {
+  mixins = [check]
   config = {
     'navigationBarTitleText': '我的余额'
   };
@@ -143,7 +162,88 @@ export default class Balance extends wepy.page {
     goPage (url, evt) {
       // 销毁当前页{跳转}
       this.$redirect(url)
+    },
+    // 提交数据
+    async upDataMoney(event) {
+      // 提现金额
+      var upDataM = event.detail.value.upDataM
+      // 红包余额
+      var balance = this.balance
+      if (this.check.isNull(upDataM)) {
+        wepy.showModal({
+          title: '',
+          content: '请输入金额',
+          showCancel: false
+        })
+        return
+      }
+      if (this.check.isMoney(upDataM)) {
+        wepy.showModal({
+          title: '',
+          content: '请输入正确金额',
+          showCancel: false
+        })
+        return
+      }
+      upDataM = parseFloat(upDataM)
+      if (upDataM <= 0) {
+        wepy.showModal({
+          title: '',
+          content: '金额不可小于等于0',
+          showCancel: false
+        })
+        return
+      }
+      upDataM = parseFloat(upDataM)
+      balance = parseFloat(balance)
+      await wepy.login().then(res => {
+        this.code = res.code
+      })
+      // loading图片显示
+      this.loadingImgShow = true
+      this.$apply()
+      await wx.request({
+        url: `${this.$parent.globalData.requestUrl}/shop/balance_in`,
+        method: 'POST',
+        data: {
+          code: this.code,
+          in: upDataM
+        },
+        success: data => {
+          wx.requestPayment({
+            'timeStamp': data.data.data.timestamp,
+            'nonceStr': data.data.data.nonceStr,
+            'package': data.data.data.package,
+            'signType': data.data.data.signType,
+            'paySign': data.data.data.paySign,
+            'success': data => {
+              // loading图片隐藏
+              this.loadingImgShow = false
+              this.$apply()
+              balance += upDataM
+              wepy.showModal({
+                title: '',
+                content: '充值成功',
+                showCancel: false
+              })
+              // 两秒后返回上一页
+              setTimeout(e => {
+                wx.navigateBack({ changed: true })
+              }, 2000)
+            },
+            'fail': data => {
+              wepy.showModal({
+                title: '',
+                content: '充值失败',
+                showCancel: false
+              })
+            }
+          })
+          this.$parent.globalData.shopInfo.balance = balance
+        }
+      })
     }
+  };
   };
   async onLoad(options) {};
 }

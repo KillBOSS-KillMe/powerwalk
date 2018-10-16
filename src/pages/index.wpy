@@ -375,7 +375,7 @@ export default class Index extends wepy.page {
       data: {
         code: this.code,
         name: this.userInfo.nickName,
-        profile: this.userInfo.avatarUrl
+        profile: this.userInfo.avatarUrl,
         recommender_id: this.inviteUserId
       },
       success: function (data) {}

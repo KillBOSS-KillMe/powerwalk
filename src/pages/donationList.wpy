@@ -114,7 +114,7 @@
       </view>
     </view>
     <view class="list">
-      <view class="listCon">
+      <view class="listCon" @tap="goDonation">
         <view class="info">
           <view class="listTitle">
             帮助特困少年上学
@@ -206,5 +206,9 @@ export default class Donationlist extends wepy.page {
   async onLoad(options) {
   
   };
+  // 进入详情页
+  goDonation() {
+    this.$navigate('/pages/donation')
+  }
 }
 </script>
