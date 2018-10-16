@@ -304,7 +304,7 @@
             </view>
           </view>
           <!-- <view @tap="clickLottery" class="canvas-btn {{btnDisabled}}">抽奖</view> -->
-          <view @tap="lottery" class="canvas-btn {{btnDisabled}}">抽奖</view>
+          <view @tap="lotteryRun" class="canvas-btn {{btnDisabled}}">抽奖</view>
         </view>
       </view>
       <view class="dataNullTitle" wx:if="{{turntableData.length==0}}">该抽奖无转盘数据</view>
@@ -358,7 +358,8 @@ export default class Game extends wepy.page {
     runDegs: 0,
     btnDisabled: '',
     lottery: null,
-    lotterySta: 0
+    lotterySta: 0,
+    promptInfo: ''
   };
 
   methods = {
@@ -424,8 +425,8 @@ export default class Game extends wepy.page {
       }
     })
   }
-  lottery() {
-    wx.request({
+  async lotteryRun() {
+    await wx.request({
       url: `${this.$parent.globalData.requestUrl}/api/lottery/${this.level}`,
       method: 'GET',
       header: {
@@ -433,48 +434,57 @@ export default class Game extends wepy.page {
       },
       success: data => {
         console.log(data)
-        // if (data.data.success) {
-        //   this.turntableData = data.data.data.big_turn_table_prizes
-        //   console.log(this.turntableData)
-        //   // 获取到的数据拼装成转盘要求的数据
-        //   let awardsData = {}
-        //   let awards = []
-        //   for (let i = 0; i < this.turntableData.length; i++) {
-        //     awardsData = {}
-        //     awardsData.index = this.turntableData[i].id
-        //     awardsData.name = this.turntableData[i].name
-        //     awards.push(awardsData)
-        //   }
-        //   this.awardsConfig.awards = awards
-        //   this.$apply()
-        //   this.onRun()
-        // }
+        if (data.data.success) {
+          this.lotteryData = data.data.data
+          this.lottery = this.lotteryData.big_turn_prize_id
+          // if (this.lotteryData.get_beans === 0) {
+          //   // promptInfo // 提示信息
+          //   this.promptInfo = `恭喜抽中奖品${this.lotteryData.get_goods.name},请到兑换纪录查看`
+          // } else {
+          //   this.promptInfo = `恭喜抽中${this.lotteryData.get_beans}活力豆,请到兑换纪录查看`
+          // }
+          this.$apply()
+          // console.log(`--------${typeof this.lottery}-------------------${this.lottery}`)
+          // this.clickLottery()
+          setTimeout(() => {
+            this.clickLottery()
+          }, 500)
+        }
       }
     })
+    // setTimeout(() => {
+    // await this.clickLottery()
+    // }, 500);
   }
 
   clickLottery() {
+    // 抽奖时直接调用此函数，转盘正常，如果通过其他函数调用，则第一次点击转盘不转动
+    // 待修改
     // 生成结果 0到6的随机数{后面通过传至或者在此处请求转盘结果控制}
-    var awardIndex = (Math.random() * 6) >>> 0
+    // var awardIndex = (Math.random() * 10) >>> 0
     // 装盘结果
-    // var awardIndex = this.lottery
+    console.log(this.lottery)
+    var awardIndex = this.lottery
     if (awardIndex == null) {
+      console.log(awardIndex)
+      console.log(awardIndex == null)
       return
     }
     // 获取奖品配置
     var awardsConfig = this.awardsConfig
-    var runNum = 8
+    var runNum = 12
     // awardIndex未转盘结果ID
     if (awardIndex < 2) awardsConfig.chance = false
     // 旋转抽奖  runDegs：旋转角度
     this.runDegs = this.runDegs || 0
     // runDegs：旋转角度
-    this.runDegs = this.runDegs + (360 - this.runDegs % 360) + (360 * runNum - awardIndex * (360 / 6))
+    this.runDegs = this.runDegs + (360 - this.runDegs % 360) + (360 * runNum - awardIndex * (360 / 10))
     var animationRun = wx.createAnimation({
       duration: 4000,
       timingFunction: 'ease'
     })
     this.animationRun = animationRun
+    console.log(`++++++++++++++++++++++++++++${this.runDegs}`)
     animationRun.rotate(this.runDegs).step()
     this.animationData = animationRun.export()
     this.btnDisabled = 'disabled'
