@@ -332,7 +332,10 @@ export default class User extends wepy.page {
   };
   async onLoad(options) {
     this.userInfo = this.$parent.globalData.userInfo
+    console.log(this.userInfo)
+    this.$apply()
     this.openId = this.$parent.globalData.openId
+    console.log(this.openId)
     if (this.openId) {
       this.loginName = `已登陆`
       this.$apply()

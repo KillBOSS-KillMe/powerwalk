@@ -1,4 +1,8 @@
 <style lang="less">
+page{
+  width: 100%;
+  height: 100%;
+}
 #getUserInfo{
   position: fixed;
   top: 0;
@@ -238,7 +242,7 @@
     </view>
     <!-- 授权按钮部分 -->
     <view>
-      <button open-type="getUserInfo" class='hide {{authorizationButton}}' id='getUserInfo' lang="zh_CN" @getuserinfo="onGotUserInfo">{{time}}</button>
+      <button open-type="getUserInfo" wx:if="{{authorizationButton}}" id='getUserInfo' lang="zh_CN" @getuserinfo="onGotUserInfo">{{time}}</button>
     </view>
     <nav @childFn.user="goPage" />
   </view>
@@ -305,7 +309,7 @@ export default class Index extends wepy.page {
   data = {
     userInfo: null,
     openId: null,
-    authorizationButton: 'hide',
+    authorizationButton: true,
     nextUrl: '',
     commodityList: [],
     encryptedData: null,
@@ -341,17 +345,39 @@ export default class Index extends wepy.page {
     this.userInfo = this.userInfo.rawData
     // 判断用户信息是否为空
     if (this.userInfo) {
-      this.authorizationButton = 'hide'
+      this.authorizationButton = false
       // 数据生效
       this.$apply()
+      // 将用户信息字符串转换为josn
+      this.userInfo = JSON.parse(this.userInfo)
       // 提交用户信息
       this.setUserInfo(this.userInfo)
+      // 登陆
+      this.userLogin(this.userInfo)
+      this.$parent.globalData.userInfo = this.userInfo
+      this.$apply()
     }
-    this.userInfo = await wepy.getUserInfo()
-    this.userInfo = this.userInfo.rawData
-    this.userInfo = JSON.parse(this.userInfo)
-    this.$parent.globalData.userInfo = this.userInfo
-    this.$apply()
+  }
+  // 提交用户信息
+  async setUserInfo(userInfo) {
+    if (this.openId) {
+      return
+    }
+    // 从组件中获取userInfo
+    await wepy.login().then(res => {
+      this.code = res.code
+    })
+    // 发送请求,存储用户信息
+    await wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/userLogin`,
+      method: 'POST',
+      data: {
+        code: this.code,
+        name: this.userInfo.nickName,
+        profile: this.userInfo.avatarUrl
+      },
+      success: function (data) {}
+    })
   }
   /**
    * onLoad
@@ -361,18 +387,7 @@ export default class Index extends wepy.page {
       // 此处请求接口，为分享功能辅助，添加活力豆
     }
     // 获取用户信息
-    // this.userInfo = await wepy.getUserInfo().then(console.log('aaa')).catch(console.log('bbb'))
-    this.userInfo = await wepy.getUserInfo()
-    this.userInfo = this.userInfo.rawData
-    // 判断用户信息是否为空
-    if (this.userInfo) {
-      // 将用户信息字符串转换为josn
-      this.userInfo = JSON.parse(this.userInfo)
-      // 用户登陆
-      this.userLogin(this.userInfo)
-      this.$parent.globalData.userInfo = this.userInfo
-      this.$apply()
-    }
+    this.onGotUserInfo()
     // 获取热门推荐商品列表
     wx.request({
       url: `${this.$parent.globalData.requestUrl}/api/hotGood`,
