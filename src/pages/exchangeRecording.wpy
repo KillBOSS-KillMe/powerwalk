@@ -39,6 +39,9 @@
   height: 70rpx;
   line-height: 90rpx;
   text-align: center;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
 }
 </style>
 <template>
@@ -51,41 +54,50 @@
     <!-- 动力豆 -->
     <view class="list" wx:if="{{selShowData === 'beans'}}">
       <view class="head2">
+        <view>兑换步数</view>
         <view>动力豆</view>
-        <view>动力豆</view>
-        <view>动力豆</view>
+        <view>兑换时间</view>
       </view>
-      <view class="listCon">
-        <view>10000</view>
-        <view>100</view>
-        <view>0000000000</view>
-      </view>
+      <block wx:for="{{beansListData}}" key="index" index="index" item="item">
+          <view class="listCon">
+          <view>{{item.cost_step}}步</view>
+          <view>{{item.get_beans}}豆</view>
+          <view>{{item.created_at}}</view>
+        </view>
+      </block>
+      <view class="dataNullTitle" wx:if="{{beansListData.length==0}}">暂无兑换纪录</view>
     </view>
     <!-- 兑换商品 -->
     <view class="list" wx:if="{{selShowData === 'exchange'}}">
       <view class="head2">
-        <view>兑换商品</view>
-        <view>兑换商品</view>
-        <view>兑换商品</view>
+        <view>商品名</view>
+        <view>兑换个数</view>
+        <view>兑换时间</view>
       </view>
-      <view class="listCon">
-        <view>10000</view>
-        <view>100</view>
-        <view>0000000000</view>
-      </view>
+      <block wx:for="{{exchangeListData}}" key="index" index="index" item="item">
+          <view class="listCon">
+          <view>{{item.good.name}}</view>
+          <view>{{item.num}}</view>
+          <view>{{item.created_at}}</view>
+        </view>
+      </block>
+      <view class="dataNullTitle" wx:if="{{exchangeListData.length==0}}">暂无兑换纪录</view>
     </view>
     <!-- 中奖纪录 -->
     <view class="list" wx:if="{{selShowData === 'winning'}}">
       <view class="head2">
-        <view>中奖纪录</view>
-        <view>中奖纪录</view>
-        <view>中奖纪录</view>
+        <view>奖品名</view>
+        <view>奖品个数</view>
+        <view>中奖时间</view>
       </view>
-      <view class="listCon">
-        <view>10000</view>
-        <view>100</view>
-        <view>0000000000</view>
-      </view>
+      <block wx:for="{{winningListData}}" key="index" index="index" item="item">
+          <view class="listCon">
+          <view>{{item.reward}}</view>
+          <view>1</view>
+          <view>{{item.created_at}}</view>
+        </view>
+      </block>
+      <view class="dataNullTitle" wx:if="{{winningListData.length==0}}">暂无兑换纪录</view>
     </view>
     <nav @childFn.user="goPage" />
   </view>
@@ -106,7 +118,11 @@ export default class Cart extends wepy.page {
   // alias example
   data = {
     userInfo: null,
-    selShowData: 'beans'
+    nextUrl: '',
+    selShowData: 'beans',
+    beansListData: null,
+    exchangeListData: null,
+    winningListData: null
   };
 
   methods = {
@@ -117,13 +133,126 @@ export default class Cart extends wepy.page {
     }
   };
   async onLoad(options) {
-  
+    // 兑换活力豆纪录
+    this.getBeansList()
   };
   // 显示类别切换
   selShow(e) {
     let sel = e.currentTarget.dataset.sel
     this.selShowData = sel
     this.$apply()
+    if (sel === 'beans') {
+      // 兑换活力豆纪录
+      this.getBeansList()
+    } else if (sel === 'exchange') {
+      // 兑换商品纪录
+      this.getExchangeList()
+    } else if (sel === 'winning') {
+      // 中奖纪录纪录
+      this.getWinningList()
+    }
+  }
+  // 兑换活力豆纪录
+  getBeansList() {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/redemptionList`,
+      method: 'GET',
+      header: {
+        AuthrizeOpenId: this.$parent.globalData.openId
+      },
+      success: data => {
+        if (data.data.success) {
+          data = data.data.data.user_redemption_records
+          this.beansListData = data.data
+          this.$apply()
+          // 获取下一页的请求Id
+          if (data.meta.pagination.links.length !== 0) {
+            this.nextUrl = data.meta.pagination.links.next
+          }
+        }
+      }
+    })
+  }
+  // 兑换商品纪录
+  getExchangeList() {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/redemptionGood`,
+      method: 'GET',
+      header: {
+        AuthrizeOpenId: this.$parent.globalData.openId
+      },
+      success: data => {
+        if (data.data.success) {
+          data = data.data.data.order_goods
+          this.exchangeListData = data.data
+          this.$apply()
+          // 获取下一页的请求Id
+          if (data.meta.pagination.links.length !== 0) {
+            this.nextUrl = data.meta.pagination.links.next
+          }
+        }
+      }
+    })
+  }
+  // 中奖纪录纪录
+  getWinningList() {
+    wx.request({
+      // url: this.nextUrl,
+      url: `${this.$parent.globalData.requestUrl}/api/rewardList`,
+      method: 'GET',
+      header: {
+        AuthrizeOpenId: this.$parent.globalData.openId
+      },
+      success: data => {
+        if (data.data.success) {
+          data = data.data.data.rewards
+          this.winningListData = data.data
+          this.$apply()
+          // 获取下一页的请求Id
+          if (data.meta.pagination.links.length !== 0) {
+            this.nextUrl = data.meta.pagination.links.next
+          }
+        }
+      }
+    })
+  }
+
+  onReachBottom() {
+    if (!this.nextUrl) {
+      return
+    }
+    wx.request({
+      url: this.nextUrl,
+      method: 'GET',
+      header: {
+        AuthrizeOpenId: this.$parent.globalData.openId
+      },
+      success: data => {
+        if (data.statusCode === 200) {
+          data = data.data.data
+          if (this.selShowData === 'beans') {
+            // 兑换活力豆纪录
+            let listData = data.user_redemption_records.data
+            // 将新的请求结果加入原有数组  concat连接两个或更多的数组，并返回结果。
+            this.beansListData = this.beansListData.concat(listData)
+          } else if (this.selShowData === 'exchange') {
+            // 兑换商品纪录
+            let listData = data.order_goods.data
+            this.exchangeListData = this.exchangeListData.concat(listData)
+          } else if (this.selShowData === 'winning') {
+            // 中奖纪录纪录
+            let listData = data.user_redemption_records.data
+            this.winningListData = this.winningListData.concat(listData)
+          }
+          this.$apply()
+          this.nextUrl = ''
+          // 更新下一页请求地址
+          if (data.meta.pagination.links.length !== 0) {
+            this.nextUrl = data.meta.pagination.links.next
+          }
+        }
+      }
+    })
   }
 }
 </script>

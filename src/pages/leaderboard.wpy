@@ -219,18 +219,18 @@ page{
         <!-- <image src="/img/index_main.jpg" /> -->
       </view>
       <view class="userImg">
-        <image src="/img/index_main.jpg" />
+        <image src="{{myInfo.user.profile}}" />
       </view>
       <view class="user">
-        <view class="name">名字名字</view>
-        <view class="ranking">第10名</view>
+        <view class="name">{{myInfo.user.nick_name}}</view>
+        <view class="ranking">第{{myInfo.ranking}}名</view>
       </view>
       <view class="count">
-        00000步
+        {{myInfo.step}}步
       </view>
       <view class="steal"></view>
       <view class="like">
-        <view class="likeCount">00000</view>
+        <view class="likeCount">{{myInfo.zan_number}}</view>
         <view class="likeImg">
           <image src="/img/like.png" />
         </view>
@@ -257,8 +257,8 @@ page{
             <image src="/img/steal.png" data-userid="{{item.user.open_id}}" @tap="steal" />
           </view>
           <view class="like">
-            <view class="likeCount">00000</view>
-            <view class="likeImg" @tap="like">
+            <view class="likeCount">{{item.zan_number}}</view>
+            <view class="likeImg" data-userid="{{item.user.id}}" @tap="like">
               <image src="/img/like.png" />
             </view>
           </view>
@@ -284,7 +284,8 @@ export default class Leaderboard extends wepy.page {
   // alias example
   data = {
     userInfo: null,
-    userList: null
+    userList: null,
+    myInfo: null
   };
 
   methods = {
@@ -330,7 +331,8 @@ export default class Leaderboard extends wepy.page {
                                         "created_at": "2018-10-11 00:00:00",
                                         "updated_at": "2018-10-11 00:00:00",
                                         "can_answer": 0
-                                    }
+                                    },
+                                    "zan_number": 100
                                 },
                                 {
                                     "step": 300,
@@ -346,7 +348,8 @@ export default class Leaderboard extends wepy.page {
                                         "created_at": "2018-10-11 00:00:00",
                                         "updated_at": "2018-10-11 00:00:00",
                                         "can_answer": 0
-                                    }
+                                    },
+                                    "zan_number": 100
                                 },
                                 {
                                     "step": 300,
@@ -362,7 +365,8 @@ export default class Leaderboard extends wepy.page {
                                         "created_at": "2018-10-11 00:00:00",
                                         "updated_at": "2018-10-11 00:00:00",
                                         "can_answer": 0
-                                    }
+                                    },
+                                    "zan_number": 100
                                 },
                                 {
                                     "step": 300,
@@ -378,7 +382,8 @@ export default class Leaderboard extends wepy.page {
                                         "created_at": "2018-10-11 00:00:00",
                                         "updated_at": "2018-10-11 00:00:00",
                                         "can_answer": 0
-                                    }
+                                    },
+                                    "zan_number": 100
                                 }
                             ],
                             "meta": {
@@ -396,6 +401,13 @@ export default class Leaderboard extends wepy.page {
                 }
         if (data.data.success) {
           this.userList = data.data.data.user_day_step.data
+          let myOpenId = this.$parent.globalData.openId
+          for (let i in this.userList) {
+            if (myOpenId === this.userList[i].user.open_id) {
+              this.myInfo = this.userList[i]
+              this.myInfo.ranking = i
+            }
+          }
           this.$apply()
           // 获取下一页的请求Id
           this.nextUrl = ''
@@ -430,8 +442,32 @@ export default class Leaderboard extends wepy.page {
     })
   }
   // 给好友点赞
-  like() {
-    console.log('点赞')
+  like(e) {
+    let userId = e.currentTarget.dataset.userid
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/addZan`,
+      method: 'POST',
+      header: {
+        AuthrizeOpenId: this.$parent.globalData.openId
+      },
+      data: {
+        zan_person_id: userId,
+        status: 'zan'
+      },
+      success: data => {
+        if (data.data.success) {
+          wx.showModal({
+            title: '',
+            content: '点赞成功'
+          })
+        } else {
+          wx.showModal({
+            title: '',
+            content: '点赞失败'
+          })
+        }
+      }
+    })
   }
 }
 </script>
