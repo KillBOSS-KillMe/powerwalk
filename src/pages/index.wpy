@@ -315,7 +315,8 @@ export default class Index extends wepy.page {
     encryptedData: null,
     iv: null,
     code: null,
-    todayStep: 0
+    todayStep: 0,
+    inviteUserId: null
   };
 
   methods = {
@@ -375,6 +376,7 @@ export default class Index extends wepy.page {
         code: this.code,
         name: this.userInfo.nickName,
         profile: this.userInfo.avatarUrl
+        recommender_id: this.inviteUserId
       },
       success: function (data) {}
     })
@@ -383,8 +385,9 @@ export default class Index extends wepy.page {
    * onLoad
    */
   async onLoad(options) {
-    if (options.openId) {
+    if (options.userId) {
       // 此处请求接口，为分享功能辅助，添加活力豆
+      this.inviteUserId = options.userId
     }
     // 获取用户信息
     this.onGotUserInfo()

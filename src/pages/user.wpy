@@ -409,7 +409,7 @@ export default class User extends wepy.page {
   }
   // // 分享页面
   onShareAppMessage(res) {
-    let url = `pages/index?openId=${this.$parent.globalData.openId}`
+    let url = `pages/index?userId=${this.$parent.globalData.id}`
     return {
       title: '步行的力量',
       desc: '',
