@@ -424,6 +424,7 @@ export default class Index extends wepy.page {
             success: data => {
               if (data.data.success) {
                 this.todayStep = data.data.data.today_step
+                this.$parent.globalData.todayStep = this.todayStep
                 this.$apply()
               }
             }

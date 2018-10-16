@@ -395,6 +395,7 @@ export default class Challenge extends wepy.page {
     this.userInfo = this.$parent.globalData.userInfo
     // 获取挑战等级及相关数据
     this.getChallengeList()
+    this.upResult()
     // 获取当天时间详情
     let timeData = new Date()
     this.year = timeData.getFullYear()
@@ -427,6 +428,35 @@ export default class Challenge extends wepy.page {
       }
     })
   }
+  // 提交挑战结果
+  upResult() {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/challegeResult`,
+      method: 'POST',
+      header: {
+        AuthrizeOpenId: this.$parent.globalData.openId
+      },
+      data: {
+        step: this.$parent.globalData.todayStep
+      },
+      success: data => {
+        if (data.data.success) {
+          // 控制刮刮卡是否显示
+          let wetherLuckyStar = data.data.data.wether_lucky_star
+          data = data.data.data.challege_result
+          wx.showModal({
+            title: '',
+            content: `挑战${data.status}，获取活力豆${data.get_beans}`
+          })
+        } else {
+          wx.showModal({
+            title: '',
+            content: '挑战失败'
+          })
+        }
+      }
+    })
+  }
   // 选择挑战等级，更改相关数据显示
   levelSel(e) {
     this.index = e.currentTarget.dataset.index
@@ -443,6 +473,7 @@ export default class Challenge extends wepy.page {
       return
     }
     let id = e.currentTarget.dataset.id
+    console.log(id)
     // 发送请求,参加挑战
     wx.request({
       url: `${this.$parent.globalData.requestUrl}/api/challengeRegistration`,
