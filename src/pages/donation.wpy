@@ -26,7 +26,7 @@ page{
   border-radius: 10rpx;
 }
 .progressBar{
-  width: 30%;
+  width: 0%;
   height: 20rpx;
   background-color: #ff7f00;
   border-radius: 10rpx;
@@ -142,8 +142,10 @@ page{
   text-align: right;
 }
 .messageCon{
-  font-size: 30rpx;
-  color: #333;
+  width: 630rpx;
+  font-size: 25rpx;
+  color: #666;
+  margin-top: 20rpx;
 }
 .messageInput{
   height: 80rpx;
@@ -180,36 +182,36 @@ page{
   <view>
     <view class="top">
       <view class="img">
-        <image src="/img/index_main.jpg" />
+        <image src="{{projectData.img}}" />
       </view>
       <!-- 进度条 -->
       <view class="schedule">
-        <view class="progressBar"></view>
+        <view class="progressBar" style="width:{{projectData.schedule}}%"></view>
       </view>
       <view class="dataInfo">
         <view>
-          <view class="data">000,000,00</view>
-          <view class="description">目标:999,999,999</view>
+          <view class="data">{{projectData.toal_step}}</view>
+          <view class="description">目标:{{projectData.goal_step}}</view>
         </view>
         <view>
-          <view class="data">000,000,00</view>
-          <view class="description">爱心:999,999,999</view>
+          <view class="data">{{projectData.person_count}}</view>
+          <view class="description">爱心(份)</view>
         </view>
         <view>
-          <view class="data">300%</view>
+          <view class="data">{{projectData.schedule}}%</view>
           <view class="description">进度</view>
         </view>
       </view>
       <view class="explain">
-        帮助00000000000000就好
+        {{projectData.donate_adress}}
       </view>
     </view>
     <view class="donationExplain">
-      <view class="donationTitle">项目说明项目说明项目说明</view>
-      <view class="donationTitle2">项目说明项目说明项目说明</view>
-      <view class="donationArticle">项目说明项目说明项目说明项目说明项目说明项目说明项目说明项目说明项目说明项目说明项目说明项目说明项目说明项目说明项目说明项目说明项目说明项目说明</view>
+      <view class="donationTitle">项目说明</view>
+      <view class="donationTitle2">{{projectData.name}}</view>
+      <view class="donationArticle">{{projectData.description}}</view>
       <view class="img">
-        <image src="/img/index_main.jpg" />
+        <image src="{{projectData.img}}" />
       </view>
     </view>
     <view class="message">
@@ -224,18 +226,21 @@ page{
           <button formType="submit" class="btn">发表评论</button>
         </view>
       </form>
-      <view class="con">
-        <view>
-          <image src="/img/index_main.jpg" />
-        </view>
-        <view class="messageInfo">
-          <view class="messageUser">
-            <view>明项目</view>
-            <view>时间</view>
+      <block wx:for="{{commentList}}" key="index" index="index" item="item">
+        <view class="con">
+          <view>
+            <image src="{{item.user.profile}}" />
           </view>
-          <view class="messageCon">项目说明项目说明项目说明项目说明项目说明项目说明项目说明项目说明项目说明项目说明项目说明项目说明</view>
+          <view class="messageInfo">
+            <view class="messageUser">
+              <view>{{item.user.name}}</view>
+              <view>{{item.updated_at}}</view>
+            </view>
+            <view class="messageCon">{{item.comment}}</view>
+          </view>
         </view>
-      </view>
+      </block>
+      <view class="dataNullTitle" wx:if="{{commentList.length==0}}">暂无评论</view>
       <form bindsubmit='upDataPace'>
         <view class="messageInput">
           <input type="text" name="pace" value ="" placeholder="剩余步数:{{100}}" />
@@ -252,7 +257,9 @@ page{
 <script>
 import wepy from 'wepy'
 import nav from '../components/nav' // 底部导航
+import check from '../mixins/check'
 export default class Donation extends wepy.page {
+  mixins = [check]
   config = {
     'navigationBarTitleText': '捐赠'
   };
@@ -264,7 +271,10 @@ export default class Donation extends wepy.page {
   // alias example
   data = {
     userInfo: null,
-    commentDom: false
+    commentDom: false,
+    projectId: null,
+    projectData: null,
+    commentList: null
   };
 
   methods = {
@@ -275,7 +285,10 @@ export default class Donation extends wepy.page {
     }
   };
   async onLoad(options) {
-    console.log(options.id)
+    // 获取用户信息
+    this.userInfo = this.$parent.globalData.userInfo
+    console.log(this.userInfo)
+    this.projectId = options.id
     // 获取详情数据
     this.getDonationData(options.id)
   };
@@ -289,30 +302,27 @@ export default class Donation extends wepy.page {
     this.$apply()
   }
   // 获取详情数据
-  getDonationData(id) {
+  getDonationData() {
+    let id = this.projectId
     wx.request({
       url: `${this.$parent.globalData.requestUrl}/api/projectDetail/${id}`,
       method: 'GET',
-      // header: {
-      //   AuthrizeOpenId: this.$parent.globalData.openId
-      // },
-      // data: {
-      //   friend_id: userId,
-      //   message: ''
-      // },
       success: data => {
         console.log(data)
-        // if (data.data.success) {
-        //   wx.showModal({
-        //     title: '',
-        //     content: '请求已发送,等待对方通过'
-        //   })
-        // } else {
-        //   wx.showModal({
-        //     title: '',
-        //     content: data.data.errmsg
-        //   })
-        // }
+        if (data.data.success) {
+          data = data.data.data.project
+          this.commentList = data.comment
+          console.log(this.commentList)
+          this.projectData = data
+          let num = this.projectData.toal_step
+          let total = this.projectData.goal_step
+          this.projectData.schedule = Math.round(num / total * 10000) / 100.00
+          this.$apply()
+        }
+        // goal_step  目标
+        // person_count  目前捐赠的人数
+        // toal_step  目前已经捐赠的步数
+        // description 描述
       }
     })
   }
@@ -320,7 +330,7 @@ export default class Donation extends wepy.page {
   upDataPace(e) {
     // 获取步数
     var pace = e.detail.value.pace
-    if (this.check.isNull(upDataM)) {
+    if (this.check.isNull(pace)) {
       wepy.showModal({
         title: '',
         content: '请输入捐赠步数',
@@ -328,8 +338,7 @@ export default class Donation extends wepy.page {
       })
       return
     }
-    upDataM = parseFloat(upDataM)
-    if (upDataM <= 0) {
+    if (pace <= 0) {
       wepy.showModal({
         title: '',
         content: '步数不可小于等于0',
@@ -337,22 +346,34 @@ export default class Donation extends wepy.page {
       })
       return
     }
+    return
     wx.request({
-      url: `${this.$parent.globalData.requestUrl}/shop/balance_in`,
+      url: `${this.$parent.globalData.requestUrl}/api/donateStep`,
       method: 'POST',
+      header: {
+        AuthrizeOpenId: this.$parent.globalData.openId
+      },
       data: {
-        in: pace
+        donate_step: pace,
+        project_id: this.projectId
       },
       success: data => {
-
+        if (data.data.success) {
+          wx.showModal({
+            title: '',
+            content: '捐赠成功',
+            showCancel: false
+          })
+        }
       } 
     })
   }
   // 提交评论
   upComment(e) {
     // 获取步数
-    var comment = e.detail.value.comment
-    if (this.check.isNull(comment)) {
+    var commentData = e.detail.value.comment
+    console.log(commentData)
+    if (this.check.isNull(commentData)) {
       wepy.showModal({
         title: '',
         content: '请输入评论',
@@ -361,13 +382,28 @@ export default class Donation extends wepy.page {
       return
     }
     wx.request({
-      url: `${this.$parent.globalData.requestUrl}/shop/balance_in`,
+      url: `${this.$parent.globalData.requestUrl}/api/commentProject`,
       method: 'POST',
+      header: {
+        AuthrizeOpenId: this.$parent.globalData.openId
+      },
       data: {
-        in: pace
+        project_id: this.projectId,
+        comment: commentData
       },
       success: data => {
-
+        if (data.data.success) {
+          wx.showModal({
+            title: '',
+            content: '评论成功',
+            showCancel: false
+          })
+          // 隐藏评论发from表单
+          this.commentDom = false
+          this.$apply()
+          // 更新页面数据
+          this.getDonationData()
+        }
       } 
     })
   }

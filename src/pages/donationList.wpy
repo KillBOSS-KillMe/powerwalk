@@ -140,47 +140,7 @@
           </view>
         </view>
       </block>
-      
-      <!-- <view class="listCon">
-        <view class="info">
-          <view class="listTitle">
-            帮助特困少年上学
-          </view>
-          <view class="infoCon">
-            帮助特困少年上学帮助特困少年上学
-          </view>
-          <view class="count">
-            <text>帮助特困</text>少年上学
-          </view>
-          <view class="infoCon">
-            <view>江苏</view>
-            <view>贫困儿童</view>
-          </view>
-        </view>
-        <view class="img">
-          <image src="/img/index_main.jpg" />
-        </view>
-      </view>
-      <view class="listCon">
-        <view class="info">
-          <view class="listTitle">
-            帮助特困少年上学
-          </view>
-          <view class="infoCon">
-            帮助特困少年上学帮助特困少年上学
-          </view>
-          <view class="count">
-            <text>帮助特困</text>少年上学
-          </view>
-          <view class="infoCon">
-            <view>江苏</view>
-            <view>贫困儿童</view>
-          </view>
-        </view>
-        <view class="img">
-          <image src="/img/index_main.jpg" />
-        </view>
-      </view> -->
+      <view class="dataNullTitle" wx:if="{{donationList.length==0}}">暂无捐赠项目</view>
     </view>
     <nav @childFn.user="goPage" />
   </view>
