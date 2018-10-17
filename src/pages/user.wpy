@@ -222,19 +222,19 @@ page{
     <view class="userNav">
       <view class="list" @tap="goAddFriend">
         <view>
-          <image src="/img/cart.png" />
+          <image src="/img/addFriend.png" />
         </view>
         <view>添加好友</view>
       </view>
       <view class="list" @tap="goFriendApplyFor">
         <view>
-          <image src="/img/cart.png" />
+          <image src="/img/friendApply.png" />
         </view>
         <view>好友申请({{applyFor}})</view>
       </view>
       <view class="list" @tap="goFriendList">
         <view>
-          <image src="/img/cart.png" />
+          <image src="/img/friendList.png" />
         </view>
         <view>好友列表</view>
       </view>

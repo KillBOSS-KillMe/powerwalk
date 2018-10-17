@@ -209,7 +209,7 @@ page{
       </view>
     </view>
     <image class="stepCountBg" src="/img/homeBg.png" />
-    <view class="stepPrompt">今日的公益金额已对完,明天早点来哦!</view>
+    <view class="stepPrompt" @tap="goDonationList">今日的公益金额已对完,明天早点来哦!</view>
     <!-- 操作按钮 -->
     <view class="operateButton">
       <view @tap="goExchange">兑换活力豆</view>
@@ -546,6 +546,10 @@ export default class Index extends wepy.page {
       return
     }
     this.$navigate('/pages/leaderboard')
+  }
+  // 公益捐赠列表
+  goDonationList() {
+    this.$navigate('/pages/donationList')
   }
   /**
    * 兑换步数

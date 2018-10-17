@@ -99,6 +99,9 @@
   width: 100rpx;
   height: 50rpx;
   line-height: 50rpx;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
 }
 </style>
 <template>
@@ -114,7 +117,31 @@
       </view>
     </view>
     <view class="list">
-      <view class="listCon" @tap="goDonation">
+      <block wx:for="{{donationList}}" key="index" index="index" item="item">
+        <view class="listCon" data-id="{{item.id}}" @tap="goDonation">
+          <view class="info">
+            <view class="listTitle">
+              {{item.name}}
+            </view>
+            <view class="infoCon">
+              {{item.description}}
+            </view>
+            <view class="count">
+              <text>帮助特困</text>少年上学
+            </view>
+            <view class="infoCon">
+              <view>{{item.donate_adress}}</view>
+              <!-- <view>贫困儿童</view> -->
+              <view>{{item.goal_step}}</view>
+            </view>
+          </view>
+          <view class="img">
+            <image src="{{item.img}}" />
+          </view>
+        </view>
+      </block>
+      
+      <!-- <view class="listCon">
         <view class="info">
           <view class="listTitle">
             帮助特困少年上学
@@ -153,27 +180,7 @@
         <view class="img">
           <image src="/img/index_main.jpg" />
         </view>
-      </view>
-      <view class="listCon">
-        <view class="info">
-          <view class="listTitle">
-            帮助特困少年上学
-          </view>
-          <view class="infoCon">
-            帮助特困少年上学帮助特困少年上学
-          </view>
-          <view class="count">
-            <text>帮助特困</text>少年上学
-          </view>
-          <view class="infoCon">
-            <view>江苏</view>
-            <view>贫困儿童</view>
-          </view>
-        </view>
-        <view class="img">
-          <image src="/img/index_main.jpg" />
-        </view>
-      </view>
+      </view> -->
     </view>
     <nav @childFn.user="goPage" />
   </view>
@@ -193,7 +200,8 @@ export default class Donationlist extends wepy.page {
   };
   // alias example
   data = {
-    userInfo: null
+    userInfo: null,
+    donationList: null
   };
 
   methods = {
@@ -204,11 +212,26 @@ export default class Donationlist extends wepy.page {
   }
   };
   async onLoad(options) {
-  
+    // 获取列表
+    this.getDonationList()
   };
+  // 获取列表
+  getDonationList() {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/projectList`,
+      method: 'GET',
+      success: data => {
+        if (data.data.success) {
+          this.donationList = data.data.data.projects.data
+          this.$apply()
+        }
+      }
+    })
+  }
   // 进入详情页
-  goDonation() {
-    this.$navigate('/pages/donation')
+  goDonation(e) {
+    let id = e.currentTarget.dataset.id
+    this.$navigate(`/pages/donation?id=${id}`)
   }
 }
 </script>
