@@ -226,8 +226,9 @@
   position: absolute;
   top: 220rpx;
   margin-left: 20rpx;
+  margin-bottom: 40rpx;
   width: 670rpx;
-  height: 1200rpx;
+  height: auto;
   background-color: #fcfcfc;
   padding:20rpx;
 }
@@ -297,9 +298,48 @@
   background-color: #f39900;
   margin: 80rpx 160rpx;
 }
+.scratch{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.scratch_wp{
+  border: 1rpx solid #e5e5e5;
+  border-radius: 20rpx;
+  margin:30rpx 22rpx 0 22rpx;
+  padding: 20rpx 60rpx;
+  color: #333;
+  font-size: 23rpx;
+  position:relative;
+  width: 300rpx;
+  height: 200rpx;
+}
+.scratch_wp canvas{
+  position: absolute;
+  top:0;
+  left:0;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+}
+.scratch_wp view{
+  position:absolute;
+  top:0;
+  left:0;
+  width: 100%;
+  height:100%;
+  line-height: 200rpx;
+  text-align: center;
+  color: #fff;
+  font-size: 30rpx;
+  pointer-events:none;
+  background-color: #f39900;
+}
 </style>
 <template>
   <view>
+    
+
     <view class="titleImg">
       <image src="/img/challengeTitle.png" />
       <view @tap="goDonationList">公益捐赠</view>
@@ -363,7 +403,25 @@
       </block>
       <view class="dataNullTitle" wx:if="{{historyList.length==0}}">尚未参加过任何活动</view>
     </view>
-    
+    <view class="bulletBox" wx:if="{{true}}">
+      <view class="bulletBoxTitle">步数契约金</view>
+      <view class="price">
+        <view>10</view>
+        <view>动力豆/人</view>
+      </view>
+      <view class="descriptionTitle">如何赚取步数奖励金？</view>
+      <view class="scratch">
+        <view class="scratch_wp">
+          <canvas canvas-id="scratchCard" class="scratchCard"
+            disable-scroll="false"
+            bindtouchstart="touchStart"
+            bindtouchmove="touchMove"
+            bindtouchend="touchEnd">
+          </canvas>
+          <view class="scratch_txt" style="">恭喜获得二狗子称号</view>
+        </view>
+      </view>
+    </view>
     <view class="bulletBox" wx:if="{{participateDom}}">
       <view class="bulletBoxTitle">步数契约金</view>
       <view class="price">
@@ -397,6 +455,8 @@
 import wepy from 'wepy'
 import nav from '../components/nav' // 底部导航
 // import author from '../components/author' // 授权按钮
+// 刮刮卡功能点,cnavas变量
+const ctx = wx.createCanvasContext('scratchCard')
 export default class Challenge extends wepy.page {
   config = {
     'navigationBarTitleText': '步数挑战'
@@ -421,7 +481,9 @@ export default class Challenge extends wepy.page {
     participateDom: false,
     challengeId: null,
     timer: null,
-    todayStep: 0
+    todayStep: 0,
+    startX: 0, //保存X坐标轴变量(刮刮卡变量)
+    startY: 0 //保存X坐标轴变量(刮刮卡变量)
   };
   methods = {
     // 底部导航跳转
@@ -643,5 +705,37 @@ export default class Challenge extends wepy.page {
   goDonationList() {
     this.$navigate('/pages/donationList')
   }
+  // =================刮刮卡相关函数==============================
+  onReady() {
+    ctx.setFillStyle('#EFEFEF')
+    ctx.fillRect(0, 0, 240, 150.75)
+    ctx.draw()    
+  }
+  touchStart(e){
+    var startX1 = e.changedTouches[0].x
+    var startY1 = e.changedTouches[0].y
+    ctx.save();  //保存当前坐标轴的缩放、旋转、平移信息
+    ctx.beginPath() //开始一个路径 
+    ctx.clearRect(startX1, startY1, 10, 10);
+    ctx.restore();  //恢复之前保存过的坐标轴的缩放、旋转、平移信息
+    
+  }
+  touchMove(e){
+    var startX1 = e.changedTouches[0].x
+    var startY1 = e.changedTouches[0].y
+    ctx.save();  //保存当前坐标轴的缩放、旋转、平移信息
+    ctx.moveTo(this.startX, this.startY);  //把路径移动到画布中的指定点，但不创建线条
+    ctx.clearRect(startX1, startY1,30,30);  //添加一个新点，然后在画布中创建从该点到最后指定点的线条
+    ctx.restore()  //恢复之前保存过的坐标轴的缩放、旋转、平移信息
+    this.startX = startX1;
+    this.startY = startY1;
+    //只是一个记录方法调用的容器，用于生成记录绘制行为的actions数组。context跟<canvas/>不存在对应关系，一个context生成画布的绘制动作数组可以应用于多个<canvas/>
+    wx.drawCanvas({
+      canvasId: 'scratchCard',
+      reserve: true,
+      actions:ctx.getActions() // 获取绘图动作数组
+    })
+  }
+  // ===============================================
 }
 </script>
