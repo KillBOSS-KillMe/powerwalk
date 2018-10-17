@@ -403,13 +403,9 @@
       </block>
       <view class="dataNullTitle" wx:if="{{historyList.length==0}}">尚未参加过任何活动</view>
     </view>
-    <view class="bulletBox" wx:if="{{true}}">
-      <view class="bulletBoxTitle">步数契约金</view>
-      <view class="price">
-        <view>10</view>
-        <view>动力豆/人</view>
-      </view>
-      <view class="descriptionTitle">如何赚取步数奖励金？</view>
+    <view class="bulletBox" wx:if="{{wetherLuckyStar}}">
+      <view class="bulletBoxTitle">挑战成功,获得{{getBeans}}活力豆</view>
+      <view class="descriptionTitle">恭喜成为幸运星,刮开卡片,查看奖品</view>
       <view class="scratch">
         <view class="scratch_wp">
           <canvas canvas-id="scratchCard" class="scratchCard"
@@ -418,7 +414,7 @@
             bindtouchmove="touchMove"
             bindtouchend="touchEnd">
           </canvas>
-          <view class="scratch_txt" style="">恭喜获得二狗子称号</view>
+          <view class="scratch_txt" style="">{{getBeans}}活力豆</view>
         </view>
       </view>
     </view>
@@ -483,7 +479,9 @@ export default class Challenge extends wepy.page {
     timer: null,
     todayStep: 0,
     startX: 0, //保存X坐标轴变量(刮刮卡变量)
-    startY: 0 //保存X坐标轴变量(刮刮卡变量)
+    startY: 0, //保存X坐标轴变量(刮刮卡变量)
+    wetherLuckyStar: false,
+    getBeans: 0
   };
   methods = {
     // 底部导航跳转
@@ -561,12 +559,12 @@ export default class Challenge extends wepy.page {
       }
     })
   }
-  // // 提交挑战结果
+  // 提交挑战结果
   upResult() {
     wx.showModal({
-      title: '',
-      content: `挑战${data.status}，获取活力豆${data.get_beans}`,
-      success: function (res) {
+      title: `当前${this.todayStep}活力豆`,
+      content: `确认提交?`,
+      success: res => {
         if (res.cancel) {
           //点击取消,默认隐藏弹框
         } else {
@@ -580,18 +578,25 @@ export default class Challenge extends wepy.page {
               step: this.todayStep
             },
             success: data => {
+              console.log(data)
               if (data.data.success) {
-                // 控制刮刮卡是否显示  /components/scratch/
+                // 控制刮刮卡是否显示
                 this.wetherLuckyStar = data.data.data.wether_lucky_star
                 data = data.data.data.challege_result
-                wx.showModal({
-                  title: '',
-                  content: `挑战${data.status}，获取活力豆${data.get_beans}`
-                })
+                if (data.data.data.wether_lucky_star) {
+                  this.wetherLuckyStar = data.data.data.wether_lucky_star
+                  this.getBeans = data.get_beans
+                  this.$apply()
+                } else {
+                  wx.showModal({
+                    title: '',
+                    content: `挑战${data.status}，获取活力豆${data.get_beans}`
+                  })
+                }
               } else {
                 wx.showModal({
                   title: '',
-                  content: '挑战失败'
+                  content: data.data.errmsg
                 })
               }
             }
