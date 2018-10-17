@@ -179,6 +179,21 @@
   font-size: 30rpx;
   height: 90rpx;
   line-height: 90rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.reachTitle view{
+  width:160rpx;
+  height:60rpx;
+  line-height:60rpx;
+  font-size:30rpx;
+  text-align:center;
+  color:#fff;
+  margin-left:20rpx;
+  background-color:#f39900;
+  border-radius:15rpx;
+
 }
 .processing {
   height: 490rpx;
@@ -316,31 +331,37 @@
           </view>
         </view>
       </view>
-      <view class="processing showContainer">
-        <view class="signUpTitle">
-          <view>【2018年8月28日/周三】3000步数挑战活动</view>
-          <view>进行中</view>
-        </view>
-        <view class="reachData">10</view>
-        <view class="reachTitle">达成目标</view>
-        <view class="infoContainer">
-          <view class="info">
-            <view class="infoShow">
-              <view>达到3000步</view>
-              <view>50动力豆报</view>
-            </view>
-            <view class="infoShow">
-              <view>达到3000</view>
-              <view>50动力豆</view>
-            </view>
-            <view class="infoShow">
-              <view>达到3000步</view>
-              <view>50动力</view>
+      <block wx:for="{{historyList}}" key="index" index="index" item="item">
+        <view class="processing showContainer">
+          <view class="signUpTitle">
+            <view>【{{item.deadline_date}}】{{item.challege_list.min_step}}步数挑战活动</view>
+            <view>{{item.timeStatus}}</view>
+          </view>
+          <view class="reachData">10</view>
+          <view class="reachTitle">
+            <text wx:if="{{!item.update}}">{{item.status}}</text>
+            <view wx:if="{{item.update}}">提交步数</view>
+          </view>
+          <view class="infoContainer">
+            <view class="info">
+              <view class="infoShow">
+                <view>{{item.challege_list.get_bean}}</view>
+                <view>获得收益</view>
+              </view>
+              <view class="infoShow">
+                <view>{{item.participant_person}}</view>
+                <view>参加人数</view>
+              </view>
+              <view class="infoShow">
+                <view>{{item.allStep}}</view>
+                <view>总奖励金</view>
+              </view>
             </view>
           </view>
+          <view class="thisStatus">您未参加该活动</view>
         </view>
-        <view class="thisStatus">您未参加该活动</view>
-      </view>
+      </block>
+      <view class="dataNullTitle" wx:if="{{historyList.length==0}}">尚未参加过任何活动</view>
     </view>
     
     <view class="bulletBox" wx:if="{{participateDom}}">
@@ -390,6 +411,7 @@ export default class Challenge extends wepy.page {
     userInfo: null,
     level: '1',
     challengeList: null,
+    historyList: null,
     index: 0,
     year: 0,
     month: 0,
@@ -398,7 +420,8 @@ export default class Challenge extends wepy.page {
     remainingTimes: '0小时0分钟0秒',
     participateDom: false,
     challengeId: null,
-    timer: null
+    timer: null,
+    todayStep: 0
   };
   methods = {
     // 底部导航跳转
@@ -410,9 +433,10 @@ export default class Challenge extends wepy.page {
   async onLoad(options) {
     // 获取用户信息
     this.userInfo = this.$parent.globalData.userInfo
+    // 获取当前步数
+    this.todayStep = this.$parent.globalData.todayStep
     // 获取挑战等级及相关数据
     this.getChallengeList()
-    this.upResult()
     // 获取当天时间详情
     let timeData = new Date()
     this.year = timeData.getFullYear()
@@ -431,6 +455,9 @@ export default class Challenge extends wepy.page {
     wx.request({
       url: `${this.$parent.globalData.requestUrl}/api/challegeList`,
       method: 'GET',
+      header: {
+        AuthrizeOpenId: this.$parent.globalData.openId
+      },
       success: data => {
         if (data.data.success) {
           this.challengeList = data.data.data.challeges
@@ -441,39 +468,61 @@ export default class Challenge extends wepy.page {
           // "cost_bean": 500,报名费用(活力豆)
           this.level = this.challengeList[0].id
           this.$apply()
+          this.historyList = data.data.data.user_challege_lists
+          console.log(this.historyList)
+          let thisTime = `${this.year}-${this.month}-${this.date}`
+          thisTime = new Date(thisTime)
+          for (let i in this.historyList) {
+            this.historyList[i].allStep = this.historyList[i].participant_person * this.historyList[i].challege_list.get_bean
+            let date = new Date(this.historyList[i].deadline_date)
+            if (date.getTime() === thisTime.getTime()) {
+              this.historyList[i].timeStatus = '进行中'
+              this.historyList[i].update = true
+            } else if (date.getTime() > thisTime.getTime()) {
+              this.historyList[i].timeStatus = '待开启'
+              this.historyList[i].status = '待开启'
+              this.historyList[i].update = false
+            } else {
+              this.historyList[i].timeStatus = '已结束'
+              this.historyList[i].update = false
+            }
+          }
+          console.log(this.historyList)
+          this.$apply()
+          // allStep
         }
       }
     })
   }
-  // 提交挑战结果
-  upResult() {
-    wx.request({
-      url: `${this.$parent.globalData.requestUrl}/api/challegeResult`,
-      method: 'POST',
-      header: {
-        AuthrizeOpenId: this.$parent.globalData.openId
-      },
-      data: {
-        step: this.$parent.globalData.todayStep
-      },
-      success: data => {
-        if (data.data.success) {
-          // 控制刮刮卡是否显示  /components/scratch/
-          this.wetherLuckyStar = data.data.data.wether_lucky_star
-          data = data.data.data.challege_result
-          wx.showModal({
-            title: '',
-            content: `挑战${data.status}，获取活力豆${data.get_beans}`
-          })
-        } else {
-          wx.showModal({
-            title: '',
-            content: '挑战失败'
-          })
-        }
-      }
-    })
-  }
+  // // 提交挑战结果
+  // upResult() {
+  //   wx.request({
+  //     url: `${this.$parent.globalData.requestUrl}/api/challegeResult`,
+  //     method: 'POST',
+  //     header: {
+  //       AuthrizeOpenId: this.$parent.globalData.openId
+  //     },
+  //     data: {
+  //       step: this.$parent.globalData.todayStep
+  //     },
+  //     success: data => {
+  //       if (data.data.success) {
+  //         // 控制刮刮卡是否显示  /components/scratch/
+  //         this.wetherLuckyStar = data.data.data.wether_lucky_star
+  //         data = data.data.data.challege_result
+  //         wx.showModal({
+  //           title: '',
+  //           content: `挑战${data.status}，获取活力豆${data.get_beans}`
+  //         })
+  //       } else {
+  //         wx.showModal({
+  //           title: '',
+  //           content: '挑战失败'
+  //         })
+  //       }
+  //     }
+  //   })
+  // }
   // 选择挑战等级，更改相关数据显示
   levelSel(e) {
     this.index = e.currentTarget.dataset.index
