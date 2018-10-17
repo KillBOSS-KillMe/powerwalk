@@ -308,6 +308,7 @@ export default class Index extends wepy.page {
   // alias example
   data = {
     userInfo: null,
+    userDetailed: null,
     openId: null,
     authorizationButton: true,
     nextUrl: '',
@@ -357,6 +358,9 @@ export default class Index extends wepy.page {
       this.userLogin(this.userInfo)
       this.$parent.globalData.userInfo = this.userInfo
       this.$apply()
+      // 获取运动步数
+      this.getRunData()
+      
     }
   }
   // 提交用户信息
@@ -378,7 +382,16 @@ export default class Index extends wepy.page {
         profile: this.userInfo.avatarUrl,
         recommender_id: this.inviteUserId
       },
-      success: function (data) {}
+      success: function (data) {
+        if (data.data.success) {
+          // 获取用户信息,及openID  并存入全局
+          this.userInfo = data.data.data.user
+          this.openId = this.userInfo.open_id
+          this.$parent.globalData.userInfo = this.userInfo
+          this.$parent.globalData.openId = this.openId
+          this.$apply()
+        }
+      }
     })
   }
   /**
@@ -389,7 +402,6 @@ export default class Index extends wepy.page {
       // 此处请求接口，为分享功能辅助，添加活力豆
       this.inviteUserId = options.userId
     }
-    // 获取用户信息
     this.onGotUserInfo()
     // 获取热门推荐商品列表
     wx.request({
@@ -408,8 +420,10 @@ export default class Index extends wepy.page {
         }
       }
     })
-    // 获取步数
-    await wx.getWeRunData({
+  }
+  // 获取步数
+  getRunData() {
+    wx.getWeRunData({
       success: res => {
         let encryptedData = res.encryptedData
         let iv = res.iv
@@ -419,6 +433,9 @@ export default class Index extends wepy.page {
           wx.request({
             url: `${this.$parent.globalData.requestUrl}/api/getStepInformation`,
             method: 'POST',
+            header: {
+              AuthrizeOpenId: this.$parent.globalData.openId
+            },
             data: {
               code: code,
               encryptedData: encryptedData,
@@ -435,6 +452,10 @@ export default class Index extends wepy.page {
         })
       }
     })
+  }
+  onShow() {
+    // 获取用户详情信息
+    this.getUserDetailed()
   }
   // 用户登陆
   async userLogin(userInfo) {
@@ -459,6 +480,8 @@ export default class Index extends wepy.page {
           this.$parent.globalData.userInfo = this.userInfo
           this.$parent.globalData.openId = this.openId
           this.$apply()
+          // 获取用户详情信息
+          this.getUserDetailed()
         }
       }
     })
@@ -494,6 +517,27 @@ export default class Index extends wepy.page {
           if (data.meta.pagination.links.length !== 0) {
             this.nextUrl = data.meta.pagination.links.next
           }
+          this.$apply()
+        }
+      }
+    })
+  }
+  // 获取用户详情信息
+  getUserDetailed() {
+    // if (this.$parent.globalData.openId) {
+    //   return
+    // }
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/userInformation`,
+      method: 'GET',
+      header: {
+        AuthrizeOpenId: this.$parent.globalData.openId
+      },
+      success: data => {
+        console.log(data)
+        if (data.data.success) {
+          this.userDetailed = data.data.data
+          this.$parent.globalData.userDetailed = this.userDetailed
           this.$apply()
         }
       }

@@ -243,7 +243,7 @@ page{
       <view class="dataNullTitle" wx:if="{{commentList.length==0}}">暂无评论</view>
       <form bindsubmit='upDataPace'>
         <view class="messageInput">
-          <input type="text" name="pace" value ="" placeholder="剩余步数:{{100}}" />
+          <input type='digit' name="pace" value ="" placeholder="步数10000步可捐赠(当前步数:{{todayStep}})" />
         </view>
         <view class="messageBottom">
           <button formType="submit" class="btn">捐赠</button>
@@ -274,7 +274,8 @@ export default class Donation extends wepy.page {
     commentDom: false,
     projectId: null,
     projectData: null,
-    commentList: null
+    commentList: null,
+    todayStep: 0
   };
 
   methods = {
@@ -287,8 +288,8 @@ export default class Donation extends wepy.page {
   async onLoad(options) {
     // 获取用户信息
     this.userInfo = this.$parent.globalData.userInfo
-    console.log(this.userInfo)
     this.projectId = options.id
+    this.todayStep = this.$parent.globalData.todayStep
     // 获取详情数据
     this.getDonationData(options.id)
   };
@@ -330,6 +331,14 @@ export default class Donation extends wepy.page {
   upDataPace(e) {
     // 获取步数
     var pace = e.detail.value.pace
+    if(this.todayStep < pace) {
+      wepy.showModal({
+        title: '',
+        content: '输入步数大于可捐赠步数',
+        showCancel: false
+      })
+      return
+    }
     if (this.check.isNull(pace)) {
       wepy.showModal({
         title: '',
@@ -346,7 +355,6 @@ export default class Donation extends wepy.page {
       })
       return
     }
-    return
     wx.request({
       url: `${this.$parent.globalData.requestUrl}/api/donateStep`,
       method: 'POST',
@@ -362,6 +370,12 @@ export default class Donation extends wepy.page {
           wx.showModal({
             title: '',
             content: '捐赠成功',
+            showCancel: false
+          })
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg,
             showCancel: false
           })
         }
