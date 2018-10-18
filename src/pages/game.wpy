@@ -425,36 +425,30 @@ export default class Game extends wepy.page {
       }
     })
   }
-  async lotteryRun() {
-    await wx.request({
+  lotteryRun() {
+    this.getlottery()
+  }
+  // 获取抽奖结果
+  getlottery() {
+    wx.request({
       url: `${this.$parent.globalData.requestUrl}/api/lottery/${this.level}`,
       method: 'GET',
       header: {
         AuthrizeOpenId: this.$parent.globalData.openId
       },
       success: data => {
-        console.log(data)
         if (data.data.success) {
           this.lotteryData = data.data.data
-          this.lottery = this.lotteryData.big_turn_prize_id
-          // if (this.lotteryData.get_beans === 0) {
-          //   // promptInfo // 提示信息
-          //   this.promptInfo = `恭喜抽中奖品${this.lotteryData.get_goods.name},请到兑换纪录查看`
-          // } else {
-          //   this.promptInfo = `恭喜抽中${this.lotteryData.get_beans}活力豆,请到兑换纪录查看`
-          // }
+          for (let i in this.awardsConfig.awards) {
+            if (this.awardsConfig.awards[i].index === this.lotteryData.big_turn_prize_id) {
+              this.lottery = i
+              this.clickLottery()
+            }
+          }
           this.$apply()
-          // console.log(`--------${typeof this.lottery}-------------------${this.lottery}`)
-          // this.clickLottery()
-          setTimeout(() => {
-            this.clickLottery()
-          }, 500)
         }
       }
     })
-    // setTimeout(() => {
-    // await this.clickLottery()
-    // }, 500);
   }
   // 转盘转动，反馈结果
   clickLottery() {
@@ -465,11 +459,11 @@ export default class Game extends wepy.page {
     // 装盘结果
     console.log(this.lottery)
     var awardIndex = this.lottery
-    if (awardIndex == null) {
-      console.log(awardIndex)
-      console.log(awardIndex == null)
-      return
-    }
+    // if (awardIndex == null) {
+    //   console.log(awardIndex)
+    //   console.log(awardIndex == null)
+    //   return
+    // }
     // 获取奖品配置
     var awardsConfig = this.awardsConfig
     var runNum = 12
