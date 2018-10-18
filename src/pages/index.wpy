@@ -399,9 +399,7 @@ export default class Index extends wepy.page {
       }
     })
   }
-  /**
-   * onLoad
-   */
+  // onLoad
   async onLoad(options) {
     if (options.userId) {
       // 此处请求接口，为分享功能辅助，添加活力豆
@@ -650,7 +648,7 @@ export default class Index extends wepy.page {
       })
       return
     }
-    if (this.todayStep <== 0) {
+    if (this.todayStep <= 0) {
       wx.showModal({
         title: '',
         content: '步数不足，无法兑换'
