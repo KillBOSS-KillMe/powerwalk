@@ -222,7 +222,7 @@ page{
         <image src="{{myInfo.user.profile}}" />
       </view>
       <view class="user">
-        <view class="name">{{myInfo.user.nick_name}}</view>
+        <view class="name">{{myInfo.user.name}}</view>
         <view class="ranking">第{{myInfo.ranking}}名</view>
       </view>
       <view class="count">
@@ -248,7 +248,7 @@ page{
             <image src="{{item.user.profile}}" />
           </view>
           <view class="user">
-            {{item.user.nick_name}}
+            {{item.user.name}}
           </view>
           <view class="count">
             {{item.step}}步
@@ -310,102 +310,13 @@ export default class Leaderboard extends wepy.page {
         AuthrizeOpenId: this.$parent.globalData.openId
       },
       success: data => {
-        data.data = {
-                    "success": true,
-                    "errcode": 0,
-                    "errmsg": "",
-                    "data": {
-                        "user_day_step": {
-                            "data": [
-                                {
-                                    "step": 300,
-                                    "date": "2018-10-11",
-                                    "user": {
-                                        "id": 3,
-                                        "name": "Zhangyiqing3",
-                                        "profile": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1539347720598&di=a473abbe89ca43f99dc0204945ac9ba3&imgtype=0&src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fq_70%2Cc_zoom%2Cw_640%2Fimages%2F20180614%2Fc99482ef82ba4328a5b01d42e5ec5ec4.jpeg",
-                                        "nick_name": "联盟英雄",
-                                        "beans": 500,
-                                        "recommender_id": 0,
-                                        "open_id": "oL3IY4yhFmFbco9NEjagastFd21p",
-                                        "created_at": "2018-10-11 00:00:00",
-                                        "updated_at": "2018-10-11 00:00:00",
-                                        "can_answer": 0
-                                    },
-                                    "zan_number": 100
-                                },
-                                {
-                                    "step": 300,
-                                    "date": "2018-10-11",
-                                    "user": {
-                                        "id": 3,
-                                        "name": "Zhangyiqing3",
-                                        "profile": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1539347720598&di=a473abbe89ca43f99dc0204945ac9ba3&imgtype=0&src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fq_70%2Cc_zoom%2Cw_640%2Fimages%2F20180614%2Fc99482ef82ba4328a5b01d42e5ec5ec4.jpeg",
-                                        "nick_name": "联盟英雄",
-                                        "beans": 500,
-                                        "recommender_id": 0,
-                                        "open_id": "oL3IY4yhFmFbco9NEjagastFd21p",
-                                        "created_at": "2018-10-11 00:00:00",
-                                        "updated_at": "2018-10-11 00:00:00",
-                                        "can_answer": 0
-                                    },
-                                    "zan_number": 100
-                                },
-                                {
-                                    "step": 300,
-                                    "date": "2018-10-11",
-                                    "user": {
-                                        "id": 3,
-                                        "name": "Zhangyiqing3",
-                                        "profile": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1539347720598&di=a473abbe89ca43f99dc0204945ac9ba3&imgtype=0&src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fq_70%2Cc_zoom%2Cw_640%2Fimages%2F20180614%2Fc99482ef82ba4328a5b01d42e5ec5ec4.jpeg",
-                                        "nick_name": "联盟英雄",
-                                        "beans": 500,
-                                        "recommender_id": 0,
-                                        "open_id": "oL3IY4yhFmFbco9NEjagastFd21p",
-                                        "created_at": "2018-10-11 00:00:00",
-                                        "updated_at": "2018-10-11 00:00:00",
-                                        "can_answer": 0
-                                    },
-                                    "zan_number": 100
-                                },
-                                {
-                                    "step": 300,
-                                    "date": "2018-10-11",
-                                    "user": {
-                                        "id": 3,
-                                        "name": "Zhangyiqing3",
-                                        "profile": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1539347720598&di=a473abbe89ca43f99dc0204945ac9ba3&imgtype=0&src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fq_70%2Cc_zoom%2Cw_640%2Fimages%2F20180614%2Fc99482ef82ba4328a5b01d42e5ec5ec4.jpeg",
-                                        "nick_name": "联盟英雄",
-                                        "beans": 500,
-                                        "recommender_id": 0,
-                                        "open_id": "oL3IY4yhFmFbco9NEjagastFd21p",
-                                        "created_at": "2018-10-11 00:00:00",
-                                        "updated_at": "2018-10-11 00:00:00",
-                                        "can_answer": 0
-                                    },
-                                    "zan_number": 100
-                                }
-                            ],
-                            "meta": {
-                                "pagination": {
-                                    "total": 2,
-                                    "count": 2,
-                                    "per_page": 10,
-                                    "current_page": 1,
-                                    "total_pages": 1,
-                                    "links": []
-                                }
-                            }
-                        }
-                    }
-                }
         if (data.data.success) {
           this.userList = data.data.data.user_day_step.data
           let myOpenId = this.$parent.globalData.openId
           for (let i in this.userList) {
             if (myOpenId === this.userList[i].user.open_id) {
               this.myInfo = this.userList[i]
-              this.myInfo.ranking = i
+              this.myInfo.ranking = parseInt(i) + 1
             }
           }
           this.$apply()

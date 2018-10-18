@@ -456,7 +456,7 @@ export default class Game extends wepy.page {
     // await this.clickLottery()
     // }, 500);
   }
-
+  // 转盘转动，反馈结果
   clickLottery() {
     // 抽奖时直接调用此函数，转盘正常，如果通过其他函数调用，则第一次点击转盘不转动
     // 待修改
@@ -508,6 +508,7 @@ export default class Game extends wepy.page {
       }
     }, 4000)
   }
+  // 转盘初始化
   onRun(e) {
     var awardsConfig = this.awardsConfig
     var len = awardsConfig.awards.length

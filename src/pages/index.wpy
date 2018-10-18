@@ -622,12 +622,16 @@ export default class Index extends wepy.page {
         } else {
           // 点击确定
           wx.request({
-            url: `${this.$parent.globalData.requestUrl}/api/test`,
+            url: `${this.$parent.globalData.requestUrl}/api/stepForBean`,
             method: 'POST',
+            header: {
+              AuthrizeOpenId: this.$parent.globalData.openId
+            },
             data: {
-              code: this.code
+              step: this.todayStep
             },
             success: data => {
+              console.log(data)
               if (data.data.success) {
                 this.$apply()
               }

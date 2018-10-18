@@ -135,20 +135,13 @@ page{
 			</view>
 		</view>
 		<view class="dayShow">
-			<!-- <view class="list dayShowSelected">
-				<view>第1天</view>
-        <view>
-          <image src="/img/beans.png" />
-        </view>
-        <view>+10</view>
-      </view> -->
       <block wx:for="{{7}}" key="index" index="index" item="item">
         <view class="list {{selShowData <= index?'':'dayShowSelected'}}">
           <view>第{{index + 1}}天</view>
           <view>
             <image src="/img/beans1.png" />
           </view>
-          <view>+10</view>
+          <view>+{{100 + index * 50}}</view>
         </view>
       </block>
 		</view>
@@ -191,18 +184,30 @@ export default class Signin extends wepy.page {
     // 签到
     signin() {
       wx.request({
-        url: `${this.$parent.globalData.requestUrl}/api/userSignInformation`,
-        method: 'GET',
+        url: `${this.$parent.globalData.requestUrl}/api/userSignin`,
+        method: 'PUT',
         header: {
           AuthrizeOpenId: this.$parent.globalData.openId
         },
         success: data => {
+          console.log(data)
           if (data.data.success) {
-            this.signinStatus = data.data.data.user_signs[0].status
-            if (this.signinStatus === '已签到') {
-              this.signinClass = 'already'
+            this.continuousDays = data.data.data.continuous_days
+            if (this.continuousDays > 7) {
+              this.selShowData = this.continuousDays%7
+            } else {
+              this.selShowData = this.continuousDays
             }
+            this.getBeans = data.data.data.get_beans
+            this.signinStatus === '已签到'
+            this.signinClass = 'already'
             this.$apply()
+            wx.showModal({
+              title: '',
+              content: `${this.signinStatus}获得${this.getBeans}活力豆`
+            })
+            // 签到信息查询
+            this.getUserSignin()
           }
         }
       })
@@ -211,25 +216,35 @@ export default class Signin extends wepy.page {
   async onLoad(options) {
     this.userInfo = this.$parent.globalData.userInfo
     // 签到信息查询
-    // userSignInformation签到？
+    this.getUserSignin()
+  };
+  // 签到信息查询
+  getUserSignin() {
     wx.request({
-      url: `${this.$parent.globalData.requestUrl}/api/userSignin`,
-      method: 'PUT',
+      url: `${this.$parent.globalData.requestUrl}/api/userSignInformation`,
+      method: 'GET',
       header: {
         AuthrizeOpenId: this.$parent.globalData.openId
       },
       success: data => {
+        console.log(data);
+        
         if (data.data.success) {
-          this.continuousDays = data.data.data.continuous_days
+          if (data.data.data.continuous_day.status == '已签到') {
+            this.signinClass = 'already'
+            this.signinStatus == '已签到'
+          }
+          this.continuousDays = data.data.data.continuous_day.continuous_day
           if (this.continuousDays > 7) {
             this.selShowData = this.continuousDays%7
           } else {
             this.selShowData = this.continuousDays
           }
+          
           this.$apply()
         }
       }
     })
-  };
+  }
 }
 </script>

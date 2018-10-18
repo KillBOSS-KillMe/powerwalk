@@ -132,7 +132,7 @@ page{
             {{item.name}}
           </view>
           <view class="steal" data-id="{{item.id}}" @tap="addfriend">
-            <image src="/img/steal.png" />
+            <image src="/img/friendApply.png" />
           </view>
         </view>
       </block>

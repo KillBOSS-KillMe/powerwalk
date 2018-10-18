@@ -421,7 +421,7 @@
     <view class="bulletBox" wx:if="{{participateDom}}">
       <view class="bulletBoxTitle">步数契约金</view>
       <view class="price">
-        <view>10</view>
+        <view>{{challengeList[index].get_bean}}</view>
         <view>动力豆/人</view>
       </view>
       <view class="descriptionTitle">如何赚取步数奖励金？</view>
@@ -646,6 +646,8 @@ export default class Challenge extends wepy.page {
             title: '',
             content: `${this.challengeList[this.index].min_step}步挑战报名成功`
           })
+          // 刷新页面数据，更细列表
+          this.getChallengeList()
         } else {
           wx.showModal({
             title: '',

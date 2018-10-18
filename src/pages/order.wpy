@@ -139,7 +139,7 @@
               <view class="again" data-index="{{index}}" @tap="againBuy">再次购买</view>
             </view>
             <block wx:for="{{item.order_good}}" key="indexs" index="indexs" wx:for-item="sonitem">
-              <view class="infoTitle" data-id="{{sonitem.id}}" @tap="goCommodity">
+              <view class="infoTitle" data-id="{{sonitem.good.id}}" @tap="goCommodity">
                 {{sonitem.good.name}}
                 <image src="/img/go.png" />
               </view>
@@ -288,6 +288,8 @@ export default class Order extends wepy.page {
   // 进入商品详情
   goCommodity(e) {
     let id = e.currentTarget.dataset.id
+    console.log(id)
+    
     this.$navigate(`/pages/commodity?id=${id}`)
   }
   exchange(e){
