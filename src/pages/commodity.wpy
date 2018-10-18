@@ -225,30 +225,21 @@ page{
         {{commodity.description}}
       </view>
       <view class="descriptionList" wx:if="{{selShowData === 'recording'}}">
-        <view class="list">
-          <view class="user">
-            <image src="/img/index_main.jpg" />
-            名字名字
+        <block wx:for="{{redemptionsList}}" key="index" index="index" item="item">
+          <view class="list">
+            <view class="user">
+              <image src="{{item.user.profile}}" />
+              {{item.user.nick_name}}
+            </view>
+            <view class="info">
+              兑换了<text>{{item.num}}</text>件
+            </view>
+            <view class="time">
+              {{item.created_at}}
+            </view>
           </view>
-          <view class="info">
-            兑换了<text>奖品奖品奖品奖品奖品奖品奖品奖品奖品</text>
-          </view>
-          <view class="time">
-            2小时前
-          </view>
-        </view>
-        <view class="list">
-          <view class="user">
-            <image src="/img/index_main.jpg" />
-            名字名字
-          </view>
-          <view class="info">
-            兑换了<text>奖品奖品奖品奖品奖品奖品奖品奖品奖品</text>
-          </view>
-          <view class="time">
-            2小时前
-          </view>
-        </view>
+        </block>
+        <view class="dataNullTitle" wx:if="{{redemptionsList.length==0}}">暂无兑换纪录</view>
       </view>
     </view>
     <view class="buy">
@@ -286,7 +277,8 @@ export default class Commodity extends wepy.page {
     buyQuantity: 1,
     id: null,
     allPrice: 0,
-    selShowData: 'details'
+    selShowData: 'details',
+    redemptionsList: null
   };
 
   methods = {
@@ -330,6 +322,10 @@ export default class Commodity extends wepy.page {
           data = data.data.data
           this.commodity = data.good
           this.allPrice = this.commodity.price
+          this.redemptionsList = data.good.redemptions
+          for (let i in this.redemptionsList) {
+            this.redemptionsList[i].created_at = this.redemptionsList[i].created_at.split(' ')[0]
+          }
           this.$apply()
         }
       }

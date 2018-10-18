@@ -41,7 +41,7 @@ import wepy from 'wepy'
 import nav from '../components/nav' // 底部导航
 export default class Rule extends wepy.page {
   config = {
-    'navigationBarTitleText': '答题规则'
+    'navigationBarTitleText': '游戏规则'
   };
   // 生命组件ID
   components = {
@@ -53,17 +53,17 @@ export default class Rule extends wepy.page {
     ruleData:[
       {
         'name': 'topic',
-        'img': '/img/index_main.jpg',
+        'img': '/img/topicImg.jpg',
         'articleCon': '答题答题答题答题答题答题答题答题答题答题答题答题答题答题答题'
       },
       {
         'name': 'challenge',
-        'img': '/img/index_main.jpg',
+        'img': '/img/challengeTitle.jpg',
         'articleCon': '挑战挑战挑战挑战挑战挑战挑战挑战挑战挑战挑战挑战'
       },
       {
         'name': 'turntable',
-        'img': '/img/index_main.jpg',
+        'img': '/img/gameTieleImg.jpg',
         'articleCon': '转盘转盘转盘转盘转盘转盘转盘转盘转盘转盘转盘转盘转盘'
       }
     ],

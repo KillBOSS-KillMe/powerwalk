@@ -341,7 +341,7 @@
     
 
     <view class="titleImg">
-      <image src="/img/challengeTitle.png" />
+      <image src="/img/challengeTitle.jpg" />
       <view @tap="goDonationList">公益捐赠</view>
     </view>
     <view class="gradeSel">

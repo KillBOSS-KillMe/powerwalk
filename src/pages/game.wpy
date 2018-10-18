@@ -275,7 +275,7 @@
 <template>
   <view>
     <view class="titleImg">
-      <image src="/img/index_main.jpg" />
+      <image src="/img/gameTieleImg.jpg" />
     </view>
     <view class="turntable">
       <view class="turntableTitle">请选择摇奖区域:</view>

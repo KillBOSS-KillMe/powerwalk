@@ -62,7 +62,7 @@ page{
 <template>
   <view>
     <view class="titleImg">
-      <image src="/img/index_main.jpg" />
+      <image src="/img/helpImg.jpg" />
     </view>
     <view class="list">
       <view class="listCon">
