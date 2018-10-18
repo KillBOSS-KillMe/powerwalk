@@ -277,7 +277,7 @@
 <template>
   <view>
     <view class="titleImg">
-      <image src="/img/gameTieleImg.jpg" />
+      <image src="{{imgUrl}}gameTieleImg.jpg" />
     </view>
     <view class="turntable">
       <view class="turntableTitle">请选择摇奖区域:</view>
@@ -361,7 +361,8 @@ export default class Game extends wepy.page {
     btnDisabled: '',
     lottery: null,
     lotterySta: 0,
-    promptInfo: ''
+    promptInfo: '',
+    imgUrl: ''
   };
 
   methods = {
@@ -372,6 +373,7 @@ export default class Game extends wepy.page {
     }
   };
   async onLoad(options) {
+    this.imgUrl = this.$parent.globalData.imgUrl
     // 获取用户信息
     this.userInfo = this.$parent.globalData.userInfo
     this.getTurntableList()

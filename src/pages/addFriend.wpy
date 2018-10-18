@@ -121,7 +121,7 @@ page{
 <template>
   <view>
     <view class="donationSearch">
-      <form bindsubmit='friendSearch'>
+      <form catchsubmit='friendSearch'>
         <input type="text" name="userName"  placeholder="输入好友昵称查询好友" />
         <button class="image" formType="submit">
           <image src="/img/search.png" />
@@ -137,7 +137,7 @@ page{
           <view class="user">
             {{item.name}}
           </view>
-          <view class="steal" data-id="{{item.id}}" @tap="addfriend">
+          <view class="steal" data-id="{{item.id}}" catchtap="addfriend">
             <image src="/img/addFriend.png" />
           </view>
         </view>
@@ -176,6 +176,7 @@ export default class Addfriend extends wepy.page {
       this.$redirect(url)
     },
     addfriend(e) {
+      console.log('asdfasdfasdf')
       // 添加好友
       let userId = e.currentTarget.dataset.id
       console.log(userId)

@@ -204,7 +204,7 @@ page{
         <view class="commdoityInfoCon">
           <view class="price">
             <image src="/img/beans3.png" />
-            {{commodity.price}}
+            {{commodity.storage}}
           </view>
           <view class="lave">剩余{{commodity.cost_beans}}件</view>
         </view>

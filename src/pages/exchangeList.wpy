@@ -68,7 +68,7 @@
 <template>
   <view>
     <view class="titleImg">
-      <image src="/img/exchangeListTitle.png" />
+      <image src="{{imgUrl}}exchangeListTitle.png" />
     </view>
     <!-- 商品列表 -->
     <view class="commodityList">
@@ -113,7 +113,8 @@ export default class Exchangelist extends wepy.page {
   // alias example
   data = {
     userInfo: null,
-    commodityList: null
+    commodityList: null,
+    imgUrl: ''
   };
 
   methods = {
@@ -124,6 +125,7 @@ export default class Exchangelist extends wepy.page {
     }
   };
   async onLoad(options) {
+    this.imgUrl = this.$parent.globalData.imgUrl
     // 获取商品列表
     wx.request({
       url: `${this.$parent.globalData.requestUrl}/api/goodsList`,

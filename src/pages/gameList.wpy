@@ -150,7 +150,7 @@
         <view>{{costBeans}}</view>
         <view>点击获取答题资格</view>
       </view>
-      <image src="/img/answerBg.png" />
+      <image src="{{imgUrl}}answerBg.png" />
     </view>
     <view class="titleImg challenge">
       <view class="info" data-type="challenge" @tap="goRule">查看规则</view>
@@ -161,7 +161,7 @@
       <view class="goChallenge" @tap="goChallenge">
         <view>开始挑战</view>
       </view>
-      <image class="bg" src="/img/challengeBg.png" />
+      <image class="bg" src="{{imgUrl}}challengeBg.png" />
     </view>
     <view class="turntableTitle">
       <view class="gameName">大转盘</view>
@@ -174,7 +174,7 @@
     </view>
     <view class="turntableTitle" @tap="goGame">
       <view class="info" data-type="turntable" @tap="goRule">查看规则及等级奖品</view>
-      <image src="/img/index_main.jpg" />
+      <image src="{{imgUrl}}challengeBg.png" />
     </view>
     <nav @childFn.user="goPage" />
   </view>
@@ -196,7 +196,8 @@ export default class Gamelist extends wepy.page {
   // alias example
   data = {
     userInfo: null,
-    costBeans: 100
+    costBeans: 100,
+    imgUrl: ''
   };
 
   methods = {
@@ -207,6 +208,7 @@ export default class Gamelist extends wepy.page {
     }
   };
   async onLoad(options) {
+    this.imgUrl = this.$parent.globalData.imgUrl
     // 获取用户信息
     this.userInfo = this.$parent.globalData.userInfo
   };

@@ -208,7 +208,7 @@ page{
         <view class="stepCountPrompt">每日24点清零</view>
       </view>
     </view>
-    <image class="stepCountBg" src="/img/homeBg.png" />
+    <image class="stepCountBg" src="{{imgUrl}}homeBg.png" />
     <view class="stepPrompt" @tap="goDonationList">您的一小步，社会一大步</view>
     <!-- 操作按钮 -->
     <view class="operateButton">
@@ -323,7 +323,8 @@ export default class Index extends wepy.page {
       time: '',
       getBeans: ''
     },
-    broadcastDom: false
+    broadcastDom: false,
+    imgUrl: ''
   };
   methods = {
     // 底部导航跳转
@@ -387,7 +388,7 @@ export default class Index extends wepy.page {
         profile: this.userInfo.avatarUrl,
         recommender_id: this.inviteUserId
       },
-      success: function (data) {
+      success: data => {
         if (data.data.success) {
           // 获取用户信息,及openID  并存入全局
           this.userInfo = data.data.data.user
@@ -401,6 +402,7 @@ export default class Index extends wepy.page {
   }
   // onLoad
   async onLoad(options) {
+    this.imgUrl = this.$parent.globalData.imgUrl
     if (options.userId) {
       // 此处请求接口，为分享功能辅助，添加活力豆
       this.inviteUserId = options.userId

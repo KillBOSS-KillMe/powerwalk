@@ -62,7 +62,7 @@ page{
 <template>
   <view>
     <view class="titleImg">
-      <image src="/img/helpImg.jpg" />
+      <image src="{{imgUrl}}helpImg.jpg" />
     </view>
     <view class="list">
       <view class="listCon">
@@ -113,7 +113,8 @@ export default class Help extends wepy.page {
         'articleCon': '转盘转盘转盘转盘转盘转盘转盘转盘转盘转盘转盘转盘转盘'
       }
     ],
-    selId: null
+    selId: null,
+    imgUrl: ''
   };
   methods = {
     // 底部导航跳转
@@ -122,7 +123,9 @@ export default class Help extends wepy.page {
       this.$redirect(url)
     }
   };
-  async onLoad(options) {};
+  async onLoad(options) {
+    this.imgUrl = this.$parent.globalData.imgUrl
+  };
   selShow(e) {
     this.selId = e.currentTarget.dataset.id
     this.$apply()

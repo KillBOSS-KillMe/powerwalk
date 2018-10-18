@@ -27,7 +27,7 @@
 <template>
   <view>
     <view class="titleImg">
-      <image src="{{showData.img}}" />
+      <image src="{{imgUrl}}{{showData.img}}" />
     </view>
     <view class="article">
       <view class="articleCon">{{showData.articleCon}}</view>
@@ -53,21 +53,22 @@ export default class Rule extends wepy.page {
     ruleData:[
       {
         'name': 'topic',
-        'img': '/img/topicImg.jpg',
+        'img': 'topicImg.jpg',
         'articleCon': '答题答题答题答题答题答题答题答题答题答题答题答题答题答题答题'
       },
       {
         'name': 'challenge',
-        'img': '/img/challengeTitle.jpg',
+        'img': 'challengeTitle.jpg',
         'articleCon': '挑战挑战挑战挑战挑战挑战挑战挑战挑战挑战挑战挑战'
       },
       {
         'name': 'turntable',
-        'img': '/img/gameTieleImg.jpg',
+        'img': 'gameTieleImg.jpg',
         'articleCon': '转盘转盘转盘转盘转盘转盘转盘转盘转盘转盘转盘转盘转盘'
       }
     ],
-    showData: null
+    showData: null,
+    imgUrl: ''
   };
 
   methods = {
@@ -78,6 +79,7 @@ export default class Rule extends wepy.page {
     }
   };
   async onLoad(options) {
+    this.imgUrl = this.$parent.globalData.imgUrl
     let types = options.type
     for (let i in this.ruleData) {
       if (types === this.ruleData[i].name) {
