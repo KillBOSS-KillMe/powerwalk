@@ -211,7 +211,7 @@ page{
         <image src="{{userInfo.profile}}" />
       </view>
       <view>{{userInfo.name}}</view>
-      <view>ID:{{userInfo.id}}</view>
+      <view>活力豆:{{userInfo.beans}}</view>
     </view>
     <view class="userNavT">
       <!-- <view> -->

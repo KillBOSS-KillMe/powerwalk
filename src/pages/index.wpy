@@ -98,7 +98,7 @@ page{
   text-align: center;
   border-bottom: 1rpx solid #e5e5e5;
   margin: 0 auto;
-  margin-top: -50rpx;
+  // margin-top: -50rpx;
   z-index: 10;
 }
 .operateButton{
@@ -194,11 +194,11 @@ page{
 <template>
   <view>
     <!-- 信息通知栏 -->
-    <view class="notice">
+    <view class="notice" wx:if="{{broadcastDom}}">
       <image src="/img/notice.png" />
-      提示信息
-      <text class="name">名字名字</text>
-      提示信息提示信息
+      <text class="name">{{broadcastInfo.name}}</text>
+      {{broadcastInfo.time}}兑换了
+      <text class="name">{{broadcastInfo.getBeans}}</text>
     </view>
     <!-- 步数显示块 -->
     <view class="stepCount">
@@ -209,7 +209,7 @@ page{
       </view>
     </view>
     <image class="stepCountBg" src="/img/homeBg.png" />
-    <view class="stepPrompt" @tap="goDonationList">今日的公益金额已对完,明天早点来哦!</view>
+    <view class="stepPrompt" @tap="goDonationList">您的一小步，社会一大步</view>
     <!-- 操作按钮 -->
     <view class="operateButton">
       <view @tap="goExchange">兑换活力豆</view>
@@ -317,9 +317,14 @@ export default class Index extends wepy.page {
     iv: null,
     code: null,
     todayStep: 0,
-    inviteUserId: null
+    inviteUserId: null,
+    broadcastInfo: {
+      name: '',
+      time: '',
+      getBeans: ''
+    },
+    broadcastDom: false
   };
-
   methods = {
     // 底部导航跳转
     goPage (url, evt) {
@@ -402,6 +407,7 @@ export default class Index extends wepy.page {
       // 此处请求接口，为分享功能辅助，添加活力豆
       this.inviteUserId = options.userId
     }
+    // 获取用户信息
     this.onGotUserInfo()
     // 获取热门推荐商品列表
     wx.request({
@@ -454,6 +460,8 @@ export default class Index extends wepy.page {
     })
   }
   onShow() {
+    // 启动消息播报定时器
+    this.broadcastTime()
     // 获取用户详情信息
     this.getUserDetailed()
   }
@@ -524,9 +532,6 @@ export default class Index extends wepy.page {
   }
   // 获取用户详情信息
   getUserDetailed() {
-    // if (this.$parent.globalData.openId) {
-    //   return
-    // }
     wx.request({
       url: `${this.$parent.globalData.requestUrl}/api/userInformation`,
       method: 'GET',
@@ -563,6 +568,45 @@ export default class Index extends wepy.page {
         this.$apply()
       }
     })
+  }
+  // 消息播报定时器
+  broadcastTime() {
+    // 获取播报消息
+    this.getBroadcast()
+    // 启动定时器
+    this.broadcast = setInterval( e => {
+      // 获取播报消息
+      this.getBroadcast()
+    }, 5000)
+  }
+  // 获取播报消息
+  getBroadcast() {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/redemptionRecords`,
+      method: 'GET',
+      success: data => {
+        if (data.data.success) {
+          data = data.data.data.user_redemption_records
+          this.broadcastInfo.name = data[0].user.name
+          this.broadcastInfo.time = data[0].updated_at.split(' ').pop()
+          this.broadcastInfo.getBeans = `${data[0].get_beans}活力豆`
+          this.broadcastDom = true
+          this.$apply()
+        }
+      }
+    })
+  }
+  // 页面隐藏
+  onHide() {
+    // 清理定时器
+    clearInterval(this.broadcast)
+  }
+  /**
+  * 生命周期函数--监听页面卸载
+  */
+  onUnload() {
+    // 清理定时器
+    clearInterval(this.broadcast)
   }
   /**
    * 进入商品详情页
@@ -606,7 +650,7 @@ export default class Index extends wepy.page {
       })
       return
     }
-    if (this.todayStep === 0) {
+    if (this.todayStep <== 0) {
       wx.showModal({
         title: '',
         content: '步数不足，无法兑换'
@@ -633,7 +677,13 @@ export default class Index extends wepy.page {
             success: data => {
               console.log(data)
               if (data.data.success) {
+                wx.showModal({
+                  title: '',
+                  content: '兑换成功'
+                })
                 this.$apply()
+                // 刷新数据
+                this.onGotUserInfo()
               }
             }
           })

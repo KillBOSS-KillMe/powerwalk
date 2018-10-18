@@ -398,7 +398,7 @@
               </view>
             </view>
           </view>
-          <view class="thisStatus">您未参加该活动</view>
+          <!-- <view class="thisStatus">您未参加该活动</view> -->
         </view>
       </block>
       <view class="dataNullTitle" wx:if="{{historyList.length==0}}">尚未参加过任何活动</view>
