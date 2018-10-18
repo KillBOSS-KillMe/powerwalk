@@ -93,15 +93,13 @@ page{
   justify-content: center;
 }
 .donationSearch input{
-  float: left;
   width: 600rpx;
   height: 80rpx;
   background-color: #eee;
   border-radius: 40rpx 0  0 40rpx;
   padding-left: 30rpx
 }
-.donationSearch button{
-  float: right;
+.donationSearch view{
   width: 100rpx;
   height: 80rpx;
   background-color: #eee;
@@ -121,12 +119,10 @@ page{
 <template>
   <view>
     <view class="donationSearch">
-      <form catchsubmit='friendSearch'>
-        <input type="text" name="userName"  placeholder="输入好友昵称查询好友" />
-        <button class="image" formType="submit">
-          <image src="/img/search.png" />
-        </button>
-      </form>
+      <input type="text" name="userName" bindinput="getUserName"  placeholder="输入好友昵称查询好友" />
+      <view class="image" @tap="friendSearch">
+        <image src="/img/search.png" />
+      </view>
     </view>
     <view class="myInfo friendRanking">
       <block wx:for="{{userList}}" key="index" index="index" item="item">
@@ -166,7 +162,8 @@ export default class Addfriend extends wepy.page {
   data = {
     userInfo: null,
     nextUrl: '',
-    userList: null
+    userList: null,
+    userName: ''
   };
 
   methods = {
@@ -234,13 +231,18 @@ export default class Addfriend extends wepy.page {
       }
     })
   }
+  // 获取文本框中的值
+  getUserName(e) {
+    this.userName = e.detail.value
+    this.$apply()
+  }
   // 搜索用户
   friendSearch(e) {
+    console.log(this.userName)
     // 获取值,并去掉前后空格
-    let userName = e.detail.value.userName
+    let userName = this.userName
     // 去前后空格
     userName = this.trim(userName)
-    console.log(userName)
     if (this.check.isNull(userName)) {
       wepy.showModal({
         title: '',
@@ -260,7 +262,6 @@ export default class Addfriend extends wepy.page {
         nick_name: userName
       },
       success: data => {
-        console.log(data)
         if (data.data.success) {
           data = data.data.data.users
           this.userList = data.data
