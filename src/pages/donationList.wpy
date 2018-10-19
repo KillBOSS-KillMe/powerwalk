@@ -142,7 +142,7 @@
       </block>
       <view class="dataNullTitle" wx:if="{{donationList.length==0}}">暂无捐赠项目</view>
     </view>
-    <nav @childFn.user="goPage" />
+    <!-- <nav @childFn.user="goPage" /> -->
   </view>
 </template>
 

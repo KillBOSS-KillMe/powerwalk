@@ -194,7 +194,7 @@ page{
         </view>
       </form>
     </view>
-    <nav @childFn.user="goPage" />
+    <!-- <nav @childFn.user="goPage" /> -->
   </view>
 </template>
 

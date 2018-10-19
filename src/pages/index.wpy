@@ -386,7 +386,8 @@ export default class Index extends wepy.page {
         code: this.code,
         name: this.userInfo.nickName,
         profile: this.userInfo.avatarUrl,
-        recommender_id: this.inviteUserId
+        recommender_id: this.inviteUserId,
+        nick_name: this.userInfo.nickName
       },
       success: data => {
         if (data.data.success) {
@@ -478,7 +479,8 @@ export default class Index extends wepy.page {
       data: {
         code: this.code,
         name: this.userInfo.nickName,
-        profile: this.userInfo.avatarUrl
+        profile: this.userInfo.avatarUrl,
+        nick_name: this.userInfo.nickName
       },
       success: data => {
         if (data.data.success) {

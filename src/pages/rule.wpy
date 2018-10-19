@@ -32,7 +32,7 @@
     <view class="article">
       <view class="articleCon">{{showData.articleCon}}</view>
     </view>
-    <nav @childFn.user="goPage" />
+    <!-- <nav @childFn.user="goPage" /> -->
   </view>
 </template>
 

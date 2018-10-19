@@ -253,7 +253,7 @@ page{
       </view>
       <view class="exchange" @tap="goExchange">立即兑换</view>
     </view>
-    <nav @childFn.user="goPage" />
+    <!-- <nav @childFn.user="goPage" /> -->
   </view>
 </template>
 

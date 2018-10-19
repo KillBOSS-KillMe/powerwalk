@@ -150,7 +150,7 @@ page{
 			<!-- 删除already属性，即为可点击状态 -->
       <view class="{{signinClass}}" @tap="signin">{{signinStatus}}</view>
 		</view>
-    <nav @childFn.user="goPage" />
+    <!-- <nav @childFn.user="goPage" /> -->
   </view>
 </template>
 

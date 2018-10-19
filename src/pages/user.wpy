@@ -405,7 +405,8 @@ export default class User extends wepy.page {
       data: {
         code: this.code,
         name: this.userInfo.nickName,
-        profile: this.userInfo.avatarUrl
+        profile: this.userInfo.avatarUrl,
+        nick_name: this.userInfo.nickName
       },
       success: function (data) {}
     })
