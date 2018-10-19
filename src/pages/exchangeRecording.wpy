@@ -164,6 +164,9 @@ export default class Cart extends wepy.page {
         if (data.data.success) {
           data = data.data.data.user_redemption_records
           this.beansListData = data.data
+          for (let i in this.beansListData) {
+            this.beansListData[i].created_at = this.beansListData[i].created_at.split(' ')[0]
+          }
           this.$apply()
           // 获取下一页的请求Id
           if (data.meta.pagination.links.length !== 0) {
@@ -185,6 +188,9 @@ export default class Cart extends wepy.page {
         if (data.data.success) {
           data = data.data.data.order_goods
           this.exchangeListData = data.data
+          for (let i in this.exchangeListData) {
+            this.exchangeListData[i].created_at = this.exchangeListData[i].created_at.split(' ')[0]
+          }
           this.$apply()
           // 获取下一页的请求Id
           if (data.meta.pagination.links.length !== 0) {
@@ -207,6 +213,9 @@ export default class Cart extends wepy.page {
         if (data.data.success) {
           data = data.data.data.rewards
           this.winningListData = data.data
+          for (let i in this.winningListData) {
+            this.winningListData[i].created_at = this.winningListData[i].created_at.split(' ')[0]
+          }
           this.$apply()
           // 获取下一页的请求Id
           if (data.meta.pagination.links.length !== 0) {

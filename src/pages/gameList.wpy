@@ -174,7 +174,7 @@
     </view>
     <view class="turntableTitle" @tap="goGame">
       <view class="info" data-type="turntable" @tap="goRule">查看规则及等级奖品</view>
-      <image src="{{imgUrl}}challengeBg.png" />
+      <image src="{{imgUrl}}turntable.jpg" />
     </view>
     <nav @childFn.user="goPage" />
   </view>

@@ -12,7 +12,6 @@
   width: 750rpx;
   height: 870rpx;
   border-radius: 20rpx;
-  background-color: #d2d3d0;
   margin: 40rpx 0 130rpx 0;
 }
 .turntableTitle{
@@ -279,7 +278,7 @@
     <view class="titleImg">
       <image src="{{imgUrl}}gameTieleImg.jpg" />
     </view>
-    <view class="turntable">
+    <view class="turntable" style="background-image: url({{imgUrl}}turntable.jpg)">
       <view class="turntableTitle">请选择摇奖区域:</view>
       <view class="sel">
         <block wx:for="{{turntableList}}" key="index" index="index" item="item">

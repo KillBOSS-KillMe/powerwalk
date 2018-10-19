@@ -413,7 +413,7 @@
             bindtouchmove="touchMove"
             bindtouchend="touchEnd">
           </canvas>
-          <view class="scratch_txt" style="">{{getBeans}}活力豆</view>
+          <view class="scratch_txt" style="">{{100}}活力豆</view>
         </view>
       </view>
     </view>
@@ -579,15 +579,15 @@ export default class Challenge extends wepy.page {
               step: this.todayStep
             },
             success: data => {
-              console.log(data)
               if (data.data.success) {
                 // 控制刮刮卡是否显示
-                // this.wetherLuckyStar = data.data.data.wether_lucky_star
                 data = data.data.data.challege_result
                 if (data.data.data.wether_lucky_star) {
                   this.wetherLuckyStar = data.data.data.wether_lucky_star
                   this.getBeans = data.get_beans
                   this.$apply()
+                  // 获取刮刮卡结果
+                  this.clickGuaGua()
                 } else {
                   wx.showModal({
                     title: '',
@@ -602,6 +602,21 @@ export default class Challenge extends wepy.page {
               }
             }
           })
+        }
+      }
+    })
+  }
+  // 获取刮刮卡结果
+  clickGuaGua() {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/clickGuaGua`,
+      method: 'GET',
+      header: {
+        AuthrizeOpenId: this.$parent.globalData.openId
+      },
+      success: data => {
+        if (data.data.success) {
+            this.getBeans = data.get_beans
         }
       }
     })

@@ -107,13 +107,13 @@
 <template>
   <view>
     <view class="donationTitle">
-      凝聚<text>000000000</text>份爱心
+      凝聚<text>{{totalPersonCount}}</text>份爱心
     </view>
     <!-- search -->
     <view class="donationSearch">
-      <input type="text"  placeholder="查询公益项目" />
+      <input type="text" bindinput="getName"  placeholder="查询公益项目" />
       <view class="image">
-        <image src="/img/search.png" />
+        <image src="/img/search.png" @tap="searchProject" />
       </view>
     </view>
     <view class="list">
@@ -149,10 +149,12 @@
 <script>
 import wepy from 'wepy'
 import nav from '../components/nav' // 底部导航
+import check from '../mixins/check'
 export default class Donationlist extends wepy.page {
   config = {
     'navigationBarTitleText': '爱心捐赠'
   };
+  mixins = [check]
   // 生命组件ID
   components = {
   // 底部导航
@@ -162,7 +164,9 @@ export default class Donationlist extends wepy.page {
   data = {
     userInfo: null,
     donationList: null,
-    commodityImgUrl: ''
+    commodityImgUrl: '',
+    totalPersonCount: 0,
+    projectsName: ''
   };
 
   methods = {
@@ -185,6 +189,46 @@ export default class Donationlist extends wepy.page {
       success: data => {
         if (data.data.success) {
           this.donationList = data.data.data.projects.data
+          this.totalPersonCount = data.data.data.total_person_count
+          this.$apply()
+        }
+      }
+    })
+  }
+  // 获取文本框中的值
+  getName(e) {
+    this.projectsName = e.detail.value
+    this.$apply()
+  }
+  // 搜索项目
+  searchProject(e) {
+    console.log(this.projectsName)
+    // 获取值,并去掉前后空格
+    let projectsName = this.projectsName
+    // 去前后空格
+    projectsName = this.trim(projectsName)
+    if (this.check.isNull(projectsName)) {
+      wepy.showModal({
+        title: '',
+        content: '请输入好友昵称',
+        showCancel: false
+      })
+      return
+    }
+    // 请求
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/allUsersSearch`,
+      method: 'GET',
+      header: {
+        AuthrizeOpenId: this.$parent.globalData.openId
+      },
+      data: {
+        name: projectsName
+      },
+      success: data => {
+        if (data.data.success) {
+          data = data.data.data.users
+          this.userList = data.data
           this.$apply()
         }
       }
