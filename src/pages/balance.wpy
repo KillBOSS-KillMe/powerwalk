@@ -122,7 +122,7 @@ page{
         </view>
       </view>
     </view>
-    <nav @childFn.user="goPage" />
+    <!-- <nav @childFn.user="goPage" /> -->
   </view>
 </template>
 <script>
@@ -231,7 +231,7 @@ export default class Balance extends wepy.page {
         }
       })
     }
-    onLoad() {};
   };
+  onLoad() {};
 }
 </script>

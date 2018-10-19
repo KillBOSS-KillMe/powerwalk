@@ -100,7 +100,7 @@ page{
       </block>
       <view class="dataNullTitle" wx:if="{{userList.length==0}}">没有好友</view>
     </view>
-    <nav @childFn.user="goPage" />
+    <!-- <nav @childFn.user="goPage" /> -->
   </view>
 </template>
 
