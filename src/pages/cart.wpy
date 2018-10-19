@@ -350,8 +350,6 @@ export default class Cart extends wepy.page {
       this.$apply()
     },
     quantityDown(e) {
-      // 剩余商品数量
-      let storage = e.currentTarget.dataset.storage
       // 商品数量
       let num = e.currentTarget.dataset.num
       // 下标
@@ -371,7 +369,7 @@ export default class Cart extends wepy.page {
       this.cartIndex = e.detail.value
       this.allPrice = this.getAllPrice()
     },
-    selectAddss(){
+    selectAddss() {
       this.$navigate('/pages/addssList?type=select')
     },
     // 删除购物车中的商品
@@ -401,7 +399,7 @@ export default class Cart extends wepy.page {
       })
     },
     // 兑换
-    exchange(){
+    exchange() {
       if (this.allPrice > this.userInfo.beans) {
         wx.showModal({
           title: '',
@@ -540,7 +538,6 @@ export default class Cart extends wepy.page {
       success: data => {
         if (data.statusCode === 200) {
           let withdrawList = data.data.data
-          let allTime = ''
           // 将新的请求结果加入原有数组  concat连接两个或更多的数组，并返回结果。
           this.withdrawList = this.withdrawList.concat(withdrawList)
           this.$apply()

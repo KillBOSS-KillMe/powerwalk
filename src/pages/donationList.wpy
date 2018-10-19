@@ -165,11 +165,11 @@ export default class Donationlist extends wepy.page {
   };
 
   methods = {
-  // 底部导航跳转
-  goPage (url, evt) {
-    // 销毁当前页{跳转}
-    this.$redirect(url)
-  }
+    // 底部导航跳转
+    goPage(url, evt) {
+      // 销毁当前页{跳转}
+      this.$redirect(url)
+    }
   };
   async onLoad(options) {
     // 获取列表

@@ -477,8 +477,8 @@ export default class Challenge extends wepy.page {
     challengeId: null,
     timer: null,
     todayStep: 0,
-    startX: 0, //保存X坐标轴变量(刮刮卡变量)
-    startY: 0, //保存X坐标轴变量(刮刮卡变量)
+    startX: 0, // 保存X坐标轴变量(刮刮卡变量)
+    startY: 0, // 保存X坐标轴变量(刮刮卡变量)
     wetherLuckyStar: false,
     getBeans: 0,
     imgUrl: ''
@@ -567,7 +567,7 @@ export default class Challenge extends wepy.page {
       content: `确认提交?`,
       success: res => {
         if (res.cancel) {
-          //点击取消,默认隐藏弹框
+          // 点击取消,默认隐藏弹框
         } else {
           wx.request({
             url: `${this.$parent.globalData.requestUrl}/api/challegeResult`,
@@ -605,7 +605,6 @@ export default class Challenge extends wepy.page {
         }
       }
     })
-    
   }
   // 选择挑战等级，更改相关数据显示
   levelSel(e) {
@@ -614,7 +613,7 @@ export default class Challenge extends wepy.page {
     this.$apply()
   }
   // 参加挑战
-  participateShow(e){
+  participateShow(e) {
     this.challengeId = e.currentTarget.dataset.id
     this.participateDom = true
     this.$apply()
@@ -675,28 +674,32 @@ export default class Challenge extends wepy.page {
   // 剩余时间倒计时，内涵定时器，注意清理
   time(times) {
     this.timer = null
-    this.timer = setInterval( e => {
-    let day = 0
-    let hour = 0
-    let minute = 0
-    let second = 0
-    if(times > 0){
-      hour = parseInt(times / 1000 / 60 / 60 % 24, 10)
-      minute = parseInt(times / 1000 / 60 % 60, 10)
-      second = parseInt(times / 1000 % 60, 10)
-    }
-    if (hour <= 9) hour = '0' + hour
-    if (minute <= 9) minute = '0' + minute
-    if (second <= 9) second = '0' + second
+    this.timer = setInterval((e) => {
+      let hour = 0
+      let minute = 0
+      let second = 0
+      if (times > 0) {
+        hour = parseInt(times / 1000 / 60 / 60 % 24, 10)
+        minute = parseInt(times / 1000 / 60 % 60, 10)
+        second = parseInt(times / 1000 % 60, 10)
+      }
+      if (hour <= 9) {
+        hour = '0' + hour
+      }
+      if (minute <= 9) {
+        minute = '0' + minute
+      }
+      if (second <= 9) {
+        second = '0' + second
+      }
       this.remainingTimes = `${hour}小时${minute}分钟${second}秒`
       this.$apply()
-      times -= 1000;
-    }, 1000);
-    if(times<=0){
+      times -= 1000
+    }, 1000)
+    if (times <= 0) {
       clearInterval(this.timer)
     }
   }
-
   // 页面隐藏
   onHide() {
     // 清理定时器
@@ -717,31 +720,38 @@ export default class Challenge extends wepy.page {
   onReady() {
     ctx.setFillStyle('#EFEFEF')
     ctx.fillRect(0, 0, 240, 150.75)
-    ctx.draw()    
+    ctx.draw()
   }
-  touchStart(e){
+  touchStart(e) {
     var startX1 = e.changedTouches[0].x
     var startY1 = e.changedTouches[0].y
-    ctx.save();  //保存当前坐标轴的缩放、旋转、平移信息
-    ctx.beginPath() //开始一个路径 
-    ctx.clearRect(startX1, startY1, 10, 10);
-    ctx.restore();  //恢复之前保存过的坐标轴的缩放、旋转、平移信息
-    
+    // 保存当前坐标轴的缩放、旋转、平移信息
+    ctx.save()
+    // 开始一个路径
+    ctx.beginPath()
+    ctx.clearRect(startX1, startY1, 10, 10)
+    // 恢复之前保存过的坐标轴的缩放、旋转、平移信息
+    ctx.restore()
   }
-  touchMove(e){
+  touchMove(e) {
     var startX1 = e.changedTouches[0].x
     var startY1 = e.changedTouches[0].y
-    ctx.save();  //保存当前坐标轴的缩放、旋转、平移信息
-    ctx.moveTo(this.startX, this.startY);  //把路径移动到画布中的指定点，但不创建线条
-    ctx.clearRect(startX1, startY1,30,30);  //添加一个新点，然后在画布中创建从该点到最后指定点的线条
-    ctx.restore()  //恢复之前保存过的坐标轴的缩放、旋转、平移信息
-    this.startX = startX1;
-    this.startY = startY1;
-    //只是一个记录方法调用的容器，用于生成记录绘制行为的actions数组。context跟<canvas/>不存在对应关系，一个context生成画布的绘制动作数组可以应用于多个<canvas/>
+    // 保存当前坐标轴的缩放、旋转、平移信息
+    ctx.save()
+    // 把路径移动到画布中的指定点，但不创建线条
+    ctx.moveTo(this.startX, this.startY)
+    // 添加一个新点，然后在画布中创建从该点到最后指定点的线条
+    ctx.clearRect(startX1, startY1, 30, 30)
+    // 恢复之前保存过的坐标轴的缩放、旋转、平移信息
+    ctx.restore()
+    this.startX = startX1
+    this.startY = startY1
+    // 只是一个记录方法调用的容器，用于生成记录绘制行为的actions数组。context跟<canvas/>不存在对应关系，一个context生成画布的绘制动作数组可以应用于多个<canvas/>
     wx.drawCanvas({
       canvasId: 'scratchCard',
       reserve: true,
-      actions:ctx.getActions() // 获取绘图动作数组
+      // 获取绘图动作数组
+      actions: ctx.getActions()
     })
   }
   // ===============================================

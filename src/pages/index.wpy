@@ -40,7 +40,7 @@ page{
 }
 
 .stepCount{
-  margin-top: 50rpx;
+  // margin-top: 50rpx;
   width: 100%;
   height: 500rpx;
   display: flex;
@@ -228,7 +228,7 @@ page{
             <view class="info">
               <view class="beans">
                 <image src="/img/beans3.png" />
-                {{item.price}}
+                {{item.storage}}
               </view>
               <view class="operating">
                 <image src="/img/setCart.png" />
@@ -272,27 +272,27 @@ page{
 // this.$navigate(url)
 
 
-  // 水平垂直居中
-  // display: flex;
-  // align-items: center;
-  // justify-content: center;
+// 水平垂直居中
+// display: flex;
+// align-items: center;
+// justify-content: center;
 
-  // 居右
-  // flex-direction:row;
-  // justify-content:flex-end
+// 居右
+// flex-direction:row;
+// justify-content:flex-end
 
 // vertical-align:middle;
 
-  // overflow:hidden;
-  // text-overflow:ellipsis;
-  // white-space:nowrap;
+// overflow:hidden;
+// text-overflow:ellipsis;
+// white-space:nowrap;
 
-  // 自动换行
-  // word-break:break-all;
+// 自动换行
+// word-break:break-all;
 
-  // overflow:hidden;
-  // text-overflow:ellipsis;
-  // white-space:nowrap;
+// overflow:hidden;
+// text-overflow:ellipsis;
+// white-space:nowrap;
 <script>
 import wepy from 'wepy'
 import nav from '../components/nav' // 底部导航
@@ -366,7 +366,6 @@ export default class Index extends wepy.page {
       this.$apply()
       // 获取运动步数
       this.getRunData()
-      
     }
   }
   // 提交用户信息
@@ -400,8 +399,7 @@ export default class Index extends wepy.page {
       }
     })
   }
-  // onLoad
-  async onLoad(options) {
+  onLoad(options) {
     this.imgUrl = this.$parent.globalData.imgUrl
     if (options.userId) {
       // 此处请求接口，为分享功能辅助，添加活力豆
@@ -495,9 +493,7 @@ export default class Index extends wepy.page {
     })
   }
   onLaunch() {};
-  /**
-   * 页面上拉触底事件的处理函数
-   */
+  // 页面上拉触底事件的处理函数
   async onReachBottom() {
     if (!this.nextUrl) {
       this.prompt = false
@@ -574,7 +570,7 @@ export default class Index extends wepy.page {
     // 获取播报消息
     this.getBroadcast()
     // 启动定时器
-    this.broadcast = setInterval( e => {
+    this.broadcast = setInterval((e) => {
       // 获取播报消息
       this.getBroadcast()
     }, 5000)
@@ -587,11 +583,13 @@ export default class Index extends wepy.page {
       success: data => {
         if (data.data.success) {
           data = data.data.data.user_redemption_records
-          this.broadcastInfo.name = data[0].user.name
-          this.broadcastInfo.time = data[0].updated_at.split(' ').pop()
-          this.broadcastInfo.getBeans = `${data[0].get_beans}活力豆`
-          this.broadcastDom = true
-          this.$apply()
+          if (data.length != 0) {
+            this.broadcastInfo.name = data[0].user.name
+            this.broadcastInfo.time = data[0].updated_at.split(' ').pop()
+            this.broadcastInfo.getBeans = `${data[0].get_beans}活力豆`
+            this.broadcastDom = true
+            this.$apply()
+          }
         }
       }
     })
@@ -601,16 +599,12 @@ export default class Index extends wepy.page {
     // 清理定时器
     clearInterval(this.broadcast)
   }
-  /**
-  * 生命周期函数--监听页面卸载
-  */
+  // 生命周期函数--监听页面卸载
   onUnload() {
     // 清理定时器
     clearInterval(this.broadcast)
   }
-  /**
-   * 进入商品详情页
-   */
+  // 进入商品详情页
   goCommodity(e) {
     if (!this.openId) {
       wx.showModal({
@@ -622,9 +616,7 @@ export default class Index extends wepy.page {
     let id = e.currentTarget.dataset.id
     this.$navigate(`/pages/commodity?id=${id}`)
   }
-  /**
-   * 进入好友排行榜页
-   */
+  // 进入好友排行榜页
   goLeaderboard() {
     if (!this.openId) {
       wx.showModal({
@@ -639,9 +631,7 @@ export default class Index extends wepy.page {
   goDonationList() {
     this.$navigate('/pages/donationList')
   }
-  /**
-   * 兑换步数
-   */
+  // 兑换步数
   goExchange() {
     if (!this.openId) {
       wx.showModal({

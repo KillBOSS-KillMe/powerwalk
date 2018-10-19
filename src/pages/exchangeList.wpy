@@ -81,7 +81,7 @@
             <view class="info">
               <view class="beans">
                 <image src="/img/beans3.png" />
-                {{item.price}}
+                {{item.storage}}
               </view>
               <view class="operating">
                 <image src="/img/setCart.png" />

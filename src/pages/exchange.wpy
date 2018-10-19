@@ -252,7 +252,7 @@ export default class Exchange extends wepy.page {
       this.buyQuantity -= 1
       this.$apply()
     },
-    selectAddss(){
+    selectAddss() {
       this.$navigate('/pages/addssList?type=select')
     }
   };
@@ -295,7 +295,7 @@ export default class Exchange extends wepy.page {
     wx.request({
       url: `${this.$parent.globalData.requestUrl}/api/redeemNow`,
       method: 'POST',
-      header:{
+      header: {
         AuthrizeOpenId: this.$parent.globalData.openId
       },
       data: {

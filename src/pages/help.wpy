@@ -96,7 +96,7 @@ export default class Help extends wepy.page {
   };
   // alias example
   data = {
-    helpData:[
+    helpData: [
       {
         'id': 1,
         'name': 'topic',

@@ -187,11 +187,11 @@ export default class Order extends wepy.page {
   };
 
   methods = {
-  // 底部导航跳转
-  goPage (url, evt) {
-    // 销毁当前页{跳转}
-    this.$redirect(url)
-  }
+    // 底部导航跳转
+    goPage(url, evt) {
+      // 销毁当前页{跳转}
+      this.$redirect(url)
+    }
   };
   async onLoad(options) {
     // 获取用户信息
@@ -252,9 +252,9 @@ export default class Order extends wepy.page {
       content: '再次购买收货地址为默认地址',
       success: res => {
         if (res.cancel) {
-            //点击取消,默认隐藏弹框
-            // 不执行购买
-            return
+          // 点击取消,默认隐藏弹框
+          // 不执行购买
+          // return
         } else {
           // 兑换
           this.exchange(e)
@@ -288,11 +288,9 @@ export default class Order extends wepy.page {
   // 进入商品详情
   goCommodity(e) {
     let id = e.currentTarget.dataset.id
-    console.log(id)
-    
     this.$navigate(`/pages/commodity?id=${id}`)
   }
-  exchange(e){
+  exchange(e) {
     // 获取订单列表数据数组下标
     let index = e.currentTarget.dataset.index
     // 在所有订单数据中拿出当前当前点击的订单数据

@@ -50,7 +50,7 @@ export default class Rule extends wepy.page {
   };
   // alias example
   data = {
-    ruleData:[
+    ruleData: [
       {
         'name': 'topic',
         'img': 'topicImg.jpg',

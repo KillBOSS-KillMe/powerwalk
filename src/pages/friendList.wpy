@@ -124,7 +124,6 @@ export default class Friendlist extends wepy.page {
     nextUrl: '',
     userList: null
   };
-
   methods = {
     // 底部导航跳转
     goPage (url, evt) {
@@ -138,8 +137,8 @@ export default class Friendlist extends wepy.page {
         content: '确定删除好友?',
         success: res => {
           if (res.cancel) {
-              //点击取消,默认隐藏弹框
-              return
+            // 点击取消,默认隐藏弹框
+            // return
           } else {
             let userId = e.currentTarget.dataset.id
             wx.request({
@@ -166,9 +165,8 @@ export default class Friendlist extends wepy.page {
               }
             })
           }
-         }
+        }
       })
-      
     }
   };
   async onLoad(options) {
@@ -187,7 +185,6 @@ export default class Friendlist extends wepy.page {
         AuthrizeOpenId: this.$parent.globalData.openId
       },
       success: data => {
-        console.log(data)
         if (data.data.success) {
           // data = data.data.data.users
           data = data.data.data.friends
@@ -199,7 +196,6 @@ export default class Friendlist extends wepy.page {
           if (data.meta.pagination.links.length !== 0) {
             this.nextUrl = data.meta.pagination.links.next
           }
-          
         }
       }
     })

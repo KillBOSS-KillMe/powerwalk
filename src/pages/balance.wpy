@@ -97,17 +97,6 @@ page{
           </view>
         </form>
       </view>
-      <!-- <form bindsubmit='upDataMoney'>
-          <view class="money">
-              ￥
-              <input class="inputs" type='digit' name="upDataM" placeholder="输入充值金额" />
-          </view>
-          <view class="balance">
-              当前余额
-              <text class="money_text">{{balance}}</text>元
-          </view>
-          <button formType="submit" class="btn">充值</button>
-        </form> -->
     </view>
     <view class="description">
       <view class="descriptionCon">
@@ -136,7 +125,6 @@ page{
     <nav @childFn.user="goPage" />
   </view>
 </template>
-
 <script>
 import wepy from 'wepy'
 import nav from '../components/nav' // 底部导航
@@ -243,8 +231,7 @@ export default class Balance extends wepy.page {
         }
       })
     }
+    onLoad() {};
   };
-  async onLoad(options) {};
-};
-  
+}
 </script>

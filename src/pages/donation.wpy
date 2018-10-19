@@ -296,7 +296,7 @@ export default class Donation extends wepy.page {
   };
   // 控制评论from表单是否显示
   commentDomShow() {
-    if (this.commentDom){
+    if (this.commentDom) {
       this.commentDom = false
     } else {
       this.commentDom = true
@@ -332,7 +332,7 @@ export default class Donation extends wepy.page {
   upDataPace(e) {
     // 获取步数
     var pace = e.detail.value.pace
-    if(this.todayStep < pace) {
+    if (this.todayStep < pace) {
       wepy.showModal({
         title: '',
         content: '输入步数大于可捐赠步数',
@@ -380,7 +380,7 @@ export default class Donation extends wepy.page {
             showCancel: false
           })
         }
-      } 
+      }
     })
   }
   // 提交评论
@@ -419,7 +419,7 @@ export default class Donation extends wepy.page {
           // 更新页面数据
           this.getDonationData()
         }
-      } 
+      }
     })
   }
 }

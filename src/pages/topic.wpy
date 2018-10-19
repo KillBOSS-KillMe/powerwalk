@@ -418,14 +418,14 @@ export default class Challenge extends wepy.page {
     this.$apply()
     if (selAnswer === answer) {
       // 正确
-      setTimeout( e => {
+      setTimeout((e) => {
         this.correct = true
         this.$apply()
       }, 2000)
       this.correctNumber += 1
     } else {
       // 错了
-      setTimeout( e => {
+      setTimeout((e) => {
         this.error = true
         this.$apply()
       }, 2000)
@@ -442,7 +442,7 @@ export default class Challenge extends wepy.page {
     this.correctStatus = '' // 答对样式
     this.errorStatus = '' // 答错样式
     this.$apply()
-    if (this.index < this.topicList.length -1) {
+    if (this.index < this.topicList.length - 1) {
       this.index += 1
       // 获取题目难度等级，并返回控制显示的字符串
       this.getDiffcult()
@@ -462,7 +462,7 @@ export default class Challenge extends wepy.page {
   // 倒计时
   countdownTime() {
     // 启动定时器
-    this.countdown = setInterval( e => {
+    this.countdown = setInterval((e) => {
       this.time -= 0.1
       this.time = this.time.toFixed(1)
       if (this.time <= 0) {
