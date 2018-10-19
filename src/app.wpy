@@ -130,8 +130,6 @@ export default class extends wepy.app {
     // 图片资源--线下
     imgUrl: 'http://walk.beaconway.cn/storage/images/',
     commodityImgUrl: 'http://walk.beaconway.cn/storage/',
-    // 图片资源--线上
-    // imgUrl: 'https://test.beaconway.cn',
     userShopInfo: null,
     shopInfo: null,
     guangGao: null,
