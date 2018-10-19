@@ -341,6 +341,39 @@ export default class Leaderboard extends wepy.page {
       }
     })
   }
+  // 页面上拉触底事件的处理函数
+  async onReachBottom() {
+    if (!this.nextUrl) {
+      return
+    }
+    await wx.request({
+      url: this.nextUrl,
+      method: 'GET',
+      header: {
+        AuthrizeOpenId: this.$parent.globalData.openId
+      },
+      success: data => {
+        if (data.statusCode === 200) {
+          let userList = data.data.data.user_day_step.data
+          let myOpenId = this.$parent.globalData.openId
+          for (let i in this.userList) {
+            if (myOpenId === this.userList[i].user.open_id) {
+              this.myInfo = this.userList[i]
+              this.myInfo.ranking = parseInt(i) + 1
+            }
+          }
+          // 将新的请求结果加入原有数组  concat连接两个或更多的数组，并返回结果。
+          this.userList = this.userList.concat(userList)
+          this.$apply()
+          this.nextUrl = ''
+          // 更新下一页请求地址
+          if (data.meta.pagination.links.length !== 0) {
+            this.nextUrl = data.meta.pagination.links.next
+          }
+        }
+      }
+    })
+  }
   // 偷取步数
   steal(e) {
     let userId = e.currentTarget.dataset.userid
