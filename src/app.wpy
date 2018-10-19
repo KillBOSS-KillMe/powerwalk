@@ -124,9 +124,9 @@ export default class extends wepy.app {
     openId: null,
     code: null,
     // 线下
-    requestUrl: 'http://140.143.203.12:8090',
+    // requestUrl: 'http://140.143.203.12:8090',
     // 线上
-    // requestUrl: 'http://walk.beaconway.cn',
+    requestUrl: 'http://walk.beaconway.cn',
     // 图片资源--线下
     imgUrl: 'http://walk.beaconway.cn/storage/images/',
     commodityImgUrl: 'http://walk.beaconway.cn/storage/',

@@ -582,7 +582,7 @@ export default class Challenge extends wepy.page {
               console.log(data)
               if (data.data.success) {
                 // 控制刮刮卡是否显示
-                this.wetherLuckyStar = data.data.data.wether_lucky_star
+                // this.wetherLuckyStar = data.data.data.wether_lucky_star
                 data = data.data.data.challege_result
                 if (data.data.data.wether_lucky_star) {
                   this.wetherLuckyStar = data.data.data.wether_lucky_star
