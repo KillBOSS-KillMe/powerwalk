@@ -340,7 +340,10 @@ export default class User extends wepy.page {
       this.loginName = `已登陆`
       this.$apply()
     }
+    // 请求好友申请个数
     this.getApplyFor()
+    // 获取用户信息
+    this.getUserDetailed()
   };
   // 显示邀请框
   showInvite() {
@@ -407,7 +410,26 @@ export default class User extends wepy.page {
       success: function (data) {}
     })
   }
-  // // 分享页面
+  // 获取用户详情信息
+  getUserDetailed() {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/userInformation`,
+      method: 'GET',
+      header: {
+        AuthrizeOpenId: this.$parent.globalData.openId
+      },
+      success: data => { 
+        if (data.data.success) {
+          this.userDetailed = data.data.data
+          this.userInfo.beans = this.userDetailed.user.beans
+          this.$parent.globalData.userInfo = this.userInfo
+          this.$parent.globalData.userDetailed = this.userDetailed
+          this.$apply()
+        }
+      }
+    })
+  }
+  // 分享页面
   onShareAppMessage(res) {
     let url = `pages/index?userId=${this.$parent.globalData.id}`
     return {

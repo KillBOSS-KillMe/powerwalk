@@ -91,7 +91,7 @@ page{
             <image src="{{item.from.profile}}" />
           </view>
           <view class="user">
-            {{item.from.nick_name}}
+            {{item.from.name}}
           </view>
           <view class="steal" data-id="{{item.from.id}}" data-status="disagree" @tap="applyOperating">
             <image src="/img/delete.png" />
@@ -144,7 +144,6 @@ export default class Friendapplyfor extends wepy.page {
       } else {
         statusShow = '拒绝申请操作成功'
       }
-      console.log(userId)
       wx.request({
         url: `${this.$parent.globalData.requestUrl}/api/agreeOrDisagree`,
         method: 'POST',

@@ -182,7 +182,7 @@ page{
   <view>
     <view class="top">
       <view class="img">
-        <image src="{{projectData.img}}" />
+        <image src="{{commodityImgUrl + projectData.img}}" />
       </view>
       <!-- 进度条 -->
       <view class="schedule">
@@ -211,7 +211,7 @@ page{
       <view class="donationTitle2">{{projectData.name}}</view>
       <view class="donationArticle">{{projectData.description}}</view>
       <view class="img">
-        <image src="{{projectData.img}}" />
+        <image src="{{commodityImgUrl + projectData.img}}" />
       </view>
     </view>
     <view class="message">
@@ -275,7 +275,8 @@ export default class Donation extends wepy.page {
     projectId: null,
     projectData: null,
     commentList: null,
-    todayStep: 0
+    todayStep: 0,
+    commodityImgUrl: ''
   };
 
   methods = {
@@ -288,6 +289,7 @@ export default class Donation extends wepy.page {
   async onLoad(options) {
     // 获取用户信息
     this.userInfo = this.$parent.globalData.userInfo
+    this.commodityImgUrl = this.$parent.globalData.commodityImgUrl
     this.projectId = options.id
     // 获取当前步数
     this.todayStep = this.$parent.globalData.todayStep

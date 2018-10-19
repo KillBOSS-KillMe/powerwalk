@@ -394,6 +394,11 @@ export default class Leaderboard extends wepy.page {
           })
           // 获取我的好友，排名(更新列表数据)
           this.getFriendLeaderBoard()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
         }
       }
     })

@@ -20,7 +20,7 @@
   border:2rpx solid #f39900;
   color: #f39900;
   border-radius: 30rpx;
-  color: #333;
+  color: #f39900;
   font-size: 30rpx;
 }
 .gradeSel{

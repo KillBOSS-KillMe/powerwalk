@@ -136,7 +136,7 @@
             </view>
           </view>
           <view class="img">
-            <image src="{{item.img}}" />
+            <image src="{{commodityImgUrl + item.img}}" />
           </view>
         </view>
       </block>
@@ -161,7 +161,8 @@ export default class Donationlist extends wepy.page {
   // alias example
   data = {
     userInfo: null,
-    donationList: null
+    donationList: null,
+    commodityImgUrl: ''
   };
 
   methods = {
@@ -172,6 +173,7 @@ export default class Donationlist extends wepy.page {
     }
   };
   async onLoad(options) {
+    this.commodityImgUrl = this.$parent.globalData.commodityImgUrl
     // 获取列表
     this.getDonationList()
   };

@@ -536,8 +536,7 @@ export default class Index extends wepy.page {
       header: {
         AuthrizeOpenId: this.$parent.globalData.openId
       },
-      success: data => {
-        console.log(data)
+      success: data => { 
         if (data.data.success) {
           this.userDetailed = data.data.data
           this.$parent.globalData.userDetailed = this.userDetailed

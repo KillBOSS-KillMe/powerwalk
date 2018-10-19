@@ -310,20 +310,20 @@
       <!-- 答错 -->
       <view class="comeOn" wx:if="{{error}}">
         <view class="comeOnTitleImg">
-          <image src="/img/comeOn.png" />
+          <image src="{{imgUrl}}comeOn.png" />
         </view>
         <view class="comeOnCon">失败乃成功之母</view>
         <view class="comeOnConButton">
           <view @tap="nextQuestion">下一题</view>
         </view>
         <view  class="comeOnBottonImg">
-          <image src="/img/comeOn1.png" />
+          <image src="{{imgUrl}}comeOn1.png" />
         </view>
       </view>
       <!-- 答对 -->
       <view class="congratulations" wx:if="{{correct}}">
         <view class="congsTitleImg">
-          <image src="/img/congratulations1.png" />
+          <image src="{{imgUrl}}congratulations1.png" />
         </view>
         <view class="congCon">再接再厉</view>
         <view class="congCons">20活力豆已经发放</view>
@@ -364,7 +364,8 @@ export default class Challenge extends wepy.page {
     answer: '', // 答案
     diffcultShowData: '00000', // 控制题目难度等级字符串
     correctNumber: 0, // 答对题目个数
-    submitStatus: false // 分数是否提交
+    submitStatus: false, // 分数是否提交
+    imgUrl: ''
   };
 
   methods = {
@@ -376,6 +377,7 @@ export default class Challenge extends wepy.page {
   };
   async onLoad(options) {
     this.userInfo = this.$parent.globalData.userInfo
+    this.imgUrl = this.$parent.globalData.imgUrl
     this.$apply()
     // 获取题目数据列表
     this.getTopicList()
@@ -453,10 +455,17 @@ export default class Challenge extends wepy.page {
     } else {
       wx.showModal({
         title: '',
-        content: '题目已答完'
+        content: '题目已答完,是否提交结果',
+        success: res => {
+          if (res.cancel) {
+            // 点击取消,默认隐藏弹框
+          } else {
+            // 点击确定
+            // 提交答题结果
+            this.submitResult()
+          }
+        }
       })
-      // 提交答题结果
-      this.submitResult()
     }
   }
   // 倒计时
@@ -504,7 +513,20 @@ export default class Challenge extends wepy.page {
       data: {
         right_answers: this.correctNumber
       },
-      success: data => {}
+      success: data => {
+        console.log(data)
+        if (data.data.success) {
+          wx.showModal({
+            title: '',
+            content: '答题完成,活力豆已发放'
+          })
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
     })
   }
   // 获取题目数据列表

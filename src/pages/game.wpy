@@ -450,6 +450,12 @@ export default class Game extends wepy.page {
             }
           }
           this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg,
+            showCancel: false
+          })
         }
       }
     })

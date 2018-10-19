@@ -238,8 +238,6 @@ export default class Gamelist extends wepy.page {
       success: data => {
         if (data.data.success) {
           this.topicList = data.data.data.question_list
-          // 获取题目难度等级，并返回控制显示的字符串
-          this.getDiffcult()
           this.$apply()
         }
       }
