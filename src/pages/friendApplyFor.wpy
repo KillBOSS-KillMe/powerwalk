@@ -93,10 +93,10 @@ page{
           <view class="user">
             {{item.from.name}}
           </view>
-          <view class="steal" data-id="{{item.from.id}}" data-status="disagree" @tap="applyOperating">
+          <view class="steal" data-id="{{item.id}}" data-status="disagree" @tap="applyOperating">
             <image src="/img/delete.png" />
           </view>
-          <view class="steal" data-id="{{item.from.id}}" data-status="agree" @tap="applyOperating">
+          <view class="steal" data-id="{{item.id}}" data-status="agree" @tap="applyOperating">
             <image src="/img/invite.png" />
           </view>
         </view>

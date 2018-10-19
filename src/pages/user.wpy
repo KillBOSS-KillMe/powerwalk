@@ -430,6 +430,12 @@ export default class User extends wepy.page {
       }
     })
   }
+  onShow() {
+    // 请求好友申请个数
+    this.getApplyFor()
+    // 获取用户信息
+    this.getUserDetailed()
+  }
   // 分享页面
   onShareAppMessage(res) {
     let url = `pages/index?userId=${this.$parent.globalData.id}`

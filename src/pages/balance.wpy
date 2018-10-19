@@ -87,7 +87,8 @@ page{
     <view class="head">
       <view class="headCon">
         <form bindsubmit='upDataMoney'>
-          <view>账户余额(元)</view>
+          <!-- <view>账户余额(元)</view> -->
+          <view></view>
           <view>
             <input class="inputs" type='digit' name="upDataM" placeholder="输入充值金额" />
           </view>
@@ -156,7 +157,6 @@ export default class Balance extends wepy.page {
       // 提现金额
       var upDataM = event.detail.value.upDataM
       // 红包余额
-      var balance = this.balance
       if (this.check.isNull(upDataM)) {
         wepy.showModal({
           title: '',
@@ -183,19 +183,21 @@ export default class Balance extends wepy.page {
         return
       }
       upDataM = parseFloat(upDataM)
-      balance = parseFloat(balance)
-      await wepy.login().then(res => {
-        this.code = res.code
-      })
+      // await wepy.login().then(res => {
+      //   this.code = res.code
+      // })
       // loading图片显示
       this.loadingImgShow = true
       this.$apply()
       await wx.request({
-        url: `${this.$parent.globalData.requestUrl}/shop/balance_in`,
+        url: `${this.$parent.globalData.requestUrl}/api/beanPay`,
         method: 'POST',
+        header: {
+          AuthrizeOpenId: this.$parent.globalData.openId
+        },
         data: {
-          code: this.code,
-          in: upDataM
+          // code: this.code,
+          pay_amount: upDataM
         },
         success: data => {
           wx.requestPayment({
@@ -208,7 +210,6 @@ export default class Balance extends wepy.page {
               // loading图片隐藏
               this.loadingImgShow = false
               this.$apply()
-              balance += upDataM
               wepy.showModal({
                 title: '',
                 content: '充值成功',
@@ -227,7 +228,6 @@ export default class Balance extends wepy.page {
               })
             }
           })
-          this.$parent.globalData.shopInfo.balance = balance
         }
       })
     }
