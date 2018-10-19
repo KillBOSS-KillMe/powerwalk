@@ -195,7 +195,7 @@ page{
     <view class="commdoity" data-id="{{commodity.id}}">
         <!-- 顶部商品图 -->
       <view class="commdoityImgCon">
-        <image class="commdoityImg" src="{{commodity.img}}" />
+        <image class="commdoityImg" src="{{commodityImgUrl + commodity.img}}" />
       </view>
       <!-- 商品信息 -->
       <view class="commdoityInfo">
@@ -278,7 +278,8 @@ export default class Commodity extends wepy.page {
     id: null,
     allPrice: 0,
     selShowData: 'details',
-    redemptionsList: null
+    redemptionsList: null,
+    commodityImgUrl: ''
   };
 
   methods = {
@@ -310,6 +311,7 @@ export default class Commodity extends wepy.page {
   };
   async onLoad(options) {
     this.id = options.id
+    this.commodityImgUrl = this.$parent.globalData.commodityImgUrl
     // 获取用户信息
     this.userInfo = this.$parent.globalData.userInfo
     // 获取商品详情

@@ -129,6 +129,7 @@ export default class extends wepy.app {
     // requestUrl: 'https://test.beaconway.cn/api',
     // 图片资源--线下
     imgUrl: 'http://140.143.203.12:8090/storage/images/',
+    commodityImgUrl: 'http://140.143.203.12:8090/storage/',
     // 图片资源--线上
     // imgUrl: 'https://test.beaconway.cn',
     userShopInfo: null,

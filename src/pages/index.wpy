@@ -221,7 +221,7 @@ page{
     <view class="commodityList">
       <block wx:for="{{commodityList}}" key="index" index="index" item="item">
         <view class="commodity" data-id="{{item.id}}" @tap="goCommodity">
-          <image class="commodityImg" src="{{item.img}}" />
+          <image class="commodityImg" src="{{commodityImgUrl + item.img}}" />
           <view class="commodityInfo">
             <view class="commodityTitle">{{item.name}}</view>
             <view class="commodityLave">剩余{{item.storage}}件</view>
@@ -324,7 +324,8 @@ export default class Index extends wepy.page {
       getBeans: ''
     },
     broadcastDom: false,
-    imgUrl: ''
+    imgUrl: '',
+    commodityImgUrl: ''
   };
   methods = {
     // 底部导航跳转
@@ -401,6 +402,7 @@ export default class Index extends wepy.page {
   }
   onLoad(options) {
     this.imgUrl = this.$parent.globalData.imgUrl
+    this.commodityImgUrl = this.$parent.globalData.commodityImgUrl
     if (options.userId) {
       // 此处请求接口，为分享功能辅助，添加活力豆
       this.inviteUserId = options.userId

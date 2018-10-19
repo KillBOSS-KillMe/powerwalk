@@ -145,7 +145,7 @@
               </view>
               <view class="details">
                 <view class="detailsImg">
-                  <image src="{{sonitem.good.img}}" />
+                  <image src="{{commodityImgUrl + sonitem.good.img}}" />
                 </view>
                 <view class="detailsInfo">
                   <view>
@@ -183,7 +183,8 @@ export default class Order extends wepy.page {
     userInfo: null,
     orderList: null,
     addssList: null,
-    addssId: ''
+    addssId: '',
+    commodityImgUrl: ''
   };
 
   methods = {
@@ -196,6 +197,7 @@ export default class Order extends wepy.page {
   async onLoad(options) {
     // 获取用户信息
     this.userInfo = this.$parent.globalData.userInfo
+    this.commodityImgUrl = this.$parent.globalData.commodityImgUrl
     wx.request({
       url: `${this.$parent.globalData.requestUrl}/api/orderList`,
       method: 'GET',

@@ -74,7 +74,7 @@
     <view class="commodityList">
       <block wx:for="{{commodityList}}" key="index" index="index" item="item">
         <view class="commodity" data-id="{{item.id}}" @tap="goCommodity">
-          <image class="commodityImg" src="{{item.img}}" />
+          <image class="commodityImg" src="{{commodityImgUrl + item.img}}" />
           <view class="commodityInfo">
             <view class="commodityTitle">{{item.name}}</view>
             <view class="commodityLave">剩余{{item.storage}}件</view>
@@ -114,7 +114,8 @@ export default class Exchangelist extends wepy.page {
   data = {
     userInfo: null,
     commodityList: null,
-    imgUrl: ''
+    imgUrl: '',
+    commodityImgUrl: ''
   };
 
   methods = {
@@ -126,6 +127,7 @@ export default class Exchangelist extends wepy.page {
   };
   async onLoad(options) {
     this.imgUrl = this.$parent.globalData.imgUrl
+    this.commodityImgUrl = this.$parent.globalData.commodityImgUrl
     // 获取商品列表
     wx.request({
       url: `${this.$parent.globalData.requestUrl}/api/goodsList`,
