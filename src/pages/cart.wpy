@@ -254,7 +254,7 @@ checkbox .wx-checkbox-input.wx-checkbox-input-checked::before{
                 <view class="infoCon">
                   <view>
                     <image src="/img/beans3.png" />
-                    {{item.good_information.price}}
+                    {{item.good_information.cost_beans}}
                   </view>
                   <view>
                     {{item.good_information.name}}
@@ -450,7 +450,7 @@ export default class Cart extends wepy.page {
     let index = this.cartIndex
     let allListData = this.cartList
     for (var i in index) {
-      allPrice += allListData[index[i]].num * allListData[index[i]].good_information.price
+      allPrice += allListData[index[i]].num * allListData[index[i]].good_information.cost_beans
     }
     return allPrice
   }
