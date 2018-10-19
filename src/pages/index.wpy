@@ -640,7 +640,11 @@ export default class Index extends wepy.page {
       })
       return
     }
-    if (this.todayStep <= 0) {
+    let step = this.todayStep
+    if (step > 3000) {
+      step = 3000
+    }
+    if (step <= 0) {
       wx.showModal({
         title: '',
         content: '步数不足，无法兑换'
@@ -649,33 +653,42 @@ export default class Index extends wepy.page {
     }
     wx.showModal({
       title: '',
-      content: `确认将${this.todayStep}步兑换为活力豆`,
+      content: `确认将${step}步兑换为活力豆`,
       success: res => {
         if (res.cancel) {
           // 点击取消
         } else {
           // 点击确定
-          wx.request({
-            url: `${this.$parent.globalData.requestUrl}/api/stepForBean`,
-            method: 'POST',
-            header: {
-              AuthrizeOpenId: this.$parent.globalData.openId
-            },
-            data: {
-              step: this.todayStep
-            },
-            success: data => {
-              console.log(data)
-              if (data.data.success) {
-                wx.showModal({
-                  title: '',
-                  content: '兑换成功'
-                })
-                this.$apply()
-                // 刷新数据
-                this.onGotUserInfo()
-              }
-            }
+          // 步数兑换活力豆请求
+          this.stepForBean(step)
+        }
+      }
+    })
+  }
+  // 步数兑换活力豆请求
+  stepForBean(step) {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/stepForBean`,
+      method: 'POST',
+      header: {
+        AuthrizeOpenId: this.$parent.globalData.openId
+      },
+      data: {
+        step: step
+      },
+      success: data => {
+        if (data.data.success) {
+          wx.showModal({
+            title: '',
+            content: '兑换成功'
+          })
+          this.$apply()
+          // 刷新数据
+          this.onGotUserInfo()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
           })
         }
       }

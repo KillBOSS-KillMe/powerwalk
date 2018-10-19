@@ -91,7 +91,7 @@ page{
             <image src="{{item.profile}}" />
           </view>
           <view class="user">
-            {{item.nick_name}}
+            {{item.name}}
           </view>
           <view class="steal" data-id="{{item.id}}" @tap="delfriend">
             <image src="/img/delete.png" />

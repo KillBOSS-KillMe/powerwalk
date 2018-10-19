@@ -286,7 +286,8 @@ export default class Leaderboard extends wepy.page {
     userInfo: null,
     userList: null,
     myInfo: null,
-    friendNum: 0
+    friendNum: 0,
+    nextUrl: ''
   };
 
   methods = {
@@ -329,14 +330,13 @@ export default class Leaderboard extends wepy.page {
           } else {
             this.friendNum = 0
           }
-          
           this.$apply()
           // 获取下一页的请求Id
           this.nextUrl = ''
           // 更新下一页请求地址
-          // if (data.meta.pagination.links.length !== 0) {
-          //   this.nextUrl = data.meta.pagination.links.next
-          // }
+          if (data.meta.pagination.links.length !== 0) {
+            this.nextUrl = data.meta.pagination.links.next
+          }
         }
       }
     })

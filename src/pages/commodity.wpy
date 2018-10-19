@@ -296,7 +296,7 @@ export default class Commodity extends wepy.page {
         return
       }
       this.buyQuantity += 1
-      this.allPrice = this.buyQuantity * this.commodity.price
+      this.allPrice = this.buyQuantity * this.commodity.cost_beans
       this.$apply()
     },
     quantityDown() {
@@ -304,7 +304,7 @@ export default class Commodity extends wepy.page {
         return
       }
       this.buyQuantity -= 1
-      this.allPrice = this.buyQuantity * this.commodity.price
+      this.allPrice = this.buyQuantity * this.commodity.cost_beans
       this.$apply()
     }
   };
@@ -321,7 +321,7 @@ export default class Commodity extends wepy.page {
         if (data.data.success) {
           data = data.data.data
           this.commodity = data.good
-          this.allPrice = this.commodity.price
+          this.allPrice = this.commodity.cost_beans
           this.redemptionsList = data.good.redemptions
           for (let i in this.redemptionsList) {
             this.redemptionsList[i].created_at = this.redemptionsList[i].created_at.split(' ')[0]
