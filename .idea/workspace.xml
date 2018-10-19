@@ -2,30 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1e4e1742-e748-43e6-8be3-ff0f8e3e785d" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/img/新建文件夹.zip" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/app.wpy" afterPath="$PROJECT_DIR$/src/app.wpy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/addFriend.wpy" afterPath="$PROJECT_DIR$/src/pages/addFriend.wpy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/addssList.wpy" afterPath="$PROJECT_DIR$/src/pages/addssList.wpy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/balance.wpy" afterPath="$PROJECT_DIR$/src/pages/balance.wpy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/cart.wpy" afterPath="$PROJECT_DIR$/src/pages/cart.wpy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/challenge.wpy" afterPath="$PROJECT_DIR$/src/pages/challenge.wpy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/commodity.wpy" afterPath="$PROJECT_DIR$/src/pages/commodity.wpy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/donation.wpy" afterPath="$PROJECT_DIR$/src/pages/donation.wpy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/donationList.wpy" afterPath="$PROJECT_DIR$/src/pages/donationList.wpy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/exchange.wpy" afterPath="$PROJECT_DIR$/src/pages/exchange.wpy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/exchangeRecording.wpy" afterPath="$PROJECT_DIR$/src/pages/exchangeRecording.wpy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/friendApplyFor.wpy" afterPath="$PROJECT_DIR$/src/pages/friendApplyFor.wpy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/friendList.wpy" afterPath="$PROJECT_DIR$/src/pages/friendList.wpy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/game.wpy" afterPath="$PROJECT_DIR$/src/pages/game.wpy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/help.wpy" afterPath="$PROJECT_DIR$/src/pages/help.wpy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/index.wpy" afterPath="$PROJECT_DIR$/src/pages/index.wpy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/leaderboard.wpy" afterPath="$PROJECT_DIR$/src/pages/leaderboard.wpy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/newAddss.wpy" afterPath="$PROJECT_DIR$/src/pages/newAddss.wpy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/order.wpy" afterPath="$PROJECT_DIR$/src/pages/order.wpy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/rule.wpy" afterPath="$PROJECT_DIR$/src/pages/rule.wpy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/signIn.wpy" afterPath="$PROJECT_DIR$/src/pages/signIn.wpy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/topic.wpy" afterPath="$PROJECT_DIR$/src/pages/topic.wpy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/pages/user.wpy" afterPath="$PROJECT_DIR$/src/pages/user.wpy" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -55,8 +33,8 @@
       <file leaf-file-name="app.wpy" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/app.wpy">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="313">
-              <caret line="126" column="45" lean-forward="true" selection-start-line="126" selection-start-column="45" selection-end-line="126" selection-end-column="45" />
+            <state relative-caret-position="231">
+              <caret line="128" column="43" lean-forward="true" selection-start-line="128" selection-start-column="43" selection-end-line="128" selection-end-column="43" />
               <folding />
             </state>
           </provider>
@@ -158,12 +136,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1539928611456</updated>
-      <workItem from="1539928612951" duration="797000" />
+      <workItem from="1539928612951" duration="1462000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="797000" />
+    <option name="totallyTimeSpent" value="1462000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="232" y="107" width="1311" height="1025" extended-state="0" />
@@ -212,8 +190,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/app.wpy">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="313">
-          <caret line="126" column="45" lean-forward="true" selection-start-line="126" selection-start-column="45" selection-end-line="126" selection-end-column="45" />
+        <state relative-caret-position="231">
+          <caret line="128" column="43" lean-forward="true" selection-start-line="128" selection-start-column="43" selection-end-line="128" selection-end-column="43" />
           <folding />
         </state>
       </provider>
