@@ -211,7 +211,7 @@ page{
     </view>
     <view class="friendsNumber">
       <view class="left"></view>
-      <view class="con">好友人数:188</view>
+      <view class="con">好友人数:{{friendNum}}</view>
       <view class="right"></view>
     </view>
     <view class="myInfo">
@@ -285,7 +285,8 @@ export default class Leaderboard extends wepy.page {
   data = {
     userInfo: null,
     userList: null,
-    myInfo: null
+    myInfo: null,
+    friendNum: 0
   };
 
   methods = {
@@ -303,6 +304,10 @@ export default class Leaderboard extends wepy.page {
     // 获取用户信息
     this.userInfo = this.$parent.globalData.userInfo
     // 获取我的好友，排名
+    this.getFriendLeaderBoard()
+  };
+  // 获取我的好友，排名
+  getFriendLeaderBoard() {
     wx.request({
       url: `${this.$parent.globalData.requestUrl}/api/friendLeaderBoard`,
       method: 'GET',
@@ -319,6 +324,12 @@ export default class Leaderboard extends wepy.page {
               this.myInfo.ranking = parseInt(i) + 1
             }
           }
+          if (this.userList.length != 0) {
+            this.friendNum = this.userList.length - 1
+          } else {
+            this.friendNum = 0
+          }
+          
           this.$apply()
           // 获取下一页的请求Id
           this.nextUrl = ''
@@ -329,7 +340,7 @@ export default class Leaderboard extends wepy.page {
         }
       }
     })
-  };
+  }
   // 偷取步数
   steal(e) {
     let userId = e.currentTarget.dataset.userid
@@ -348,6 +359,8 @@ export default class Leaderboard extends wepy.page {
             title: '',
             content: data.data.data.message
           })
+          // 获取我的好友，排名(更新列表数据)
+          this.getFriendLeaderBoard()
         }
       }
     })
@@ -371,6 +384,8 @@ export default class Leaderboard extends wepy.page {
             title: '',
             content: '点赞成功'
           })
+          // 获取我的好友，排名(更新列表数据)
+          this.getFriendLeaderBoard()
         } else {
           wx.showModal({
             title: '',

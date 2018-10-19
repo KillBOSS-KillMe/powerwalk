@@ -77,11 +77,11 @@
           <image class="commodityImg" src="{{item.img}}" />
           <view class="commodityInfo">
             <view class="commodityTitle">{{item.name}}</view>
-            <view class="commodityLave">剩余{{item.cost_beans}}件</view>
+            <view class="commodityLave">剩余{{item.storage}}件</view>
             <view class="info">
               <view class="beans">
                 <image src="/img/beans3.png" />
-                {{item.storage}}
+                {{item.cost_beans}}
               </view>
               <view class="operating">
                 <image src="/img/setCart.png" />
