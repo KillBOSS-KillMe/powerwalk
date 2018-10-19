@@ -317,7 +317,8 @@ export default class Leaderboard extends wepy.page {
       },
       success: data => {
         if (data.data.success) {
-          this.userList = data.data.data.user_day_step.data
+          data = data.data.data.user_day_step
+          this.userList = data.data
           let myOpenId = this.$parent.globalData.openId
           for (let i in this.userList) {
             if (myOpenId === this.userList[i].user.open_id) {
@@ -325,7 +326,7 @@ export default class Leaderboard extends wepy.page {
               this.myInfo.ranking = parseInt(i) + 1
             }
           }
-          if (this.userList.length != 0) {
+          if (this.userList.length !== 0) {
             this.friendNum = this.userList.length - 1
           } else {
             this.friendNum = 0
@@ -354,7 +355,8 @@ export default class Leaderboard extends wepy.page {
       },
       success: data => {
         if (data.statusCode === 200) {
-          let userList = data.data.data.user_day_step.data
+          data = data.data.data.user_day_step
+          let userList = data.data
           let myOpenId = this.$parent.globalData.openId
           for (let i in this.userList) {
             if (myOpenId === this.userList[i].user.open_id) {
@@ -377,11 +379,19 @@ export default class Leaderboard extends wepy.page {
   // 偷取步数
   steal(e) {
     let userId = e.currentTarget.dataset.userid
+    let myOpenId = this.$parent.globalData.openId
+    if (userId === myOpenId) {
+      wx.showModal({
+        title: '',
+        content: '不能自己偷自己'
+      })
+      return
+    }
     wx.request({
       url: `${this.$parent.globalData.requestUrl}/api/theifStep`,
       method: 'POST',
       header: {
-        AuthrizeOpenId: this.$parent.globalData.openId
+        AuthrizeOpenId: myOpenId
       },
       data: {
         theifed_open_id: userId
