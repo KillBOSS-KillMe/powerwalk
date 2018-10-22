@@ -336,6 +336,16 @@
   pointer-events:none;
   background-color: #f39900;
 }
+.hideRun{
+  width: 50rpx;
+  height: 50rpx;
+  line-height: 50rpx;
+  text-align: center;
+  position: absolute;
+  top: 10rpx;
+  right: 20rpx;
+  color: #333;
+}
 </style>
 <template>
   <view>
@@ -403,6 +413,7 @@
       <view class="dataNullTitle" wx:if="{{historyList.length==0}}">尚未参加过任何活动</view>
     </view>
     <view class="bulletBox" wx:if="{{wetherLuckyStar}}">
+      <view class="hideRun" @tap="wetherLuckyStarHide">×</view>
       <view class="bulletBoxTitle">挑战成功,获得{{getBeans}}活力豆</view>
       <view class="descriptionTitle">恭喜成为幸运星,刮开卡片,查看奖品</view>
       <view class="scratch">
@@ -419,6 +430,7 @@
     </view>
     <view class="bulletBox" wx:if="{{participateDom}}">
       <view class="bulletBoxTitle">步数契约金</view>
+      <view class="hideRun" @tap="participateHide">×</view>
       <view class="price">
         <view>{{challengeList[index].get_bean}}</view>
         <view>动力豆/人</view>
@@ -606,6 +618,11 @@ export default class Challenge extends wepy.page {
       }
     })
   }
+  // 新运行弹出框隐藏
+  wetherLuckyStarHide() {
+    this.wetherLuckyStar = false
+    this.$apply()
+  }
   // 获取刮刮卡结果
   clickGuaGua() {
     wx.request({
@@ -631,6 +648,11 @@ export default class Challenge extends wepy.page {
   participateShow(e) {
     this.challengeId = e.currentTarget.dataset.id
     this.participateDom = true
+    this.$apply()
+  }
+  // 隐藏弹出框
+  participateHide() {
+    this.participateDom = false
     this.$apply()
   }
   // 参加挑战
