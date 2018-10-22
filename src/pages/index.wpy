@@ -50,42 +50,47 @@
   margin-top: -500rpx;
   z-index: -10;
 }
-// .stepCount image{
-//   width: 100%;
-//   height: 100%;
-//   z-index: -10;
-// }
-// .stepCountInfoFa{
-//   text-align: center;
-//   overflow:hidden;
-//   margin: 0 auto;
-//   width: 340rpx;
-//   height: 340rpx;
-//   border-image: linear-gradient( red, blue) 50 50;
-//   border-radius: 180rpx;
-//   border-right: 30rpx solid ;
-//   border-top: 30rpx solid ;
-//   background-color: #fff;
-//   z-index: 8;
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   transition: All 0.4s ease-in-out;
-// }
+
 .stepCountInfo{
   text-align: center;
   overflow:hidden;
   margin: 0 auto;
-  width: 340rpx;
-  height: 340rpx;
-  // width: 320rpx;
-  // height: 320rpx;
+  width: 300rpx;
+  height: 300rpx;
   border-radius: 170rpx;
-  border: 1rpx solid #f5b859;
   background-color: #fff;
   z-index: 10;
 }
 
+.stepCountInfoFa{
+  text-align: center;
+  overflow:hidden;
+  margin: 0 auto;
+  width: 390rpx;
+  height: 390rpx;
+  border-radius: 170rpx;
+  background-color: #fff;
+  z-index: 10;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.stepCountInfoFa image{
+  position: absolute;
+  text-align: center;
+  overflow:hidden;
+  margin: 0 auto;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  animation: headRotate 1s linear infinite;
+  animation-name: timg;
+}
+@keyframes timg{
+  0% {transform: rotate(0deg);}
+  100% {transform: rotate(360deg);}
+}
 .stepCountTitle{
   height: 100rpx;
   line-height: 100rpx;
@@ -220,18 +225,14 @@
       <text class="name">{{broadcastInfo.getBeans}}</text>
     </view>
     <!-- 步数显示块 -->
-    <!-- <view class="stepCount">
+    <view class="stepCount">
       <view class="stepCountInfoFa">
+        <image class="timg" src="/img/timg.png" />
         <view class="stepCountInfo">
           <view class="stepCountTitle">进入步数</view>
           <view class="stepCountCon">{{todayStep}}</view>
           <view class="stepCountPrompt">每日24点清零</view>
         </view>
-      </view> -->
-      <view class="stepCountInfo">
-        <view class="stepCountTitle">进入步数</view>
-        <view class="stepCountCon">{{todayStep}}</view>
-        <view class="stepCountPrompt">每日24点清零</view>
       </view>
     </view>
     <image class="stepCountBg" src="{{imgUrl}}homeBg.png" />
@@ -618,6 +619,10 @@ export default class Index extends wepy.page {
             this.broadcastInfo.getBeans = `${data[0].get_beans}活力豆`
             this.broadcastDom = true
             this.$apply()
+            setTimeout(() => {
+              this.broadcastDom = false
+              this.$apply()
+            }, 10000)
           }
         }
       }
