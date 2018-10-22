@@ -407,7 +407,10 @@
               </view>
             </view>
           </view>
-          <!-- <view class="thisStatus">您未参加该活动</view> -->
+          <view class="thisStatus">
+            {{item.finished_person}}人完成挑战
+            <text wx:if="{{item.finished_person != 0}}">,每人获得{{item.reward}}动力豆</text>
+          </view>
         </view>
       </block>
       <view class="dataNullTitle" wx:if="{{historyList.length==0}}">尚未参加过任何活动</view>
@@ -548,6 +551,15 @@ export default class Challenge extends wepy.page {
           for (let i in this.historyList) {
             // 计算总奖励金
             this.historyList[i].allStep = this.historyList[i].participant_person * this.historyList[i].challege_list.get_bean
+            // 计算每人获取的奖金
+            if (this.historyList[i].finished_person !== 0) {
+              // 总奖金除以达成目标的人数
+              this.historyList[i].reward = this.historyList[i].allStep / this.historyList[i].finished_person
+              // 取整
+              this.historyList[i].reward = parseInt(this.historyList[i].reward)
+            } else {
+              this.historyList[i].reward = 0
+            }
             // 获取活动时间
             let date = new Date(this.historyList[i].deadline_date)
             // 对比时间获取状态
@@ -633,7 +645,7 @@ export default class Challenge extends wepy.page {
       },
       success: data => {
         if (data.data.success) {
-            this.getBeans = data.get_beans
+          this.getBeans = data.get_beans
         }
       }
     })
