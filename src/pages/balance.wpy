@@ -88,15 +88,6 @@ page{
   <view>
     <view class="head">
       <view class="headCon">
-        <!-- <form bindsubmit='upDataMoney'>
-          <view></view>
-          <view>
-            <input class="inputs" type='digit' name="upDataM" placeholder="输入充值金额" />
-          </view>
-          <view>
-            <button formType="submit" class="btn">充值</button>
-          </view>
-        </form> -->
         <view class="con">
           <view class="{{money === 1?'action':''}}" data-money="1" @tap="getMoney">1￥</view>
           <view class="{{money === 2?'action':''}}" data-money="2" @tap="getMoney">2￥</view>
