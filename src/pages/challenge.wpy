@@ -357,9 +357,10 @@
       <block wx:for="{{challengeList}}" key="index" index="index" item="item">
         <view class="{{level === item.id?'action':''}}" data-index="{{index}}" @tap="levelSel">{{item.min_step}}步</view>
       </block>
+      <view class="dataNullTitle" wx:if="{{challengeList.length==0}}">暂无挑战项目</view>
     </view>
     <view class="container">
-      <view class="signUp showContainer">
+      <view class="signUp showContainer" wx:if="{{challengeList.length!=0}}">
         <view class="signUpTitle">
           <view>【{{year}}年{{month}}月{{date}}日/周{{day}}】{{challengeList[index].min_step}}步数挑战活动</view>
           <view>{{challengeList[index].status}}</view>
@@ -479,7 +480,7 @@ export default class Challenge extends wepy.page {
   data = {
     userInfo: null,
     level: '1',
-    challengeList: null,
+    challengeList: [],
     historyList: null,
     index: 0,
     year: 0,
