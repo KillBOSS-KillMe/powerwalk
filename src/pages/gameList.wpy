@@ -43,10 +43,17 @@
   border-top: 0;
   border-bottom: 0;
 }
-.turntableTitle image{
+.turntableTitle .turntableBg{
   width: 750rpx;
   height: 860rpx;
   border-radius: 0 0 20rpx 20rpx;
+  position: relative;
+}
+.turntableTitle image{
+  width: 350rpx;
+  height: 360rpx;
+  border-radius: 0 0 20rpx 20rpx;
+  position: absolute;
 }
 .info{
   position: absolute;
@@ -59,6 +66,7 @@
   background-color: rgba(255,255,255,0.5);;
   font-size: 24rpx;
   color: #fff;
+  z-index: 4;
 }
 .answerInfo{
   position: absolute;
@@ -172,9 +180,10 @@
     <view class="turntableTitle">
       <view class="connection"></view>
     </view>
-    <view class="turntableTitle" @tap="goGame">
+    <view class="turntableTitle">
       <view class="info" data-type="turntable" @tap="goRule">查看规则及等级奖品</view>
-      <image src="{{imgUrl}}turntable.jpg" />
+      <image class="turntableBg" src="{{imgUrl}}turntable.jpg" />
+      <image src="{{imgUrl}}challengeBg.png" @tap="goGame" />
     </view>
     <nav @childFn.user="goPage" />
   </view>

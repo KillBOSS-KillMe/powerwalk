@@ -75,6 +75,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color:rgba(0,0,0,0.0);
 }
 .stepCountInfoFa image{
   position: absolute;
@@ -431,9 +432,11 @@ export default class Index extends wepy.page {
   onLoad(options) {
     this.imgUrl = this.$parent.globalData.imgUrl
     this.commodityImgUrl = this.$parent.globalData.commodityImgUrl
-    if (options.userId) {
-      // 此处请求接口，为分享功能辅助，添加活力豆
-      this.inviteUserId = options.userId
+    if (options) {
+      if (options.userId) {
+        // 此处请求接口，为分享功能辅助，添加活力豆
+        this.inviteUserId = options.userId
+      }
     }
     // 获取用户信息
     this.onGotUserInfo()
@@ -488,6 +491,8 @@ export default class Index extends wepy.page {
     })
   }
   onShow() {
+    // 数据刷新
+    this.onLoad()
     // 启动消息播报定时器
     this.broadcastTime()
     // 获取用户详情信息
@@ -565,7 +570,7 @@ export default class Index extends wepy.page {
       header: {
         AuthrizeOpenId: this.$parent.globalData.openId
       },
-      success: data => { 
+      success: data => {
         if (data.data.success) {
           this.userDetailed = data.data.data
           this.$parent.globalData.userDetailed = this.userDetailed
@@ -613,7 +618,7 @@ export default class Index extends wepy.page {
       success: data => {
         if (data.data.success) {
           data = data.data.data.user_redemption_records
-          if (data.length != 0) {
+          if (data.length !== 0) {
             this.broadcastInfo.name = data[0].user.name
             this.broadcastInfo.time = data[0].updated_at.split(' ').pop()
             this.broadcastInfo.getBeans = `${data[0].get_beans}活力豆`

@@ -30,7 +30,24 @@
       <image src="{{imgUrl}}{{showData.img}}" />
     </view>
     <view class="article">
-      <view class="articleCon">{{showData.articleCon}}</view>
+      <view class="articleCon" wx:if="{{indexs == 0}}">
+        <text>
+          1、用户花费100活力豆可以参加知识答题活动。
+          2、每局有10道题目，题目的间隔时间为10秒，如果10秒内没有进行选择，将会自动跳转到下一题，10道题目回答完毕后会自动进行奖励。
+          3、如果在答题途中退出知识答题，将会无法获得奖励。
+          4、知识答题类型包括但不限于文学、体育、历史、地理、生活常识等。
+        </text>
+      </view>
+      <view class="articleCon" wx:if="{{indexs == 1}}">
+        <text>
+          1、报名参赛
+            支付活力豆步数契约金，即可加入明天的步天挑战活动
+          2、运动达标
+            活动当日走的步数达标即可获得奖励资格
+          3、获得奖励
+            比赛结束后达标用户平均分步数奖金
+        </text>
+      </view>
     </view>
     <!-- <nav @childFn.user="goPage" /> -->
   </view>
@@ -54,12 +71,14 @@ export default class Rule extends wepy.page {
       {
         'name': 'topic',
         'img': 'topicImg.jpg',
-        'articleCon': '答题答题答题答题答题答题答题答题答题答题答题答题答题答题答题'
+        'articleCon': '答题答题答题答题答题答题答题答题答题答题答题答题答题答题答题',
+        'showS': true
       },
       {
         'name': 'challenge',
         'img': 'challengeTitle.jpg',
-        'articleCon': '挑战挑战挑战挑战挑战挑战挑战挑战挑战挑战挑战挑战'
+        'articleCon': '挑战挑战挑战挑战挑战挑战挑战挑战挑战挑战挑战挑战',
+        'showS': true
       },
       {
         'name': 'turntable',
@@ -68,7 +87,8 @@ export default class Rule extends wepy.page {
       }
     ],
     showData: null,
-    imgUrl: ''
+    imgUrl: '',
+    indexs: null
   };
 
   methods = {
@@ -84,6 +104,7 @@ export default class Rule extends wepy.page {
     for (let i in this.ruleData) {
       if (types === this.ruleData[i].name) {
         this.showData = this.ruleData[i]
+        this.indexs = i
         this.$apply()
       }
     }

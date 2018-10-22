@@ -427,15 +427,15 @@
       <view class="conList">
         <view class="con">
           <view>报名参赛</view>
-          <view>如何赚取步数奖励金？如何赚取步数奖励金？如何赚取步数奖励金？如何赚取步数奖励金？如何赚取步数奖励金？如何赚取步数奖励金？如何赚取步数奖励金？</view>
+          <view>支付{{challengeList[index].get_bean}}活力豆步数契约金，即可加入明天的{{challengeList[index].min_step}}步天挑战活动</view>
         </view>
         <view class="con">
-          <view>报名参赛</view>
-          <view>如何赚取步数奖励金？如何赚取步数奖励金？如何赚取步数奖励金？如何赚取步数奖励金？如何赚取步数奖励金？如何赚取步数奖励金？如何赚取步数奖励金？</view>
+          <view>运动达标</view>
+          <view>活动当日走的步数达标即可获得奖励资格</view>
         </view>
         <view class="con">
-          <view>报名参赛</view>
-          <view>如何赚取步数奖励金？如何赚取步数奖励金？如何赚取步数奖励金？如何赚取步数奖励金？如何赚取步数奖励金？如何赚取步数奖励金？如何赚取步数奖励金？</view>
+          <view>获得奖励</view>
+          <view>比赛结束后达标用户平均分步数奖金</view>
         </view>
       </view>
       <view class="button">
