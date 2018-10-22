@@ -12,32 +12,12 @@ page{
 }
 .headCon{
   width: 710rpx;
-  height: 300rpx;
+  height: 240rpx;
   border-radius: 20rpx;
   border: 1rpx solid #e5e5e5;
+  padding: 30rpx 0;
 }
-.headCon view:nth-child(1){
-  height: 80rpx;
-  line-height: 80rpx;
-  font-size: 30rpx;
-  color: #333;
-  text-align: center;
-}
-.headCon view:nth-child(2){
-  height: 90rpx;
-  line-height: 90rpx;
-  font-size: 50rpx;
-  color: #f39900;
-  text-align: center;
-}
-.headCon view:nth-child(3){
-  height: 120rpx;
-  line-height: 120rpx;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.headCon view:nth-child(3) button{
+.headCon button{
   width: 200rpx;
   height: 60rpx;
   line-height: 60rpx;
@@ -46,6 +26,24 @@ page{
   background-color: #f39900;
   border-radius: 30rpx;
   text-align: center;
+}
+.headCon .con{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.headCon .con view{
+  padding: 20rpx;
+  border: 1rpx solid #f39900;
+  color: #f39900;
+  border-radius: 10rpx;
+  margin: 0 20rpx;
+}
+.headCon .button{
+  height: 150rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .description{
   margin-top: 40rpx;
@@ -80,23 +78,35 @@ page{
   padding-bottom: 60rpx;
   border-bottom: 1rpx solid #e5e5e5;
 }
+.action{
+  background-color: #f39900;
+  color: #fff !important;
+}
 </style>
 
 <template>
   <view>
     <view class="head">
       <view class="headCon">
-        <form bindsubmit='upDataMoney'>
-          <!-- <view>账户余额(元)</view> -->
+        <!-- <form bindsubmit='upDataMoney'>
           <view></view>
           <view>
             <input class="inputs" type='digit' name="upDataM" placeholder="输入充值金额" />
           </view>
           <view>
-            <!-- <view>立即充值</view> -->
             <button formType="submit" class="btn">充值</button>
           </view>
-        </form>
+        </form> -->
+        <view class="con">
+          <view class="{{money === 1?'action':''}}" data-money="1" @tap="getMoney">1￥</view>
+          <view class="{{money === 2?'action':''}}" data-money="2" @tap="getMoney">2￥</view>
+          <view class="{{money === 5?'action':''}}" data-money="5" @tap="getMoney">5￥</view>
+          <view class="{{money === 10?'action':''}}" data-money="10" @tap="getMoney">10￥</view>
+        </view>
+        <view class="button">
+          <!-- <view>立即充值</view> -->
+          <button @tap="upDataMoney">充值</button>
+        </view>
       </view>
     </view>
     <view class="description">
@@ -139,7 +149,8 @@ export default class Balance extends wepy.page {
   };
   // alias example
   data = {
-    userInfo: null
+    userInfo: null,
+    money: 1
   };
 
   methods = {
@@ -148,10 +159,15 @@ export default class Balance extends wepy.page {
       // 销毁当前页{跳转}
       this.$redirect(url)
     },
+    getMoney(e) {
+      this.money = e.currentTarget.dataset.money
+      this.money = parseInt(this.money)
+      this.$apply()
+    },
     // 提交数据
     async upDataMoney(event) {
       // 提现金额
-      var upDataM = event.detail.value.upDataM
+      var upDataM = this.money
       // 红包余额
       if (this.check.isNull(upDataM)) {
         wepy.showModal({

@@ -16,7 +16,7 @@
   height: 530rpx;
   border: 1rpx solid #eee;
   border-radius: 30rpx;
-  margin: 28rpx;
+  margin: 27rpx;
 }
 .commodityImg{
   width: 100%;
@@ -32,6 +32,9 @@
   line-height: 70rpx;
   font-size: 26rpx;
   color: #333;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
 }
 .commodityLave{
   font-size: 20rpx;
