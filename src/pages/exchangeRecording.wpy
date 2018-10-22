@@ -172,6 +172,11 @@ export default class Cart extends wepy.page {
           if (data.meta.pagination.links.length !== 0) {
             this.nextUrl = data.meta.pagination.links.next
           }
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
         }
       }
     })
@@ -196,6 +201,11 @@ export default class Cart extends wepy.page {
           if (data.meta.pagination.links.length !== 0) {
             this.nextUrl = data.meta.pagination.links.next
           }
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
         }
       }
     })
@@ -221,6 +231,11 @@ export default class Cart extends wepy.page {
           if (data.meta.pagination.links.length !== 0) {
             this.nextUrl = data.meta.pagination.links.next
           }
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
         }
       }
     })

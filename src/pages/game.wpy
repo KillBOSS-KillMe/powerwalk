@@ -272,6 +272,11 @@
   position: absolute;
   z-index: -10;
 }
+// .canvas-item image{
+//   width: 88rpx;
+//   height: 88rpx;
+//   position: absolute;
+// }
 </style>
 <template>
   <view>
@@ -299,6 +304,10 @@
             <view class="canvas-list">
               <repeat for="{{awardsList}}" key="index" index="index" item="item" class="canvas-item">
                 <view class="canvas-item">
+                  <!-- <view class="canvas-item-text" style="-webkit-transform: rotate({{item.turn}});transform: rotate({{item.turn}})">
+                    <image src="/img/home1.png" />
+                    {{item.award}}
+                  </view> -->
                   <view class="canvas-item-text" style="-webkit-transform: rotate({{item.turn}});transform: rotate({{item.turn}})">{{item.award}}</view>
                 </view>
               </repeat>
@@ -391,6 +400,11 @@ export default class Game extends wepy.page {
           this.level = this.turntableList[0].id
           this.$apply()
           this.getTurntableData(this.level)
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
         }
       }
     })
@@ -424,6 +438,11 @@ export default class Game extends wepy.page {
           this.awardsConfig.awards = awards
           this.$apply()
           this.onRun()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
         }
       }
     })

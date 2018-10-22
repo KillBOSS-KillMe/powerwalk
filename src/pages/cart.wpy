@@ -395,6 +395,11 @@ export default class Cart extends wepy.page {
             })
             // 刷新购物车商品列表
             this.getShopCartList()
+          } else {
+            wx.showModal({
+              title: '',
+              content: data.data.errmsg
+            })
           }
         }
       })
@@ -440,6 +445,11 @@ export default class Cart extends wepy.page {
               icon: 'success'
             })
             this.onLoad()
+          } else {
+            wx.showModal({
+              title: '',
+              content: data.data.errmsg
+            })
           }
         }
       })
@@ -482,6 +492,11 @@ export default class Cart extends wepy.page {
           let cart = data.data.data.shopping_cart
           this.cartList = cart.list
           this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
         }
       }
     })
@@ -505,6 +520,11 @@ export default class Cart extends wepy.page {
             }
           }
           this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
         }
       }
     })

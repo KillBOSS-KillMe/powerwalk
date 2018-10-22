@@ -425,6 +425,11 @@ export default class Index extends wepy.page {
           this.$parent.globalData.userInfo = this.userInfo
           this.$parent.globalData.openId = this.openId
           this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
         }
       }
     })
@@ -454,6 +459,11 @@ export default class Index extends wepy.page {
             this.nextUrl = data.meta.pagination.links.next
           }
           this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
         }
       }
     })
@@ -483,6 +493,11 @@ export default class Index extends wepy.page {
                 this.todayStep = data.data.data.today_step
                 this.$parent.globalData.todayStep = this.todayStep
                 this.$apply()
+              } else {
+                wx.showModal({
+                  title: '',
+                  content: data.data.errmsg
+                })
               }
             }
           })
@@ -524,6 +539,11 @@ export default class Index extends wepy.page {
           this.$apply()
           // 获取用户详情信息
           this.getUserDetailed()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
         }
       }
     })
@@ -558,12 +578,20 @@ export default class Index extends wepy.page {
             this.nextUrl = data.meta.pagination.links.next
           }
           this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
         }
       }
     })
   }
   // 获取用户详情信息
   getUserDetailed() {
+    if (!this.$parent.globalData.openId) {
+      return
+    }
     wx.request({
       url: `${this.$parent.globalData.requestUrl}/api/userInformation`,
       method: 'GET',
@@ -575,6 +603,11 @@ export default class Index extends wepy.page {
           this.userDetailed = data.data.data
           this.$parent.globalData.userDetailed = this.userDetailed
           this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
         }
       }
     })
@@ -629,6 +662,11 @@ export default class Index extends wepy.page {
               this.$apply()
             }, 10000)
           }
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
         }
       }
     })

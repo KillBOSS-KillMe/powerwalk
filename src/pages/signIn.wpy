@@ -190,7 +190,6 @@ export default class Signin extends wepy.page {
           AuthrizeOpenId: this.$parent.globalData.openId
         },
         success: data => {
-          console.log(data)
           if (data.data.success) {
             this.continuousDays = data.data.data.continuous_days
             if (this.continuousDays > 7) {
@@ -208,6 +207,11 @@ export default class Signin extends wepy.page {
             })
             // 签到信息查询
             this.getUserSignin()
+          } else {
+            wx.showModal({
+              title: '',
+              content: data.data.errmsg
+            })
           }
         }
       })
@@ -239,6 +243,11 @@ export default class Signin extends wepy.page {
             this.selShowData = this.continuousDays
           }
           this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
         }
       }
     })

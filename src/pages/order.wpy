@@ -213,6 +213,11 @@ export default class Order extends wepy.page {
             this.nextUrl = orders.meta.pagination.links.next
           }
           this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
         }
       }
     })
@@ -243,6 +248,11 @@ export default class Order extends wepy.page {
             this.nextUrl = orders.meta.pagination.links.next
           }
           this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
         }
       }
     })
@@ -283,6 +293,11 @@ export default class Order extends wepy.page {
             }
           }
           this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
         }
       }
     })
@@ -344,6 +359,11 @@ export default class Order extends wepy.page {
             icon: 'success'
           })
           this.onLoad()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
         }
       }
     })

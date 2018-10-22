@@ -364,10 +364,14 @@ export default class User extends wepy.page {
         AuthrizeOpenId: this.$parent.globalData.openId
       },
       success: data => {
-        console.log(data)
         if (data.data.success) {
           this.applyFor = data.data.data.friend_request_count
           this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
         }
       }
     })
@@ -419,13 +423,18 @@ export default class User extends wepy.page {
       header: {
         AuthrizeOpenId: this.$parent.globalData.openId
       },
-      success: data => { 
+      success: data => {
         if (data.data.success) {
           this.userDetailed = data.data.data
           this.userInfo.beans = this.userDetailed.user.beans
           this.$parent.globalData.userInfo = this.userInfo
           this.$parent.globalData.userDetailed = this.userDetailed
           this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
         }
       }
     })

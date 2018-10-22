@@ -173,10 +173,8 @@ export default class Addfriend extends wepy.page {
       this.$redirect(url)
     },
     addfriend(e) {
-      console.log('asdfasdfasdf')
       // 添加好友
       let userId = e.currentTarget.dataset.id
-      console.log(userId)
       wx.request({
         url: `${this.$parent.globalData.requestUrl}/api/addFriend`,
         method: 'POST',
@@ -188,7 +186,6 @@ export default class Addfriend extends wepy.page {
           message: ''
         },
         success: data => {
-          console.log(data)
           if (data.data.success) {
             wx.showModal({
               title: '',
@@ -266,6 +263,11 @@ export default class Addfriend extends wepy.page {
           data = data.data.data.users
           this.userList = data.data
           this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
         }
       }
     })
@@ -296,6 +298,11 @@ export default class Addfriend extends wepy.page {
             this.nextUrl = data.next_page_url
           }
           this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
         }
       }
     })

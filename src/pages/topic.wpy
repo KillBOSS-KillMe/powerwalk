@@ -540,6 +540,11 @@ export default class Challenge extends wepy.page {
           // 获取题目难度等级，并返回控制显示的字符串
           this.getDiffcult()
           this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
         }
       }
     })

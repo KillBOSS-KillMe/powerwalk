@@ -329,6 +329,11 @@ export default class Commodity extends wepy.page {
             this.redemptionsList[i].created_at = this.redemptionsList[i].created_at.split(' ')[0]
           }
           this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
         }
       }
     })
@@ -352,6 +357,11 @@ export default class Commodity extends wepy.page {
             duration: 2000,
             mask: true,
             icon: 'success'
+          })
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
           })
         }
       }

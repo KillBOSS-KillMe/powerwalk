@@ -336,6 +336,11 @@ export default class Newaddss extends wepy.page {
             setTimeout(function() {
               wx.navigateBack({ changed: true })
             }, 2000)
+          } else {
+            wx.showModal({
+              title: '',
+              content: data.data.errmsg
+            })
           }
         }
       })

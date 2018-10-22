@@ -354,7 +354,6 @@
       <view @tap="goDonationList">公益捐赠</view>
     </view>
     <view class="gradeSel">
-      <!-- <view class="action" @tap="levelSel">3000步</view> -->
       <block wx:for="{{challengeList}}" key="index" index="index" item="item">
         <view class="{{level === item.id?'action':''}}" data-index="{{index}}" @tap="levelSel">{{item.min_step}}步</view>
       </block>
@@ -580,6 +579,11 @@ export default class Challenge extends wepy.page {
             }
           }
           this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
         }
       }
     })
@@ -646,6 +650,11 @@ export default class Challenge extends wepy.page {
       success: data => {
         if (data.data.success) {
           this.getBeans = data.get_beans
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
         }
       }
     })

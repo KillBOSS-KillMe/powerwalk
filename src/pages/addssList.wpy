@@ -151,6 +151,11 @@ export default class Addsslist extends wepy.page {
               icon: 'success'
             })
             this.getAddssList()
+          } else {
+            wx.showModal({
+              title: '',
+              content: data.data.errmsg
+            })
           }
         }
       })
@@ -172,6 +177,11 @@ export default class Addsslist extends wepy.page {
               duration: 2000,
               mask: true,
               icon: 'success'
+            })
+          } else {
+            wx.showModal({
+              title: '',
+              content: data.data.errmsg
             })
           }
         }
@@ -205,6 +215,11 @@ export default class Addsslist extends wepy.page {
             }
           }
           this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
         }
       }
     })

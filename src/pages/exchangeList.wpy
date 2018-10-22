@@ -148,6 +148,11 @@ export default class Exchangelist extends wepy.page {
             this.nextUrl = data.meta.pagination.links.next
           }
           this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
         }
       }
     })

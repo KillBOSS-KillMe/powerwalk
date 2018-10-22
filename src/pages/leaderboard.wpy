@@ -246,7 +246,7 @@ page{
         <view class="list">
           <view class="rankingImg">
             <!-- <text wx:if="{{index > 3}}">{{item.img}}</text> -->
-            <text wx:if="{{index >= 3}}">{{index}}</text>
+            <text wx:if="{{index >= 3}}">{{index + 1}}</text>
             <image wx:if="{{index < 3}}" src="/img/medal{{index}}.png" />
           </view>
           <view class="userImg">
@@ -343,6 +343,11 @@ export default class Leaderboard extends wepy.page {
           if (data.meta.pagination.links.length !== 0) {
             this.nextUrl = data.meta.pagination.links.next
           }
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
         }
       }
     })
@@ -442,7 +447,7 @@ export default class Leaderboard extends wepy.page {
         } else {
           wx.showModal({
             title: '',
-            content: '点赞失败'
+            content: data.data.errmsg
           })
         }
       }

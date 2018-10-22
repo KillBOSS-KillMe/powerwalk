@@ -191,6 +191,11 @@ export default class Donationlist extends wepy.page {
           this.donationList = data.data.data.projects.data
           this.totalPersonCount = data.data.data.total_person_count
           this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
         }
       }
     })
@@ -230,6 +235,11 @@ export default class Donationlist extends wepy.page {
           data = data.data.data.users
           this.userList = data.data
           this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
         }
       }
     })

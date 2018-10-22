@@ -322,6 +322,11 @@ export default class Donation extends wepy.page {
           let total = this.projectData.goal_step
           this.projectData.schedule = Math.round(num / total * 10000) / 100.00
           this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
         }
         // goal_step  目标
         // person_count  目前捐赠的人数
@@ -420,6 +425,11 @@ export default class Donation extends wepy.page {
           this.$apply()
           // 更新页面数据
           this.getDonationData()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
         }
       }
     })

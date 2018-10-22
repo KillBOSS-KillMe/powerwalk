@@ -248,6 +248,11 @@ export default class Gamelist extends wepy.page {
         if (data.data.success) {
           this.topicList = data.data.data.question_list
           this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
         }
       }
     })
