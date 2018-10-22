@@ -62,8 +62,8 @@
 
 .infoTitle{
   width: 750rpx;
-  height: 80rpx;
-  line-height: 80rpx;
+  // height: 80rpx;
+  line-height: 50rpx;
   padding-left: 20rpx;
   font-size: 30rpx;
   color: #333;
@@ -143,7 +143,7 @@
                 {{sonitem.good.name}}
                 <image src="/img/go.png" />
               </view>
-              <view class="details">
+              <view class="details" data-id="{{sonitem.good.id}}" @tap="goCommodity">
                 <view class="detailsImg">
                   <image src="{{commodityImgUrl + sonitem.good.img}}" />
                 </view>

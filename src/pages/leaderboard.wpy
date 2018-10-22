@@ -170,6 +170,7 @@ page{
   justify-content: center;
 }
 .steal{
+  height: 150rpx;
   border-bottom:1rpx solid #dcdcdc;
 }
 .rankingImg image,.steal image{
@@ -190,6 +191,10 @@ page{
   color: #fd0009;
 }
 .userImg,.user,.count,.like{
+  border-bottom: 1rpx solid #dcdcdc;
+}
+.userImg{
+  height: 150rpx;
   border-bottom: 1rpx solid #dcdcdc;
 }
 

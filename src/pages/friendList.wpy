@@ -78,6 +78,7 @@ page{
 }
 
 .userImg,.user{
+  height: 150rpx;
   border-bottom: 1rpx solid #dcdcdc;
 }
 
