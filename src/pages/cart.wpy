@@ -413,7 +413,23 @@ export default class Cart extends wepy.page {
         })
         return
       }
-      let addssId = this.addss.id
+      let addssId = null
+      if (this.addss) {
+        addssId = this.addss.id
+        if (!addssId) {
+          wx.showModal({
+            title: '',
+            content: '请设置收货地址'
+          })
+          return
+        }
+      } else {
+        wx.showModal({
+          title: '',
+          content: '请设置收货地址'
+        })
+        return
+      }
       let exchangeList = []
       let index = this.cartIndex
       let allListData = this.cartList
@@ -424,6 +440,13 @@ export default class Cart extends wepy.page {
         indexExchange['good_id'] = allListData[index[i]].good_id
         indexExchange['num'] = allListData[index[i]].num
         exchangeList.push(indexExchange)
+      }
+      if (exchangeList.length <= 0) {
+        wx.showModal({
+          title: '',
+          content: '请选择兑换商品'
+        })
+        return
       }
       // 发送兑换请求
       wx.request({

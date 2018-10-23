@@ -259,6 +259,13 @@ export default class Order extends wepy.page {
   }
   // 再次购买
   againBuy(e) {
+    if (!this.addssId) {
+      wx.showModal({
+        title: '',
+        content: '请设置默认地址'
+      })
+      return
+    }
     wx.showModal({
       title: '',
       content: '再次购买收货地址为默认地址',
