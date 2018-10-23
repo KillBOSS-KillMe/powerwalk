@@ -13,7 +13,7 @@
   display:inline-block;
   margin-top: 44rpx;
   width: 316rpx;
-  height: 530rpx;
+  height: 615rpx;
   border: 1rpx solid #eee;
   border-radius: 30rpx;
   margin: 27rpx;
@@ -46,8 +46,15 @@
   justify-content: center;
   height: 80rpx;
 }
-.beans,.operating{
-  width: 50%;
+.beans{
+  width: 100%;
+  font-size: 25rpx;
+  color: #ff6101;
+  display: flex;
+  align-items: center;
+}
+.operating{
+  width: 100%;
   font-size: 25rpx;
   color: #ff6101;
   display: flex;
@@ -60,12 +67,13 @@
   margin-right: 10rpx;
 }
 .operating view{
-  width: 70rpx;
-  height: 35rpx;
+  width: 170rpx;
+  height: 55rpx;
+  line-height: 55rpx;
   background-color: #ff6101;
   color: #fff;
   text-align: center;
-  border-radius: 10rpx;
+  border-radius: 30rpx;
 }
 </style>
 <template>
@@ -86,10 +94,13 @@
                 <image src="/img/beans3.png" />
                 {{item.cost_beans}}
               </view>
-              <view class="operating">
+              <!-- <view class="operating">
                 <image src="/img/setCart.png" />
                 <view>兑换</view>
-              </view>
+              </view> -->
+            </view>
+            <view class="operating">
+              <view>兑换</view>
             </view>
           </view>
         </view>

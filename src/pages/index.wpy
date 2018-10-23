@@ -16,9 +16,9 @@
 .notice{
   position: fixed;
   top: 0rpx;
-  width: 670rpx;
-  height: 80rpx;
-  line-height: 80rpx;
+  width: 170rpx;
+  // height: 80rpx;
+  line-height:40rpx;
   border: 1rpx solid #e5e5e5;
   border-radius: 20rpx;
   background-color: #eee;
@@ -29,8 +29,9 @@
   z-index: 20;
 }
 .notice image{
-  width: 30rpx;
-  height: 30rpx;
+  margin-right:15rpx;
+  width: 20rpx;
+  height: 20rpx;
 }
 .notice .name{
   color: #4a8dff;
@@ -43,12 +44,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
 }
 .stepCountBg{
   width: 100%;
   height: 500rpx;
-  margin-top: -500rpx;
+  // margin-top: -500rpx;
   z-index: -10;
+  position: absolute;
+  top: 0;
 }
 
 .stepCountInfo{
@@ -162,7 +166,7 @@
   display:inline-block;
   margin-top: 44rpx;
   width: 316rpx;
-  height: 530rpx;
+  height: 585rpx;
   border: 1rpx solid #eee;
   border-radius: 30rpx;
   margin: 28rpx;
@@ -170,6 +174,7 @@
 .commodityImg{
   width: 100%;
   height: 350rpx;
+  border-radius: 30rpx 30rpx 0 0;
 }
 .commodityInfo{
   padding: 0 20rpx;
@@ -192,10 +197,17 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 80rpx;
+  height: 50rpx;
 }
-.beans,.operating{
-  width: 50%;
+.beans{
+  width: 100%;
+  font-size: 25rpx;
+  color: #ff6101;
+  display: flex;
+  align-items: center;
+}
+.operating{
+  width: 100%;
   font-size: 25rpx;
   color: #ff6101;
   display: flex;
@@ -208,12 +220,13 @@
   margin-right: 10rpx;
 }
 .operating view{
-  width: 70rpx;
-  height: 35rpx;
+  width: 170rpx;
+  height: 55rpx;
+  line-height: 55rpx;
   background-color: #ff6101;
   color: #fff;
   text-align: center;
-  border-radius: 10rpx;
+  border-radius: 30rpx;
 }
 </style>
 <template>
@@ -235,8 +248,9 @@
           <view class="stepCountPrompt">每日24点清零</view>
         </view>
       </view>
+      <image class="stepCountBg" src="{{imgUrl}}homeBg.png" />
     </view>
-    <image class="stepCountBg" src="{{imgUrl}}homeBg.png" />
+    
     <view class="stepPrompt" @tap="goDonationList">您的一小步，社会一大步</view>
     <!-- 操作按钮 -->
     <view class="operateButton">
@@ -258,10 +272,13 @@
                 <image src="/img/beans3.png" />
                 {{item.cost_beans}}
               </view>
-              <view class="operating">
+              <!-- <view class="operating">
                 <image src="/img/setCart.png" />
                 <view>兑换</view>
-              </view>
+              </view> -->
+            </view>
+            <view class="operating">
+              <view>兑换</view>
             </view>
           </view>
         </view>
@@ -718,9 +735,6 @@ export default class Index extends wepy.page {
       return
     }
     let step = this.todayStep
-    if (step > 3000) {
-      step = 3000
-    }
     if (step <= 0) {
       wx.showModal({
         title: '',

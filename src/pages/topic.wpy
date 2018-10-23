@@ -105,9 +105,9 @@
   border-radius: 20rpx;
 }
 .articleConTitle{
-  height: 110rpx;
-  line-height: 110rpx;
+  line-height: 60rpx;
   text-align: center;
+  padding: 20rpx;
 }
 .select{
   margin: 50rpx 140rpx;
@@ -297,8 +297,6 @@
       <view class="articleCon">
         <view class="articleConTitle">{{topicList[index].description}}</view>
         <view class="select">
-          <!-- errorStatus
-          correctStatus -->
           <view class="{{'A' === answer?correctStatus:errorStatus}}" data-sel="A" @tap="reply">A:{{topicList[index].answer_list[0].A}}</view>
           <view class="{{'B' === answer?correctStatus:errorStatus}}" data-sel="B" @tap="reply">B:{{topicList[index].answer_list[1].B}}</view>
           <view class="{{'C' === answer?correctStatus:errorStatus}}" data-sel="C" @tap="reply">C:{{topicList[index].answer_list[2].C}}</view>

@@ -24,6 +24,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top:70rpx;
 }
 .turntableTitle .gameName{
   margin-top: 70rpx;
@@ -63,7 +64,7 @@
   padding: 0 30rpx;
   line-height: 46rpx;
   border-radius: 23rpx;
-  background-color: rgba(255,255,255,0.5);;
+  background-color: #ec6200;
   font-size: 24rpx;
   color: #fff;
   z-index: 4;
@@ -171,19 +172,13 @@
       </view>
       <image class="bg" src="{{imgUrl}}challengeBg.png" />
     </view>
-    <view class="turntableTitle">
-      <view class="gameName">大转盘</view>
-    </view>
-    <view class="turntableTitle">
-      <view class="connection"></view>
-    </view>
-    <view class="turntableTitle">
-      <view class="connection"></view>
-    </view>
-    <view class="turntableTitle">
+    <view class="turntableTitle turntable">
       <view class="info" data-type="turntable" @tap="goRule">查看规则及等级奖品</view>
       <image class="turntableBg" src="{{imgUrl}}turntable.jpg" />
       <image src="{{imgUrl}}challengeBg.png" @tap="goGame" />
+      <view class="goChallenge" @tap="goChallenge">
+        <view>开始抽奖</view>
+      </view>
     </view>
     <nav @childFn.user="goPage" />
   </view>
