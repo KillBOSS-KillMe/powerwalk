@@ -4,7 +4,6 @@ page{
 }
 .head{
   width: 750rpx;
-  height: 340rpx;
   background-color: #fff;
   display: flex;
   align-items: center;
@@ -12,32 +11,38 @@ page{
 }
 .headCon{
   width: 710rpx;
-  height: 240rpx;
   border-radius: 20rpx;
   border: 1rpx solid #e5e5e5;
-  padding: 30rpx 0;
-}
-.headCon button{
-  width: 200rpx;
-  height: 60rpx;
-  line-height: 60rpx;
-  font-size: 30rpx;
-  color: #fff;
-  background-color: #f39900;
-  border-radius: 30rpx;
-  text-align: center;
 }
 .headCon .con{
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  word-wrap:break-word;
 }
-.headCon .con view{
+.headCon .con .model{
+  display:inline-block;
+  width: 269rpx;
   padding: 20rpx;
   border: 1rpx solid #f39900;
   color: #f39900;
   border-radius: 10rpx;
-  margin: 0 20rpx;
+  margin: 20rpx;
+}
+.model image{
+  width: 80rpx;
+  height: 80rpx;
+}
+.model view{
+  width: 100%;
+  line-height: 40rpx;
+  text-align: center;
+}
+.model .upData{
+  width: 100%;
+  height:60rpx;
+  line-height:60rpx;
+  margin-top: 20rpx;
+  background-color:#f39900;
+  border-radius:30rpx;
+  color: #fff;
 }
 .headCon .button{
   height: 150rpx;
@@ -54,6 +59,7 @@ page{
   align-items: center;
   justify-content: center;
   margin-bottom: 110rpx;
+  padding: 20rpx 0;
 }
 .descriptionCon{
   width: 710rpx;
@@ -89,14 +95,34 @@ page{
     <view class="head">
       <view class="headCon">
         <view class="con">
-          <view class="{{money === 1?'action':''}}" data-money="1" @tap="getMoney">1￥</view>
-          <view class="{{money === 2?'action':''}}" data-money="2" @tap="getMoney">2￥</view>
-          <view class="{{money === 5?'action':''}}" data-money="5" @tap="getMoney">5￥</view>
-          <view class="{{money === 10?'action':''}}" data-money="10" @tap="getMoney">10￥</view>
-        </view>
-        <view class="button">
-          <!-- <view>立即充值</view> -->
-          <button @tap="upDataMoney">充值</button>
+          <view class="model" data-money="1" @tap="getMoney">
+            <view>
+              <image src="/img/beans3.png" />
+            </view>
+            <view>100</view>
+            <view class="upData" data-money="1" @tap="upDataMoney">1￥</view>
+          </view>
+          <view class="model" data-money="1" @tap="getMoney">
+            <view>
+              <image src="/img/beans3.png" />
+            </view>
+            <view>220</view>
+            <view class="upData" data-money="2" @tap="upDataMoney">2￥</view>
+          </view>
+          <view class="model" data-money="1" @tap="getMoney">
+            <view>
+              <image src="/img/beans3.png" />
+            </view>
+            <view>540</view>
+            <view class="upData" data-money="5" @tap="upDataMoney">5￥</view>
+          </view>
+          <view class="model" data-money="1" @tap="getMoney">
+            <view>
+              <image src="/img/beans3.png" />
+            </view>
+            <view>1100</view>
+            <view class="upData" data-money="10" @tap="upDataMoney">10￥</view>
+          </view>
         </view>
       </view>
     </view>
@@ -150,42 +176,10 @@ export default class Balance extends wepy.page {
       // 销毁当前页{跳转}
       this.$redirect(url)
     },
-    getMoney(e) {
-      this.money = e.currentTarget.dataset.money
-      this.money = parseInt(this.money)
-      this.$apply()
-    },
     // 提交数据
-    async upDataMoney(event) {
-      // 提现金额
-      var upDataM = this.money
-      // 红包余额
-      if (this.check.isNull(upDataM)) {
-        wepy.showModal({
-          title: '',
-          content: '请输入金额',
-          showCancel: false
-        })
-        return
-      }
-      if (this.check.isMoney(upDataM)) {
-        wepy.showModal({
-          title: '',
-          content: '请输入正确金额',
-          showCancel: false
-        })
-        return
-      }
-      upDataM = parseFloat(upDataM)
-      if (upDataM <= 0) {
-        wepy.showModal({
-          title: '',
-          content: '金额不可小于等于0',
-          showCancel: false
-        })
-        return
-      }
-      upDataM = parseFloat(upDataM)
+    async upDataMoney(e) {
+      var upDataM = e.currentTarget.dataset.money
+      upDataM = parseInt(upDataM)
       // await wepy.login().then(res => {
       //   this.code = res.code
       // })
