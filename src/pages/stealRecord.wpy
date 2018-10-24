@@ -1,0 +1,235 @@
+<style lang="less">
+page{
+  color: #333;
+}
+
+.myInfo, .list{
+  width: 100%;
+  height: 150rpx;
+  line-height: 150rpx;
+  background-color: #fff;
+  display: flex;
+}
+.friendRanking{
+  display: block;
+  height: auto;
+  min-height: 600rpx;
+  margin-bottom: 115rpx;
+}
+.list{
+  display: flex;
+}
+.user{
+  width: 640rpx;
+  height: 150rpx;
+  padding-left: 10rpx;
+  font-size: 30rpx;
+  color: #333;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.myInfo .userImg image{
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 40rpx;
+  vertical-align:middle;
+  margin: 0 10rpx;
+}
+
+.myInfo .user view{
+  width: 150rpx;
+  height: 90rpx;
+  line-height: 130rpx;
+  color: #242424;
+  font-size: 30rpx;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.myInfo .ranking{
+  line-height: 40rpx !important;
+  color: #696969 !important;
+  font-size: 24rpx !important;
+}
+
+.myInfo .count{
+  width: 160rpx;
+  height: 150rpx;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.steal{
+  width: 90rpx;
+  height: 149rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.steal{
+  border-bottom:1rpx solid #dcdcdc;
+}
+.steal image{
+  width: 60rpx;
+  height: 60rpx;
+  vertical-align:middle;
+}
+
+.userImg,.user{
+  height: 150rpx;
+  border-bottom: 1rpx solid #dcdcdc;
+}
+
+</style>
+<template>
+  <view>
+    <view class="myInfo friendRanking">
+      <block wx:for="{{steaList}}" key="index" index="index" item="item">
+        <view class="list">
+          <view class="userImg">
+            <image src="{{item.theif.profile}}" />
+          </view>
+          <view class="user">
+            <!-- {{item.theif.name}} -->
+            {{item.description}}
+          </view>
+        </view>
+      </block>
+      <view class="dataNullTitle" wx:if="{{steaList.length==0}}">没有好友</view>
+    </view>
+    <!-- <nav @childFn.user="goPage" /> -->
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import nav from '../components/nav' // 底部导航
+import check from '../mixins/check'
+export default class Stealrecord extends wepy.page {
+  config = {
+    'navigationBarTitleText': '被偷纪录'
+  };
+  mixins = [check]
+  // 生命组件ID
+  components = {
+  // 底部导航
+    nav: nav
+  };
+  // alias example
+  data = {
+    userInfo: null,
+    nextUrl: '',
+    steaList: null
+  };
+  methods = {
+    // 底部导航跳转
+    goPage (url, evt) {
+      // 销毁当前页{跳转}
+      this.$redirect(url)
+    },
+    delfriend(e) {
+      
+    }
+  };
+  async onLoad(options) {
+    // 获取用户信息
+    this.userInfo = this.$parent.globalData.userInfo
+    // 获取偷取列表
+    this.getRecordList()
+  };
+  // 获取偷取列表
+  getRecordList() {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/theifAndTheifed`,
+      method: 'GET',
+      header: {
+        AuthrizeOpenId: this.$parent.globalData.openId
+      },
+      success: data => {
+        console.log(data)
+        if (data.data.success) {
+          data = data.data.data.user_step_costs
+          let listData = data.data
+          listData = this.dataAssembly(listData)
+          this.steaList = listData
+          this.$apply()
+          // 获取下一页的请求Id
+          this.nextUrl = ''
+          // 更新下一页请求地址
+          if (data.meta.pagination.links.length !== 0) {
+            this.nextUrl = data.meta.pagination.links.next
+          }
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
+  }
+  // 数据重组
+  dataAssembly(listData) {
+    for (let i in listData) {
+      if (listData[i].status === '没被偷') {
+        listData[i].theif = listData[i].theif
+        listData[i].status = '偷取被发现'
+        listData[i].step = listData[i].description.replace(/[^0-9]/ig,"")
+        listData[i].description = `{${listData[i].theif.name}}${listData[i].status}减少${listData[i].step}步`
+      } else if (listData[i].status === '偷取失败') {
+        listData[i].theif = listData[i].theifed
+        listData[i].status = '偷取被发现'
+        listData[i].step = listData[i].description.replace(/[^0-9]/ig,"")
+        listData[i].description = `${listData[i].status}被{${listData[i].theif.name}}发现减少${listData[i].step}步`
+      } else if (listData[i].status === '被偷') {
+        listData[i].theif = listData[i].theif
+        listData[i].status = '偷取了'
+        listData[i].step = listData[i].description.replace(/[^0-9]/ig,"")
+        listData[i].description = `{${listData[i].theif.name}}${listData[i].status}${listData[i].step}步`
+      } else if (listData[i].status === '偷') {
+        listData[i].theif = this.userInfo
+        listData[i].status = '成功偷取'
+        listData[i].step = listData[i].description.replace(/[^0-9]/ig,"")
+        listData[i].description = `${listData[i].status}{${listData[i].theif.name}}${listData[i].step}步`
+      }
+    }
+    return listData
+  }
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  async onReachBottom() {
+    if (!this.nextUrl) {
+      this.$apply()
+      return
+    }
+    await wx.request({
+      url: this.nextUrl,
+      method: 'GET',
+      header: {
+        AuthrizeOpenId: this.$parent.globalData.openId
+      },
+      success: data => {
+        if (data.data.success) {
+          data = data.data.data.user_step_costs
+          this.steaList = this.steaList.concat(this.dataAssembly(data.data))
+          this.nextUrl = ''
+          // 获取下一页的请求Id
+          if (data.meta.pagination.links.length !== 0) {
+            this.nextUrl = data.meta.pagination.links.next
+          }
+          console.log(this.nextUrl)
+          this.$apply()
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
+  }
+}
+</script>

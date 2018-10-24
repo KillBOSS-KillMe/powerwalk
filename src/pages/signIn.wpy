@@ -137,7 +137,7 @@ page{
 		<view class="dayShow">
       <block wx:for="{{7}}" key="index" index="index" item="item">
         <view class="list {{selShowData <= index?'':'dayShowSelected'}}">
-          <view>第{{index + 1}}天</view>
+          <view>第{{reward[index]}}天</view>
           <view>
             <image src="/img/beans1.png" />
           </view>
@@ -172,7 +172,8 @@ export default class Signin extends wepy.page {
     continuousDays: 0,
     signinStatus: '签到',
     signinClass: 'signin',
-    selShowData: 0
+    selShowData: 0,
+    reward: []
   };
 
   methods = {
@@ -236,6 +237,14 @@ export default class Signin extends wepy.page {
             this.signinClass = 'already'
             this.signinStatus = '已签到'
           }
+          let rewardData = data.data.data.setting_bean
+          this.reward[0] = rewardData.first_day
+          this.reward[1] = rewardData.second_day
+          this.reward[2] = rewardData.third_day
+          this.reward[3] = rewardData.fourth_day
+          this.reward[4] = rewardData.fifth_day
+          this.reward[5] = rewardData.sixth_day
+          this.reward[6] = rewardData.seventh_day
           this.continuousDays = data.data.data.continuous_day.continuous_day
           if (this.continuousDays > 7) {
             this.selShowData = this.continuousDays % 7

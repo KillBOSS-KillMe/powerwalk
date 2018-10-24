@@ -108,6 +108,7 @@ export default class extends wepy.app {
       'pages/addFriend', // 添加好友
       'pages/friendApplyFor', // 好友申请
       'pages/friendList', // 好友列表
+      'pages/stealRecord', // 被偷纪录
       'pages/commodity' // 商品详情
     ],
     window: {

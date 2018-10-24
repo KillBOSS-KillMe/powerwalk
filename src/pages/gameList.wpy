@@ -51,8 +51,8 @@
   position: relative;
 }
 .turntableTitle image{
-  width: 350rpx;
-  height: 360rpx;
+  width: 430rpx;
+  height: 430rpx;
   border-radius: 0 0 20rpx 20rpx;
   position: absolute;
 }
@@ -131,7 +131,7 @@
   position: absolute;
   top: 670rpx;
   left: 180rpx;
-  border: 2rpx solid #ec6200;
+  border: 2rpx solid #333;
   border-radius: 35rpx;
   display: flex;
   align-items: center;
@@ -141,10 +141,12 @@
   width: 340rpx;
   height: 66rpx;
   line-height: 66rpx;
-  color: #333;
+  color: #fff;
+  border: 2rpx solid #ec6200;
+  background-color: #ec6200;;
   font-size: 30rpx;
   text-align: center;
-  border: 2rpx solid #333;
+  
   border-radius: 35rpx;
 }
 </style>
@@ -175,8 +177,8 @@
     <view class="turntableTitle turntable">
       <view class="info" data-type="turntable" @tap="goRule">查看规则及等级奖品</view>
       <image class="turntableBg" src="{{imgUrl}}turntable.jpg" />
-      <image src="{{imgUrl}}challengeBg.png" @tap="goGame" />
-      <view class="goChallenge" @tap="goChallenge">
+      <image src="/img/turntableBg.png" @tap="goGame" />
+      <view class="goChallenge" @tap="goGame">
         <view>开始抽奖</view>
       </view>
     </view>

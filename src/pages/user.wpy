@@ -201,6 +201,8 @@ page{
 }
 .userNavT button{
   background-color: #fff;
+  font-size: 34rpx;
+  color: #333;
 }
 </style>
 

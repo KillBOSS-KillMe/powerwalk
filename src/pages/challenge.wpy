@@ -491,7 +491,7 @@ export default class Challenge extends wepy.page {
     participateDom: false,
     challengeId: null,
     timer: null,
-    todayStep: 0,
+    total: 0,
     startX: 0, // 保存X坐标轴变量(刮刮卡变量)
     startY: 0, // 保存X坐标轴变量(刮刮卡变量)
     wetherLuckyStar: false,
@@ -510,7 +510,7 @@ export default class Challenge extends wepy.page {
     this.userInfo = this.$parent.globalData.userInfo
     this.imgUrl = this.$parent.globalData.imgUrl
     // 获取当前步数
-    this.todayStep = this.$parent.globalData.todayStep
+    this.total = this.$parent.globalData.total
     // 获取挑战等级及相关数据
     this.getChallengeList()
     // 获取当天时间详情
@@ -567,7 +567,7 @@ export default class Challenge extends wepy.page {
               // 当天进行的活动
               this.historyList[i].timeStatus = '进行中'
               this.historyList[i].update = true
-              this.historyList[i].step = this.todayStep
+              this.historyList[i].step = this.total
             } else if (date.getTime() > thisTime.getTime()) {
               // 已报名,但未开启的活动,明天开启
               this.historyList[i].timeStatus = '待开启'
@@ -592,7 +592,7 @@ export default class Challenge extends wepy.page {
   // 提交挑战结果
   upResult() {
     wx.showModal({
-      title: `当前${this.todayStep}活力豆`,
+      title: `当前${this.total}步`,
       content: `确认提交?`,
       success: res => {
         if (res.cancel) {
@@ -605,7 +605,7 @@ export default class Challenge extends wepy.page {
               AuthrizeOpenId: this.$parent.globalData.openId
             },
             data: {
-              step: this.todayStep
+              step: this.total
             },
             success: data => {
               if (data.data.success) {

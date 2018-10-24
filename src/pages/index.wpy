@@ -59,8 +59,8 @@
   text-align: center;
   overflow:hidden;
   margin: 0 auto;
-  width: 300rpx;
-  height: 300rpx;
+  width: 340rpx;
+  height: 340rpx;
   border-radius: 170rpx;
   background-color: #fff;
   z-index: 10;
@@ -70,8 +70,8 @@
   text-align: center;
   overflow:hidden;
   margin: 0 auto;
-  width: 390rpx;
-  height: 390rpx;
+  width: 350rpx;
+  height: 350rpx;
   border-radius: 170rpx;
   background-color: #fff;
   z-index: 10;
@@ -80,6 +80,7 @@
   align-items: center;
   justify-content: center;
   background-color:rgba(0,0,0,0.0);
+  box-shadow: 0rpx 10rpx 40rpx #f87b00;
 }
 .stepCountInfoFa image{
   position: absolute;
@@ -89,7 +90,7 @@
   width: 100%;
   height: 100%;
   z-index: 10;
-  animation: headRotate 1s linear infinite;
+  animation: headRotate 3s linear infinite;
   animation-name: timg;
 }
 @keyframes timg{
@@ -509,6 +510,10 @@ export default class Index extends wepy.page {
               if (data.data.success) {
                 this.todayStep = data.data.data.today_step
                 this.$parent.globalData.todayStep = this.todayStep
+                let getStep = data.data.data.get_step
+                let costStep = data.data.data.cost_step
+                this.$parent.globalData.total = this.todayStep + costStep - getStep
+                console.log(this.$parent.globalData.allStep)
                 this.$apply()
               } else {
                 wx.showModal({

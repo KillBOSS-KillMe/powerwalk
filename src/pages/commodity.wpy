@@ -81,6 +81,7 @@ page{
 
 .descriptionCon{
   background-color: #fff;
+  margin-bottom: 110rpx;
 }
 .description{
   width: 100%;
@@ -149,12 +150,13 @@ page{
 
 
 .buy{
+  position: fixed;
+  bottom: 0;
   height: 100rpx;
   color: #fff;
   font-size: 30rpx;
   text-align: center;
   display: flex;
-  margin-bottom: 110rpx;
   line-height: 100rpx;
 }
 .buy .shoppCart{
