@@ -454,7 +454,7 @@ export default class User extends wepy.page {
       title: '步行的力量',
       desc: '',
       // 图片路径
-      imageUrl: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1539347720598&di=a473abbe89ca43f99dc0204945ac9ba3&imgtype=0&src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fq_70%2Cc_zoom%2Cw_640%2Fimages%2F20180614%2Fc99482ef82ba4328a5b01d42e5ec5ec4.jpeg',
+      imageUrl: '/img/logo.png',
       path: url
     }
   };

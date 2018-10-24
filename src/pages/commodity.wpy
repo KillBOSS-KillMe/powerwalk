@@ -101,10 +101,12 @@ page{
   border-bottom: 2rpx solid #ea6200
 }
 .descriptionInfo{
-  width: 650rpx;
+  width: 750rpx;
   height: auto;
-  padding:60rpx;
   white-space: pre-wrap;
+}
+.descriptionInfo view{
+  padding:60rpx;
 }
 
 .descriptionList{
@@ -224,9 +226,9 @@ page{
         <view class="{{selShowData === 'recording'?'action':''}}" data-sel="recording" @tap="selShow">兑换记录</view>
       </view>
       <view class="descriptionInfo" wx:if="{{selShowData === 'details'}}">
-        <text>{{commodity.description}}</text>
+        <view>{{commodity.description}}</view>
         <block wx:for="{{commodityImgList}}" key="index" index="index" item="item">
-          <image src="{{commodityImgUrl + commodityImgList[index]}}" style="width:{{autoW}}px;height:{{autoH}}px" bindload='autoImage' />
+          <image src="{{commodityImgUrl + item.img}}" style="width:{{autoW}}px;height:{{autoH}}px" bindload='autoImage' />
         </block>
       </view>
       <view class="descriptionList" wx:if="{{selShowData === 'recording'}}">
@@ -285,7 +287,9 @@ export default class Commodity extends wepy.page {
     selShowData: 'details',
     redemptionsList: null,
     commodityImgUrl: '',
-    commodityImgList: []
+    commodityImgList: [],
+    autoW: 0,
+    autoH: 0
   };
 
   methods = {
