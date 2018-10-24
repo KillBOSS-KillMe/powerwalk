@@ -180,10 +180,7 @@
       <view class="info" data-type="turntable" @tap="goRule">查看规则及等级奖品</view>
       <image class="turntableBg" src="{{imgUrl}}turntable.png" />
       <!-- <image class="turntableBg" src="/img/turntable.png" /> -->
-      <image class="turntable" src="/img/turntableBg.png" @tap="goGame" />
-      <!-- <view class="goChallenge" @tap="goGame">
-        <view>开始抽奖</view>
-      </view> -->
+      <image class="turntable" src="{{imgUrl}}turntableBg.png" @tap="goGame" />
     </view>
     <nav @childFn.user="goPage" />
   </view>

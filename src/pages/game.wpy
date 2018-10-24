@@ -305,10 +305,8 @@
       <image src="{{imgUrl}}gameTieleImg.jpg" />
     </view>
     <view class="turntable">
-    <!-- <view class="turntable" style="background-image: url({{imgUrl}}turntable.jpg)"> -->
-      <!-- <image class="turntableBg" src="/img/turntable.png" /> -->
       <image class="turntableBg" src="{{imgUrl}}turntable.png" />
-      <image class="turntableMinBg" src="/img/turntableMinBg.png" />
+      <image class="turntableMinBg" src="{{imgUrl}}turntableMinBg.png" />
       <!-- <view class="turntableTitle">请选择摇奖区域:</view> -->
       <view class="sel">
         <block wx:for="{{turntableList}}" key="index" index="index" item="item">
@@ -338,7 +336,6 @@
               </repeat>
             </view>
           </view>
-          <!-- <view @tap="clickLottery" class="canvas-btn {{btnDisabled}}">抽奖</view> -->
           <view @tap="lotteryRun" class="canvas-btn {{btnDisabled}}">抽奖</view>
         </view>
       </view>
