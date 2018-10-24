@@ -25,6 +25,7 @@
   align-items: center;
   justify-content: center;
   margin-top:70rpx;
+  margin-bottom: 150rpx;
 }
 .turntableTitle .gameName{
   margin-top: 70rpx;
@@ -46,15 +47,16 @@
 }
 .turntableTitle .turntableBg{
   width: 750rpx;
-  height: 860rpx;
+  height: 1096rpx;
   border-radius: 0 0 20rpx 20rpx;
   position: relative;
 }
-.turntableTitle image{
+.turntableTitle .turntable{
   width: 430rpx;
   height: 430rpx;
   border-radius: 0 0 20rpx 20rpx;
   position: absolute;
+  top: 505rpx;
 }
 .info{
   position: absolute;
@@ -176,11 +178,12 @@
     </view>
     <view class="turntableTitle turntable">
       <view class="info" data-type="turntable" @tap="goRule">查看规则及等级奖品</view>
-      <image class="turntableBg" src="{{imgUrl}}turntable.jpg" />
-      <image src="/img/turntableBg.png" @tap="goGame" />
-      <view class="goChallenge" @tap="goGame">
+      <image class="turntableBg" src="{{imgUrl}}turntable.png" />
+      <!-- <image class="turntableBg" src="/img/turntable.png" /> -->
+      <image class="turntable" src="/img/turntableBg.png" @tap="goGame" />
+      <!-- <view class="goChallenge" @tap="goGame">
         <view>开始抽奖</view>
-      </view>
+      </view> -->
     </view>
     <nav @childFn.user="goPage" />
   </view>

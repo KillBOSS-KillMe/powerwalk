@@ -13,6 +13,7 @@
   height: 870rpx;
   border-radius: 20rpx;
   margin: 40rpx 0 130rpx 0;
+  position: relative;
 }
 .turntableTitle{
   width: 100%;
@@ -25,24 +26,25 @@
 .sel{
   width: 100%;
   height: 54rpx;
-  margin-bottom: 100rpx;
+  // margin-bottom: 100rpx;
+  padding-top:20rpx;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 .sel view{
   padding: 10rpx 40rpx;
-  border: 1rpx solid #fff;
+  border: 1rpx solid #f39900;
   border-right: 0;
   font-size: 30rpx;
   text-align: center;
-  color: #333;
+  color: #fff;
 }
 .sel view:last-of-type{
-  border-right: 1rpx solid #fff;
+  border-right: 1rpx solid #f39900;
 }
 .sel .action{
-  background-color: #fff;
+  background-color: #f39900;
 }
 .mask{
   position: absolute;
@@ -168,10 +170,10 @@
   top: 0;
   width: 100%;
   height: 100%;
-  color: #e4370e;
+  color: #f7ca7e;
   // 修改字体颜色
   font-weight: bold;
-  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.6);
+  // text-shadow: 0 1px 1px rgba(255, 255, 255, 0.6);
 }
 .canvas-item-text {
   position: relative;
@@ -272,19 +274,42 @@
   position: absolute;
   z-index: -10;
 }
-// .canvas-item image{
-//   width: 88rpx;
-//   height: 88rpx;
-//   position: absolute;
-// }
+.canvas-item image{
+  width: 113rpx;
+  height: 100rpx;
+  position: absolute;
+}
+.turntableBg{
+  width: 750rpx;
+  height: 1096rpx;
+  border-radius: 0 0 20rpx 20rpx;
+  position: absolute;
+  z-index: -10;
+}
+.turntableMinBg{
+  width:360px;
+  height:360px;
+  border-radius:0 0 20rpx 20rpx;
+  position:absolute;
+  z-index:-5;
+  top:433rpx;
+  left:49rpx;
+}
+.main{
+  margin-top: 420rpx;
+}
 </style>
 <template>
   <view>
     <view class="titleImg">
       <image src="{{imgUrl}}gameTieleImg.jpg" />
     </view>
-    <view class="turntable" style="background-image: url({{imgUrl}}turntable.jpg)">
-      <view class="turntableTitle">请选择摇奖区域:</view>
+    <view class="turntable">
+    <!-- <view class="turntable" style="background-image: url({{imgUrl}}turntable.jpg)"> -->
+      <!-- <image class="turntableBg" src="/img/turntable.png" /> -->
+      <image class="turntableBg" src="{{imgUrl}}turntable.png" />
+      <image class="turntableMinBg" src="/img/turntableMinBg.png" />
+      <!-- <view class="turntableTitle">请选择摇奖区域:</view> -->
       <view class="sel">
         <block wx:for="{{turntableList}}" key="index" index="index" item="item">
           <view class="{{level === item.id?'action':''}}" data-index="{{index}}" @tap="selTurntable">{{item.cost_beans}}步</view>
@@ -304,11 +329,11 @@
             <view class="canvas-list">
               <repeat for="{{awardsList}}" key="index" index="index" item="item" class="canvas-item">
                 <view class="canvas-item">
-                  <!-- <view class="canvas-item-text" style="-webkit-transform: rotate({{item.turn}});transform: rotate({{item.turn}})">
-                    <image src="/img/home1.png" />
+                  <view class="canvas-item-text" style="-webkit-transform: rotate({{item.turn}});transform: rotate({{item.turn}})">
+                    <image src="{{item.img}}" />
                     {{item.award}}
-                  </view> -->
-                  <view class="canvas-item-text" style="-webkit-transform: rotate({{item.turn}});transform: rotate({{item.turn}})">{{item.award}}</view>
+                  </view>
+                  <!-- <view class="canvas-item-text" style="-webkit-transform: rotate({{item.turn}});transform: rotate({{item.turn}})">{{item.award}}</view> -->
                 </view>
               </repeat>
             </view>
@@ -370,7 +395,8 @@ export default class Game extends wepy.page {
     lottery: null,
     lotterySta: 0,
     promptInfo: '',
-    imgUrl: ''
+    imgUrl: '',
+    commodityImgUrl: ''
   };
 
   methods = {
@@ -381,6 +407,7 @@ export default class Game extends wepy.page {
     }
   };
   async onLoad(options) {
+    this.commodityImgUrl = this.$parent.globalData.commodityImgUrl
     this.imgUrl = this.$parent.globalData.imgUrl
     // 获取用户信息
     this.userInfo = this.$parent.globalData.userInfo
@@ -429,10 +456,16 @@ export default class Game extends wepy.page {
           // 获取到的数据拼装成转盘要求的数据
           let awardsData = {}
           let awards = []
+          console.log(this.turntableData)
           for (let i = 0; i < this.turntableData.length; i++) {
             awardsData = {}
             awardsData.index = this.turntableData[i].id
             awardsData.name = this.turntableData[i].name
+            if (this.turntableData[i].goods) {
+              awardsData.turntableImg = this.commodityImgUrl + this.turntableData[i].goods.img
+            } else {
+              awardsData.turntableImg =  `/img/beans3.png`
+            }
             awards.push(awardsData)
           }
           this.awardsConfig.awards = awards
@@ -533,6 +566,7 @@ export default class Game extends wepy.page {
   // 转盘初始化
   onRun(e) {
     var awardsConfig = this.awardsConfig
+    console.log(awardsConfig)
     var len = awardsConfig.awards.length
     var rotateDeg = 360 / len / 2 + 90
     var html = []
@@ -575,7 +609,8 @@ export default class Game extends wepy.page {
       html.push({
         turn: i * turnNum + 'turn',
         lineTurn: i * turnNum + turnNum / 2 + 'turn',
-        award: awardsConfig.awards[i].name
+        award: awardsConfig.awards[i].name,
+        img: awardsConfig.awards[i].turntableImg
       })
     }
     // 将获取到装盘的数据存入Data

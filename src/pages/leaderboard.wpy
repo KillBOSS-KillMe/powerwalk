@@ -220,7 +220,7 @@ page{
         <view class="addFriend" @tap="goAddFriend">
           <view class="addFriend2">添加好友</view>
         </view>
-        <view class="addFriend" @tap="goAddFriend">
+        <view class="addFriend" @tap="goStealRecord">
           <view class="addFriend2">被偷纪录</view>
         </view>
       </view>
@@ -317,7 +317,7 @@ export default class Leaderboard extends wepy.page {
       // 进入添加好友页面
       this.$navigate('/pages/addFriend')
     },
-    goAddFriend() {
+    goStealRecord() {
       // 进入被偷纪录页
       this.$navigate('/pages/stealRecord')
     }
