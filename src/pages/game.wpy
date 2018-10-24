@@ -292,11 +292,15 @@
   border-radius:0 0 20rpx 20rpx;
   position:absolute;
   z-index:-5;
-  top:433rpx;
-  left:49rpx;
+  // top:433rpx;
+  // left:49rpx;
+  top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 .main{
   margin-top: 420rpx;
+  position: relative;
 }
 </style>
 <template>
@@ -306,7 +310,7 @@
     </view>
     <view class="turntable">
       <image class="turntableBg" src="{{imgUrl}}turntable.png" />
-      <image class="turntableMinBg" src="{{imgUrl}}turntableMinBg.png" />
+      <!-- <image class="turntableMinBg" src="{{imgUrl}}turntableMinBg.png" /> -->
       <!-- <view class="turntableTitle">请选择摇奖区域:</view> -->
       <view class="sel">
         <block wx:for="{{turntableList}}" key="index" index="index" item="item">
@@ -314,7 +318,9 @@
         </block>
       </view>
       <view class="main" wx:if="{{turntableData.length != 0}}">
+        <image class="turntableMinBg" src="{{imgUrl}}turntableMinBg.png" />
         <view class="canvas-container">
+          
           <view animation="{{animationData}}" class="canvas-content">
             <canvas style="width: 300px; height: 300px;" class="canvas-element" canvas-id="lotteryCanvas"></canvas>
 

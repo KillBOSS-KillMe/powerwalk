@@ -170,7 +170,7 @@
   height: 585rpx;
   border: 1rpx solid #eee;
   border-radius: 30rpx;
-  margin: 28rpx;
+  margin: 26rpx;
 }
 .commodityImg{
   width: 100%;
