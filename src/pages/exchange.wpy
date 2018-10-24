@@ -171,7 +171,7 @@
             <radio/>
           </view>
           <view class="img">
-            <image src="{{commodityImgUrl + item.good_information.img}}" />
+            <image src="{{commodityImgUrl + img}}" />
           </view>
           <view class="info">
             <view class="delete">×</view>
@@ -223,7 +223,8 @@ export default class Exchange extends wepy.page {
     defaultAddssId: null,
     addssList: null,
     addss: null,
-    commodityImgUrl: ''
+    commodityImgUrl: '',
+    img: ''
   };
 
   methods = {
@@ -260,6 +261,7 @@ export default class Exchange extends wepy.page {
   async onLoad(options) {
     this.id = options.id
     this.name = options.name
+    this.img = options.img
     this.commodityImgUrl = this.$parent.globalData.commodityImgUrl
     this.buyQuantity = parseInt(options.buyQuantity)
     this.costBeans = parseInt(options.costBeans)
@@ -299,11 +301,12 @@ export default class Exchange extends wepy.page {
   }
   // 兑换
   exchange() {
-    if (!this.addss.id) {
+    if (!this.addss) {
       wx.showModal({
         title: '',
         content: '请完善收货地址'
       })
+      return
     }
     wx.request({
       url: `${this.$parent.globalData.requestUrl}/api/redeemNow`,

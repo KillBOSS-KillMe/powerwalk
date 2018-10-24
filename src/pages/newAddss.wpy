@@ -327,11 +327,9 @@ export default class Newaddss extends wepy.page {
         },
         success: data => {
           if (data.data.success) {
-            wx.showToast({
-              title: '添加成功',
-              duration: 2000,
-              mask: true,
-              icon: 'success'
+            wx.showModal({
+              title: '',
+              content: '新建成功'
             })
             setTimeout(function() {
               wx.navigateBack({ changed: true })
