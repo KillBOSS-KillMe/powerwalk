@@ -246,12 +246,12 @@ checkbox .wx-checkbox-input.wx-checkbox-input-checked::before{
               <view class="select">
                 <checkbox data-index="{{index}}" id="2" value="{{index}}" checked="{{item.checks}}"/>
               </view>
-              <view class="img">
+              <view class="img" data-id="{{item.good_id}}" @tap="goCommodity">
                 <image src="{{commodityImgUrl + item.good_information.img}}" />
               </view>
               <view class="info">
                 <view class="delete" data-id="{{item.good_id}}" @tap="deleteCart">×</view>
-                <view class="infoCon">
+                <view class="infoCon" data-id="{{item.good_id}}" @tap="goCommodity">
                   <view>
                     <image src="/img/beans3.png" />
                     {{item.good_information.cost_beans}}
@@ -594,6 +594,11 @@ export default class Cart extends wepy.page {
         }
       }
     })
+  }
+  // 进入商品详情页
+  goCommodity(e) {
+    let id = e.currentTarget.dataset.id
+    this.$navigate(`/pages/commodity?id=${id}`)
   }
 }
 </script>
