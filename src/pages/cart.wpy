@@ -99,6 +99,10 @@ page{
   display: flex;
   align-items: center;
 }
+.infoCon text{
+  font-size: 30rpx;
+  color: #fc6800;
+}
 .infoCon view:nth-child(1){
   font-size: 30rpx;
   color: #fa0100;
@@ -259,6 +263,7 @@ checkbox .wx-checkbox-input.wx-checkbox-input-checked::before{
                   <view>
                     {{item.good_information.name}}
                   </view>
+                  <text>库存:{{item.good_information.storage}}件</text>
                 </view>
                 <view>
                   <view data-index="{{index}}" data-num="{{item.num}}" data-storage="{{item.good_information.storage}}" @tap="quantityDown">-</view>
@@ -436,6 +441,14 @@ export default class Cart extends wepy.page {
       let indexExchange = {}
       // 获取选中商品ID及数量
       for (var i in index) {
+        if (allListData[index[i]].num > allListData[index[i]].good_information.storage) {
+          wx.showModal({
+            title: '',
+            content: '所选商品库存不足,请查看库存数量'
+          })
+          return
+        }
+        allListData[index[i]].good_information.storage
         indexExchange = {}
         indexExchange['good_id'] = allListData[index[i]].good_id
         indexExchange['num'] = allListData[index[i]].num

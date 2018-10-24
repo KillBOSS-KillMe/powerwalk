@@ -388,6 +388,13 @@ export default class Commodity extends wepy.page {
       })
       return
     }
+    if (this.commodity.storage <= 0) {
+      wx.showModal({
+        title: '',
+        content: '库存不足'
+      })
+      return
+    }
     // 在此处将商品信息传入兑换页
     this.$navigate(`/pages/exchange?img=${this.commodity.img}&id=${this.id}&allPrice=${this.allPrice}&price=${this.commodity.price}&name=${this.commodity.name}&buyQuantity=${this.buyQuantity}&costBeans=${this.commodity.cost_beans}`)
   }
