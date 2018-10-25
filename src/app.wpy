@@ -128,10 +128,10 @@ export default class extends wepy.app {
     // 线下
     // requestUrl: 'http://140.143.203.12:8090',
     // 线上
-    requestUrl: 'http://walk.beaconway.cn',
+    requestUrl: 'https://walk.beaconway.cn',
     // 图片资源--线下
-    imgUrl: 'http://walk.beaconway.cn/storage/images/',
-    commodityImgUrl: 'http://walk.beaconway.cn/storage/',
+    imgUrl: 'https://walk.beaconway.cn/storage/images/',
+    commodityImgUrl: 'https://walk.beaconway.cn/storage/',
     userShopInfo: null,
     shopInfo: null,
     guangGao: null,
