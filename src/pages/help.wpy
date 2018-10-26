@@ -43,6 +43,7 @@ page{
 }
 .listShow view{
   width: 650rpx;
+  font-weight: 700;
 }
 .listShowSon{
   height: auto;
