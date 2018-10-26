@@ -56,7 +56,16 @@
   height: 430rpx;
   border-radius: 0 0 20rpx 20rpx;
   position: absolute;
-  top: 505rpx;
+  top: 405rpx;
+  z-index: 2;
+}
+.turntableTitle .turntableMinBg {
+  width: 520rpx;
+  height: 520rpx;
+  border-radius: 0 0 20rpx 20rpx;
+  position: absolute;
+  z-index: 1;
+  top: 357rpx;
 }
 .info{
   position: absolute;
@@ -180,6 +189,7 @@
       <view class="info" data-type="turntable" @tap="goRule">查看规则及等级奖品</view>
       <image class="turntableBg" src="{{imgUrl}}turntable.png" />
       <!-- <image class="turntableBg" src="/img/turntable.png" /> -->
+      <image class="turntableMinBg" src="{{imgUrl}}turntableMinBg.png" />
       <image class="turntable" src="{{imgUrl}}turntableBg.png" @tap="goGame" />
     </view>
     <nav @childFn.user="goPage" />

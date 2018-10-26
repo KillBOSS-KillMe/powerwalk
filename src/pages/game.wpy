@@ -281,7 +281,7 @@
 }
 .turntableBg{
   width: 750rpx;
-  height: 1096rpx;
+  height: 1396rpx;
   border-radius: 0 0 20rpx 20rpx;
   position: absolute;
   z-index: -10;
@@ -452,14 +452,12 @@ export default class Game extends wepy.page {
       url: `${this.$parent.globalData.requestUrl}/api/bigTurnTablePrize/${id}`,
       method: 'GET',
       success: data => {
-        console.log(data)
         if (data.data.success) {
           this.turntableData = data.data.data.big_turn_table_prizes
           this.$apply()
           // 获取到的数据拼装成转盘要求的数据
           let awardsData = {}
           let awards = []
-          console.log(this.turntableData)
           for (let i = 0; i < this.turntableData.length; i++) {
             awardsData = {}
             awardsData.index = this.turntableData[i].id
@@ -521,13 +519,7 @@ export default class Game extends wepy.page {
     // 生成结果 0到6的随机数{后面通过传至或者在此处请求转盘结果控制}
     // var awardIndex = (Math.random() * 10) >>> 0
     // 装盘结果
-    console.log(this.lottery)
     var awardIndex = this.lottery
-    // if (awardIndex == null) {
-    //   console.log(awardIndex)
-    //   console.log(awardIndex == null)
-    //   return
-    // }
     // 获取奖品配置
     var awardsConfig = this.awardsConfig
     var runNum = 12
@@ -542,7 +534,6 @@ export default class Game extends wepy.page {
       timingFunction: 'ease'
     })
     this.animationRun = animationRun
-    console.log(`++++++++++++++++++++++++++++${this.runDegs}`)
     animationRun.rotate(this.runDegs).step()
     this.animationData = animationRun.export()
     this.btnDisabled = 'disabled'
@@ -555,21 +546,19 @@ export default class Game extends wepy.page {
     wx.setStorageSync('winAwards', winAwards)
 
     // 中奖提示
-    setTimeout(function() {
+    setTimeout((e) => {
       wx.showModal({
         title: '恭喜',
         content: '获得' + awardsConfig.awards[awardIndex].name + '请到个人中心查看',
         showCancel: false
       })
-      if (awardsConfig.chance) {
-        this.btnDisabled = ''
-      }
+      this.btnDisabled = ''
+      this.$apply()
     }, 4000)
   }
   // 转盘初始化
   onRun(e) {
     var awardsConfig = this.awardsConfig
-    console.log(awardsConfig)
     var len = awardsConfig.awards.length
     var rotateDeg = 360 / len / 2 + 90
     var html = []

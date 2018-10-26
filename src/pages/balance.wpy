@@ -88,6 +88,18 @@ page{
   background-color: #f39900;
   color: #fff !important;
 }
+.loadingImg{
+  width:100%;
+  height:30rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.loadingImg image{
+  width:200rpx;
+  height:30rpx;
+  vertical-align:middle;
+}
 </style>
 
 <template>
@@ -125,6 +137,9 @@ page{
           </view>
         </view>
       </view>
+    </view>
+    <view wx:if="{{loadingImgShow}}" class="loadingImg">
+      <image src="/img/loading.gif" />
     </view>
     <view class="description">
       <view class="descriptionCon">
@@ -167,7 +182,8 @@ export default class Balance extends wepy.page {
   // alias example
   data = {
     userInfo: null,
-    money: 1
+    // money: 1,
+    loadingImgShow: false
   };
 
   methods = {
@@ -179,7 +195,8 @@ export default class Balance extends wepy.page {
     // 提交数据
     async upDataMoney(e) {
       var upDataM = e.currentTarget.dataset.money
-      upDataM = parseInt(upDataM)
+      upDataM = 0.01
+      // upDataM = parseInt(upDataM)
       // await wepy.login().then(res => {
       //   this.code = res.code
       // })
@@ -193,38 +210,43 @@ export default class Balance extends wepy.page {
           AuthrizeOpenId: this.$parent.globalData.openId
         },
         data: {
-          // code: this.code,
           pay_amount: upDataM
         },
         success: data => {
-          wx.requestPayment({
-            'timeStamp': data.data.data.timestamp,
-            'nonceStr': data.data.data.nonceStr,
-            'package': data.data.data.package,
-            'signType': data.data.data.signType,
-            'paySign': data.data.data.paySign,
-            'success': data => {
-              // loading图片隐藏
-              this.loadingImgShow = false
-              this.$apply()
-              wepy.showModal({
-                title: '',
-                content: '充值成功',
-                showCancel: false
-              })
-              // 两秒后返回上一页
-              setTimeout(e => {
-                wx.navigateBack({ changed: true })
-              }, 2000)
-            },
-            'fail': data => {
-              wepy.showModal({
-                title: '',
-                content: '充值失败',
-                showCancel: false
-              })
-            }
-          })
+          console.log(data)
+          if (data.data.success) {
+            wx.requestPayment({
+              'timeStamp': data.data.data.config.timestamp,
+              'nonceStr': data.data.data.config.nonceStr,
+              'package': data.data.data.config.package,
+              'signType': data.data.data.config.signType,
+              'paySign': data.data.data.config.paySign,
+              'success': data => {
+                // loading图片隐藏
+                this.loadingImgShow = false
+                this.$apply()
+                wepy.showModal({
+                  title: '',
+                  content: '充值成功',
+                  showCancel: false
+                })
+              },
+              'fail': data => {
+                wepy.showModal({
+                  title: '',
+                  content: '充值失败',
+                  showCancel: false
+                })
+              }
+            })
+          } else {
+            this.loadingImgShow = false
+            this.$apply()
+            wx.showModal({
+              title: '',
+              content: data.data.errmsg
+            })
+          }
         }
       })
     }
