@@ -1,0 +1,207 @@
+<style lang="less">
+.head, .head2{
+  width: 750rpx;
+  height: 70rpx;
+  line-height: 70rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1rpx solid #e5e5e5;
+}
+
+.head view,.head2 view{
+  margin: 0 54rpx;
+  width: 142rpx;
+  height: 70rpx;
+  line-height: 70rpx;
+  text-align: center;
+  font-size: 30rpx;
+}
+.action{
+  color: #ff6200;
+  border-bottom: 1rpx solid #ff6200;
+}
+.list{
+  margin-bottom: 110rpx; 
+}
+.list,.head2 view{
+  font-size: 22rpx;
+  color: #373737;
+}
+.listCon{
+  display: flex;
+  border-bottom: 1rpx solid #e5e5e5;
+  // margin: 0 54rpx;
+}
+.listCon view, .head2 view{
+  margin: 0 54rpx;
+  width: 142rpx;
+  height: 70rpx;
+  line-height: 90rpx;
+  text-align: center;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.description{
+  width: 390rpx !important;
+}
+</style>
+<template>
+  <view>
+    <view class="head">
+      <view class="{{selShowData === 'getBeans'?'action':''}}" data-sel="getBeans" @tap="selShow">消耗纪录</view>
+      <view class="{{selShowData === 'costBeans'?'action':''}}" data-sel="costBeans" @tap="selShow">获取纪录</view>
+    </view>
+    <!-- 获取纪录 -->
+    <view class="list" wx:if="{{selShowData === 'getBeans'}}">
+      <view class="head2">
+        <view class="description">详情</view>
+        <!-- <view>数量</view> -->
+        <view>时间</view>
+      </view>
+      <block wx:for="{{getBeansList}}" key="index" index="index" item="item">
+        <view class="listCon">
+          <view class="description">{{item.description}}</view>
+          <!-- <view>{{item.beans}}</view> -->
+          <view>{{item.date}}</view>
+        </view>
+      </block>
+      <view class="dataNullTitle" wx:if="{{getBeansList.length==0}}">暂无兑换纪录</view>
+    </view>
+    <!-- 消耗纪录 -->
+    <view class="list" wx:if="{{selShowData === 'costBeans'}}">
+      <view class="head2">
+        <view class="description">详情</view>
+        <!-- <view>数量</view> -->
+        <view>时间</view>
+      </view>
+      <block wx:for="{{costBeansList}}" key="index" index="index" item="item">
+        <view class="listCon">
+          <view class="description">{{item.description}}</view>
+          <!-- <view>{{item.beans}}</view> -->
+          <view>{{item.date}}</view>
+        </view>
+      </block>
+      <view class="dataNullTitle" wx:if="{{costBeansList.length==0}}">暂无兑换纪录</view>
+    </view>
+    <!-- <nav @childFn.user="goPage" /> -->
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import nav from '../components/nav' // 底部导航
+export default class Beansdetails extends wepy.page {
+  config = {
+    'navigationBarTitleText': '活力豆详情'
+  };
+  // 生命组件ID
+  components = {
+  // 底部导航
+    nav: nav
+  };
+  // alias example
+  data = {
+    userInfo: null,
+    nextUrl: '',
+    selShowData: 'getBeans',
+    getBeansList: null,
+    costBeansList: null
+  };
+  methods = {
+    // 底部导航跳转
+    goPage (url, evt) {
+      // 销毁当前页{跳转}
+      this.$redirect(url)
+    }
+  };
+  async onLoad(options) {
+    // 兑换活力豆纪录
+    this.getBeansL()
+  };
+  // 显示类别切换
+  selShow(e) {
+    let sel = e.currentTarget.dataset.sel
+    this.selShowData = sel
+    this.$apply()
+  }
+  // 兑换活力豆纪录
+  getBeansL() {
+    wx.request({
+      url: `${this.$parent.globalData.requestUrl}/api/userCostBeanRecord`,
+      method: 'GET',
+      header: {
+        AuthrizeOpenId: this.$parent.globalData.openId
+      },
+      data: {
+        status: 'get'
+      },
+      success: data => {
+        console.log(data)
+        if (data.data.success) {
+          data = data.data.data.user_bean_cost_records
+          let beansListData = data.data
+          let getBeans = []
+          let costBeans = []
+          for (let i in beansListData) {
+            if (beansListData[i].status === '获取') {
+              getBeans.push(beansListData[i])
+            } else if (beansListData[i].status === '消耗') {
+              costBeans.push(beansListData[i])
+            }
+          }
+          this.getBeansList = getBeans
+          this.costBeansList = costBeans
+          this.$apply()
+          // 获取下一页的请求Id
+          this.nextUrl = ''
+          if (data.meta.pagination.links.length !== 0) {
+            this.nextUrl = data.meta.pagination.links.next
+          }
+        } else {
+          wx.showModal({
+            title: '',
+            content: data.data.errmsg
+          })
+        }
+      }
+    })
+  }
+  onReachBottom() {
+    if (!this.nextUrl) {
+      return
+    }
+    wx.request({
+      url: this.nextUrl,
+      method: 'GET',
+      header: {
+        AuthrizeOpenId: this.$parent.globalData.openId
+      },
+      success: data => {
+        if (data.statusCode === 200) {
+          data = data.data.data.user_bean_cost_records
+          let beansListData = data.data
+          let getBeans = []
+          let costBeans = []
+          for (let i in beansListData) {
+            if (beansListData[i].status === '获取') {
+              getBeans.push(beansListData[i])
+            } else if (beansListData[i].status === '消耗') {
+              costBeans.push(beansListData[i])
+            }
+          }
+          this.getBeansList = this.beansListData.concat(getBeans)
+          this.costBeansList = this.beansListData.concat(costBeans)
+          this.$apply()
+          this.nextUrl = ''
+          // 更新下一页请求地址
+          if (data.meta.pagination.links.length !== 0) {
+            this.nextUrl = data.meta.pagination.links.next
+          }
+        }
+      }
+    })
+  }
+}
+</script>

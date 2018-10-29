@@ -98,6 +98,7 @@ export default class extends wepy.app {
       'pages/addssList', // 地址列表
       'pages/order', // 订单
       'pages/exchangeRecording', // 兑换记录
+      'pages/beansDetails', // 活力豆详情
       'pages/signIn', // 签到
       'pages/newAddss', // 新建地址
       'pages/user', // 个人中心

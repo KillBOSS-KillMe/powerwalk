@@ -314,7 +314,7 @@
       <!-- <view class="turntableTitle">请选择摇奖区域:</view> -->
       <view class="sel">
         <block wx:for="{{turntableList}}" key="index" index="index" item="item">
-          <view class="{{level === item.id?'action':''}}" data-index="{{index}}" @tap="selTurntable">{{item.cost_beans}}步</view>
+          <view class="{{level === item.id?'action':''}}" data-index="{{index}}" @tap="selTurntable">{{item.cost_beans}}豆</view>
         </block>
       </view>
       <view class="main" wx:if="{{turntableData.length != 0}}">

@@ -170,12 +170,12 @@
           <view class="select">
             <radio/>
           </view>
-          <view class="img">
+          <view class="img" @tap="goCommodity">
             <image src="{{commodityImgUrl + img}}" />
           </view>
           <view class="info">
             <view class="delete">×</view>
-            <view class="infoCon">
+            <view class="infoCon" @tap="goCommodity">
               <view>
                 <image src="/img/beans3.png" />
                 {{allPrice}}
@@ -226,7 +226,6 @@ export default class Exchange extends wepy.page {
     commodityImgUrl: '',
     img: ''
   };
-
   methods = {
     // 底部导航跳转
     goPage (url, evt) {
@@ -252,10 +251,15 @@ export default class Exchange extends wepy.page {
         return
       }
       this.buyQuantity -= 1
+      this.allPrice = this.buyQuantity * this.price
       this.$apply()
     },
     selectAddss() {
       this.$navigate('/pages/addssList?type=select')
+    },
+    goCommodity() {
+      // 返回上一页
+      wx.navigateBack({ changed: true })
     }
   };
   async onLoad(options) {

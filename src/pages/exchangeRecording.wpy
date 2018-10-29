@@ -47,15 +47,15 @@
 <template>
   <view>
     <view class="head">
-      <view class="{{selShowData === 'beans'?'action':''}}" data-sel="beans" @tap="selShow">动力豆</view>
+      <view class="{{selShowData === 'beans'?'action':''}}" data-sel="beans" @tap="selShow">活力豆</view>
       <view class="{{selShowData === 'exchange'?'action':''}}" data-sel="exchange" @tap="selShow">兑换商品</view>
       <view class="{{selShowData === 'winning'?'action':''}}" data-sel="winning" @tap="selShow">中奖纪录</view>
     </view>
-    <!-- 动力豆 -->
+    <!-- 活力豆 -->
     <view class="list" wx:if="{{selShowData === 'beans'}}">
       <view class="head2">
         <view>兑换步数</view>
-        <view>动力豆</view>
+        <view>活力豆</view>
         <view>兑换时间</view>
       </view>
       <block wx:for="{{beansListData}}" key="index" index="index" item="item">
@@ -106,7 +106,7 @@
 <script>
 import wepy from 'wepy'
 import nav from '../components/nav' // 底部导航
-export default class Cart extends wepy.page {
+export default class Exchangerecording extends wepy.page {
   config = {
     'navigationBarTitleText': '兑换记录'
   };

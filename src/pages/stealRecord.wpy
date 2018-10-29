@@ -5,7 +5,7 @@ page{
 
 .myInfo, .list{
   width: 100%;
-  height: 150rpx;
+  height: auto;
   line-height: 150rpx;
   background-color: #fff;
   display: flex;
@@ -21,13 +21,13 @@ page{
 }
 .user{
   width: 640rpx;
-  height: 150rpx;
+  height: auto;
   padding-left: 10rpx;
   font-size: 30rpx;
   color: #333;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  white-space:nowrap;
+  // overflow:hidden;
+  // text-overflow:ellipsis;
+  // white-space:nowrap;
 }
 .myInfo .userImg image{
   width: 80rpx;
@@ -38,14 +38,14 @@ page{
 }
 
 .myInfo .user view{
-  width: 150rpx;
+  width: auto;
   height: 90rpx;
   line-height: 130rpx;
   color: #242424;
   font-size: 30rpx;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  white-space:nowrap;
+  // overflow:hidden;
+  // text-overflow:ellipsis;
+  // white-space:nowrap;
 }
 .myInfo .ranking{
   line-height: 40rpx !important;
@@ -56,9 +56,9 @@ page{
 .myInfo .count{
   width: 160rpx;
   height: 150rpx;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  white-space:nowrap;
+  // overflow:hidden;
+  // text-overflow:ellipsis;
+  // white-space:nowrap;
 }
 
 .steal{
@@ -77,9 +77,17 @@ page{
   vertical-align:middle;
 }
 
-.userImg,.user{
-  height: 150rpx;
+// .userImg{
+//   height: 150rpx;
+//   border-bottom: 1rpx solid #dcdcdc;
+// }
+.userImg, .user{
+  line-height: 70rpx;
+  height: auto;
   border-bottom: 1rpx solid #dcdcdc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 </style>
@@ -172,27 +180,32 @@ export default class Stealrecord extends wepy.page {
   }
   // 数据重组
   dataAssembly(listData) {
+    var actionDom = ['被摁在地上摩擦,','被追了十八条街,','被塞在麻袋中打了一顿,','被吊起来打,','被群殴,']
     for (let i in listData) {
       if (listData[i].status === '没被偷') {
+        let index = (Math.random() * 4) >>> 0
+        let action = actionDom[index]
         listData[i].theif = listData[i].theif
-        listData[i].status = '偷取被发现'
+        listData[i].status = `偷取被『${this.userInfo.name}』发现,${action}步数`
         listData[i].step = listData[i].description.replace(/[^0-9]/ig,"")
-        listData[i].description = `{${listData[i].theif.name}}${listData[i].status}减少${listData[i].step}步`
+        listData[i].description = `『${listData[i].theif.name}』${listData[i].status}减少${listData[i].step}步`
       } else if (listData[i].status === '偷取失败') {
+        let index = (Math.random() * 4) >>> 0
+        let action = actionDom[index]
         listData[i].theif = listData[i].theifed
-        listData[i].status = '偷取被发现'
+        listData[i].status = `『${this.userInfo.name}』偷取`
         listData[i].step = listData[i].description.replace(/[^0-9]/ig,"")
-        listData[i].description = `${listData[i].status}被{${listData[i].theif.name}}发现减少${listData[i].step}步`
+        listData[i].description = `${listData[i].status}被『${listData[i].theif.name}』发现,${action}步数减少${listData[i].step}步`
       } else if (listData[i].status === '被偷') {
         listData[i].theif = listData[i].theif
-        listData[i].status = '偷取了'
+        listData[i].status = `偷取了『${this.userInfo.name}』`
         listData[i].step = listData[i].description.replace(/[^0-9]/ig,"")
-        listData[i].description = `{${listData[i].theif.name}}${listData[i].status}${listData[i].step}步`
+        listData[i].description = `『${listData[i].theif.name}』${listData[i].status}${listData[i].step}步`
       } else if (listData[i].status === '偷') {
         listData[i].theif = this.userInfo
-        listData[i].status = '成功偷取'
+        listData[i].status = `『${this.userInfo.name}』成功偷取`
         listData[i].step = listData[i].description.replace(/[^0-9]/ig,"")
-        listData[i].description = `${listData[i].status}{${listData[i].theif.name}}${listData[i].step}步`
+        listData[i].description = `${listData[i].status}『${listData[i].theif.name}』${listData[i].step}步`
       }
     }
     return listData

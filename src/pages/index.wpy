@@ -1,5 +1,4 @@
 <style lang="less">
-
 #getUserInfo{
   position: fixed;
   top: 0;

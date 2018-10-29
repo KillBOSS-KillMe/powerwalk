@@ -419,14 +419,16 @@ export default class Challenge extends wepy.page {
     if (selAnswer === answer) {
       // 正确
       setTimeout((e) => {
-        this.correct = true
+        this.nextQuestion()
+        // this.correct = true
         this.$apply()
       }, 2000)
       this.correctNumber += 1
     } else {
       // 错了
       setTimeout((e) => {
-        this.error = true
+        this.nextQuestion()
+        // this.error = true
         this.$apply()
       }, 2000)
     }
@@ -453,7 +455,7 @@ export default class Challenge extends wepy.page {
     } else {
       wx.showModal({
         title: '',
-        content: '题目已答完,是否提交结果',
+        content: `答对了${this.correctNumber}道题,是否提交结果`,
         success: res => {
           if (res.cancel) {
             // 点击取消,默认隐藏弹框
@@ -516,7 +518,7 @@ export default class Challenge extends wepy.page {
         if (data.data.success) {
           wx.showModal({
             title: '',
-            content: '答题完成,活力豆已发放'
+            content: `结果提交成功,活力豆已发放`
           })
         } else {
           wx.showModal({

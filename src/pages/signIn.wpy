@@ -137,11 +137,11 @@ page{
 		<view class="dayShow">
       <block wx:for="{{7}}" key="index" index="index" item="item">
         <view class="list {{selShowData <= index?'':'dayShowSelected'}}">
-          <view>第{{reward[index]}}天</view>
+          <view>第{{index + 1 }}天</view>
           <view>
             <image src="/img/beans1.png" />
           </view>
-          <view>+{{100 + index * 50}}</view>
+          <view>+{{reward[index]}}</view>
         </view>
       </block>
 		</view>

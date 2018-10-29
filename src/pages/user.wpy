@@ -213,7 +213,7 @@ page{
         <image src="{{userInfo.profile}}" />
       </view>
       <view>{{userInfo.name}}</view>
-      <view>活力豆:{{userInfo.beans}}</view>
+      <view @tap="goBeansDetails">活力豆:{{userInfo.beans}}</view>
     </view>
     <view class="userNavT">
       <!-- <view> -->
@@ -501,6 +501,10 @@ export default class User extends wepy.page {
   // 进入帮助中心
   goHelp() {
     this.$navigate('/pages/help')
+  }
+  // 进入活力豆详情
+  goBeansDetails() {
+    this.$navigate('/pages/beansDetails')
   }
 }
 </script>
