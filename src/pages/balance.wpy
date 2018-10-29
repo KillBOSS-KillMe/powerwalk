@@ -195,8 +195,7 @@ export default class Balance extends wepy.page {
     // 提交数据
     async upDataMoney(e) {
       var upDataM = e.currentTarget.dataset.money
-      upDataM = 0.01
-      // upDataM = parseInt(upDataM)
+      upDataM = parseInt(upDataM)
       // await wepy.login().then(res => {
       //   this.code = res.code
       // })
