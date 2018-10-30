@@ -184,6 +184,9 @@
   text-align: center;
   -webkit-transform-origin: 50% 150px;
   transform-origin: 50% 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* 分隔线 */
@@ -462,11 +465,11 @@ export default class Game extends wepy.page {
             awardsData = {}
             awardsData.index = this.turntableData[i].id
             awardsData.name = this.turntableData[i].name
-            if (this.turntableData[i].goods) {
-              awardsData.turntableImg = this.commodityImgUrl + this.turntableData[i].goods.img
-            } else {
-              awardsData.turntableImg =  `/img/beans3.png`
-            }
+            // if (this.turntableData[i].goods) {
+            awardsData.turntableImg = this.commodityImgUrl + this.turntableData[i].img
+            // } else {
+            //   awardsData.turntableImg =  `/img/beans3.png`
+            // }
             awards.push(awardsData)
           }
           this.awardsConfig.awards = awards

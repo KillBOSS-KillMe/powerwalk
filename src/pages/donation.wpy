@@ -1,4 +1,12 @@
 <style lang="less">
+// @import "../wxParse/wxParse.wxss";
+// .wxParse-img {
+//   margin: 0 auto;
+//   width: 100%;
+//   min-height: 200rpx;
+//   display: block;
+//   background-color: transparent;
+// }
 page{
   background-color: #efefef;
 }
@@ -87,7 +95,7 @@ page{
   padding-bottom: 30rpx;
   border-bottom: 1rpx solid #e5e5e5;
 }
-.donationTitle, .donationTitle2, .donationArticle, .messageTitle{
+.donationTitle, .donationTitle2, .donationArticle{
   padding: 20rpx;
   width: 720rpx;
   height: auto;
@@ -95,6 +103,17 @@ page{
   line-height: 70rpx;
   font-size: 30rpx;
   color: #333;
+}
+.messageTitle{
+  width: 180rpx;
+  height: auto;
+  border-radius: 100rpx;
+  min-height: 70rpx;
+  line-height: 70rpx;
+  font-size: 30rpx;
+  color: #fff;
+  background-color: #fc901e;
+  text-align: center;
 }
 .donationTitle2{
   color: #666;
@@ -180,6 +199,7 @@ page{
 </style>
 <template>
   <view>
+    <import src="../wxParse/wxParse.wxml"/>
     <view class="top">
       <view class="img">
         <image src="{{commodityImgUrl + projectData.img}}" />
@@ -209,7 +229,11 @@ page{
     <view class="donationExplain">
       <view class="donationTitle">项目说明</view>
       <view class="donationTitle2">{{projectData.name}}</view>
-      <view class="donationArticle">{{projectData.description}}</view>
+      <!-- <view class="donationArticle">{{projectData.description}}</view> -->
+      <view class="donationArticle">
+        <template is="wxParse" data="{{wxParseData:article.nodes}}" />
+      </view>
+      
       <view class="img">
         <image src="{{commodityImgUrl + projectData.img}}" />
       </view>
@@ -255,9 +279,11 @@ page{
 </template>
 
 <script>
+
 import wepy from 'wepy'
 import nav from '../components/nav' // 底部导航
 import check from '../mixins/check'
+import WxParse from '../wxParse/wxParse'
 export default class Donation extends wepy.page {
   mixins = [check]
   config = {
@@ -318,6 +344,8 @@ export default class Donation extends wepy.page {
           this.commentList = data.comment
           console.log(this.commentList)
           this.projectData = data
+          // html转换显示
+          WxParse.wxParse('article', 'html', this.projectData.description, this, 5)
           let num = this.projectData.toal_step
           let total = this.projectData.goal_step
           this.projectData.schedule = Math.round(num / total * 10000) / 100.00

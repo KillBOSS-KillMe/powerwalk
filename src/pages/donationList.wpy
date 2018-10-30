@@ -124,7 +124,7 @@
               {{item.name}}
             </view>
             <view class="infoCon">
-              {{item.description}}
+              <!-- {{item.description}} -->
             </view>
             <view class="count">
               <text>帮助特困</text>少年上学
@@ -150,6 +150,7 @@
 import wepy from 'wepy'
 import nav from '../components/nav' // 底部导航
 import check from '../mixins/check'
+// import WxParse from '../wxParse/wxParse'
 export default class Donationlist extends wepy.page {
   config = {
     'navigationBarTitleText': '爱心捐赠'

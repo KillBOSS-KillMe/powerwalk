@@ -18,9 +18,9 @@ page{
   justify-content: center;
   color: #333;
 }
-.userShow view:nth-child(1){
-  padding-top: 40rpx;
-}
+// .userShow view:nth-child(1){
+//   padding-top: 40rpx;
+// }
 .userShow view:nth-child(2){
   height: 60rpx;
   line-height: 60rpx;
@@ -204,6 +204,19 @@ page{
   font-size: 34rpx;
   color: #333;
 }
+.beansDetails{
+  margin-top: 40rpx;
+}
+.beansDetails view {
+  width: auto;
+  background-color: #f39900;
+  color: #fff;
+  border-radius: 30rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  padding-top:0rpx;
+  padding: 0 30rpx;
+}
 </style>
 
 <template>
@@ -213,7 +226,11 @@ page{
         <image src="{{userInfo.profile}}" />
       </view>
       <view>{{userInfo.name}}</view>
-      <view @tap="goBeansDetails">活力豆:{{userInfo.beans}}</view>
+      <view class="beansDetails" @tap="goBeansDetails">
+        <view>
+          活力豆:{{userInfo.beans}}
+        </view>
+      </view>
     </view>
     <view class="userNavT">
       <!-- <view> -->

@@ -15,7 +15,7 @@
 .notice{
   position: fixed;
   top: 0rpx;
-  width: 170rpx;
+  width: 300rpx;
   // height: 80rpx;
   line-height:40rpx;
   border: 1rpx solid #e5e5e5;

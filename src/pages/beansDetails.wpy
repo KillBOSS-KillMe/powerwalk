@@ -50,8 +50,8 @@
 <template>
   <view>
     <view class="head">
-      <view class="{{selShowData === 'getBeans'?'action':''}}" data-sel="getBeans" @tap="selShow">消耗纪录</view>
-      <view class="{{selShowData === 'costBeans'?'action':''}}" data-sel="costBeans" @tap="selShow">获取纪录</view>
+      <view class="{{selShowData === 'getBeans'?'action':''}}" data-sel="getBeans" @tap="selShow">获取纪录</view>
+      <view class="{{selShowData === 'costBeans'?'action':''}}" data-sel="costBeans" @tap="selShow">消耗纪录</view>
     </view>
     <!-- 获取纪录 -->
     <view class="list" wx:if="{{selShowData === 'getBeans'}}">
@@ -138,7 +138,6 @@ export default class Beansdetails extends wepy.page {
         status: 'get'
       },
       success: data => {
-        console.log(data)
         if (data.data.success) {
           data = data.data.data.user_bean_cost_records
           let beansListData = data.data
