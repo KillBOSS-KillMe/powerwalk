@@ -305,68 +305,74 @@
   margin-top: 420rpx;
   position: relative;
 }
+scroll-view{
+  height: auto;
+}
 </style>
 <template>
-  <view>
-    <view class="titleImg">
-      <image src="{{imgUrl}}gameTieleImg.jpg" />
-    </view>
-    <view class="turntable">
-      <image class="turntableBg" src="{{imgUrl}}turntable.png" />
-      <!-- <image class="turntableMinBg" src="{{imgUrl}}turntableMinBg.png" /> -->
-      <!-- <view class="turntableTitle">请选择摇奖区域:</view> -->
-      <view class="sel">
-        <block wx:for="{{turntableList}}" key="index" index="index" item="item">
-          <view class="{{level === item.id?'action':''}}" data-index="{{index}}" @tap="selTurntable">{{item.cost_beans}}豆</view>
-        </block>
+  <scroll-view scroll-y="hidden">
+    <view>
+      <view class="titleImg">
+        <image src="{{imgUrl}}gameTieleImg.jpg" />
       </view>
-      <view class="main" wx:if="{{turntableData.length != 0}}">
-        <image class="turntableMinBg" src="{{imgUrl}}turntableMinBg.png" />
-        <view class="canvas-container">
-          
-          <view animation="{{animationData}}" class="canvas-content">
-            <canvas style="width: 300px; height: 300px;" class="canvas-element" canvas-id="lotteryCanvas"></canvas>
+      <view class="turntable">
+        <image class="turntableBg" src="{{imgUrl}}turntable.png" />
+        <!-- <image class="turntableMinBg" src="{{imgUrl}}turntableMinBg.png" /> -->
+        <!-- <view class="turntableTitle">请选择摇奖区域:</view> -->
+        <view class="sel">
+          <block wx:for="{{turntableList}}" key="index" index="index" item="item">
+            <view class="{{level === item.id?'action':''}}" data-index="{{index}}" @tap="selTurntable">{{item.cost_beans}}豆</view>
+          </block>
+        </view>
+        <view class="main" wx:if="{{turntableData.length != 0}}">
+          <image class="turntableMinBg" src="{{imgUrl}}turntableMinBg.png" />
+          <view class="canvas-container">
+            
+            <view animation="{{animationData}}" class="canvas-content">
+              <canvas style="width: 300px; height: 300px;" class="canvas-element" canvas-id="lotteryCanvas"></canvas>
 
-            <view class="canvas-line">
-              <repeat for="{{awardsList}}" key="index" index="index" item="item">
-                <view class="canvas-litem" style="-webkit-transform: rotate({{item.lineTurn}});transform: rotate({{item.lineTurn}})">{{item.lineTurn}}</view>
-              </repeat>
-            </view>
+              <view class="canvas-line">
+                <repeat for="{{awardsList}}" key="index" index="index" item="item">
+                  <view class="canvas-litem" style="-webkit-transform: rotate({{item.lineTurn}});transform: rotate({{item.lineTurn}})">{{item.lineTurn}}</view>
+                </repeat>
+              </view>
 
-            <view class="canvas-list">
-              <repeat for="{{awardsList}}" key="index" index="index" item="item" class="canvas-item">
-                <view class="canvas-item">
-                  <view class="canvas-item-text" style="-webkit-transform: rotate({{item.turn}});transform: rotate({{item.turn}})">
-                    <image src="{{item.img}}" />
-                    {{item.award}}
+              <view class="canvas-list">
+                <repeat for="{{awardsList}}" key="index" index="index" item="item" class="canvas-item">
+                  <view class="canvas-item">
+                    <view class="canvas-item-text" style="-webkit-transform: rotate({{item.turn}});transform: rotate({{item.turn}})">
+                      <image src="{{item.img}}" />
+                      {{item.award}}
+                    </view>
+                    <!-- <view class="canvas-item-text" style="-webkit-transform: rotate({{item.turn}});transform: rotate({{item.turn}})">{{item.award}}</view> -->
                   </view>
-                  <!-- <view class="canvas-item-text" style="-webkit-transform: rotate({{item.turn}});transform: rotate({{item.turn}})">{{item.award}}</view> -->
-                </view>
-              </repeat>
+                </repeat>
+              </view>
             </view>
+            <view @tap="lotteryRun" class="canvas-btn {{btnDisabled}}">抽奖</view>
           </view>
-          <view @tap="lotteryRun" class="canvas-btn {{btnDisabled}}">抽奖</view>
+        </view>
+        <view class="dataNullTitle" wx:if="{{turntableData.length==0}}">该抽奖无转盘数据</view>
+      </view>
+      
+      <view class="mask hide">
+        <view class="congratulations">
+          <view class="congsTitleImg">
+            <image src="/img/index_main.jpg" />
+          </view>
+          <view class="winningInfo">
+            <view class="congCon">获得奖品:啊手动阀</view>
+            <view class="congCons">奖品已发送,请前往订单查看</view>
+          </view>
+          <view  class="congBotton">
+            <view>继续抽奖</view>
+          </view>
         </view>
       </view>
-      <view class="dataNullTitle" wx:if="{{turntableData.length==0}}">该抽奖无转盘数据</view>
+      <!-- <nav @childFn.user="goPage" /> -->
     </view>
-    
-    <view class="mask hide">
-      <view class="congratulations">
-        <view class="congsTitleImg">
-          <image src="/img/index_main.jpg" />
-        </view>
-        <view class="winningInfo">
-          <view class="congCon">获得奖品:啊手动阀</view>
-          <view class="congCons">奖品已发送,请前往订单查看</view>
-        </view>
-        <view  class="congBotton">
-          <view>继续抽奖</view>
-        </view>
-      </view>
-    </view>
-    <!-- <nav @childFn.user="goPage" /> -->
-  </view>
+  </scroll-view>
+  
 </template>
 
 <script>

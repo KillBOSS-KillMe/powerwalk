@@ -300,7 +300,7 @@ export default class Commodity extends wepy.page {
       this.$redirect(url)
     },
     quantityUp() {
-      if (this.buyQuantity >= this.commodity.cost_beans) {
+      if (this.buyQuantity >= this.commodity.storage) {
         wx.showModal({
           title: '',
           content: '剩余商品不足'

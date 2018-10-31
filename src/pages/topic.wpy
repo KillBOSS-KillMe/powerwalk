@@ -267,71 +267,77 @@
   border: 1rpx solid rgb(255, 0, 0);
   color: #fff;
 }
+scroll-view{
+  height: auto;
+}
 </style>
 <template>
-  <view>
-    <view class="head">
-      <view class="time" wx:if="{{startStatus}}" @tap="start">
-        <view>10s倒计时:</view>
-        <view>{{time}}</view>
-      </view>
-      <view class="time" wx:if="{{!startStatus}}" @tap="start">
-        <view class="start">开始答题</view>
-      </view>
-      <view class="grade">
-        <!-- diffcultShowData -->
-        <block wx:for="{{diffcultShowData}}" key="index" index="index" item="item">
-          <view>
-            <image src="/img/star{{item}}.png" />
-          </view>
+  <scroll-view scroll-y="hidden">
+    <view>
+      <view class="head">
+        <view class="time" wx:if="{{startStatus}}" @tap="start">
+          <view>10s倒计时:</view>
+          <view>{{time}}</view>
+        </view>
+        <view class="time" wx:if="{{!startStatus}}" @tap="start">
+          <view class="start">开始答题</view>
+        </view>
+        <view class="grade">
+          <!-- diffcultShowData -->
+          <block wx:for="{{diffcultShowData}}" key="index" index="index" item="item">
+            <view>
+              <image src="/img/star{{item}}.png" />
+            </view>
+            <view></view>
+          </block>
+        </view>
+        <view class="number">
           <view></view>
-        </block>
+          <view><text>{{index + 1}}</text>/{{topicList.length}}</view>
+          <view></view>
+        </view>
       </view>
-      <view class="number">
-        <view></view>
-        <view><text>{{index + 1}}</text>/{{topicList.length}}</view>
-        <view></view>
+      <view class="article">
+        <view class="articleCon">
+          <view class="articleConTitle">{{topicList[index].description}}</view>
+          <view class="select">
+            <view class="{{'A' === answer?correctStatus:errorStatus}}" data-sel="A" @tap="reply">A:{{topicList[index].answer_list[0].A}}</view>
+            <view class="{{'B' === answer?correctStatus:errorStatus}}" data-sel="B" @tap="reply">B:{{topicList[index].answer_list[1].B}}</view>
+            <view class="{{'C' === answer?correctStatus:errorStatus}}" data-sel="C" @tap="reply">C:{{topicList[index].answer_list[2].C}}</view>
+            <view class="{{'D' === answer?correctStatus:errorStatus}}" data-sel="D" @tap="reply">D:{{topicList[index].answer_list[3].D}}</view>
+          </view>
+        </view>
       </view>
+      <view class="mask" wx:if="{{correct || error}}">
+        <!-- 答错 -->
+        <view class="comeOn" wx:if="{{error}}">
+          <view class="comeOnTitleImg">
+            <image src="{{imgUrl}}comeOn.png" />
+          </view>
+          <view class="comeOnCon">失败乃成功之母</view>
+          <view class="comeOnConButton">
+            <view @tap="nextQuestion">下一题</view>
+          </view>
+          <view  class="comeOnBottonImg">
+            <image src="{{imgUrl}}comeOn1.png" />
+          </view>
+        </view>
+        <!-- 答对 -->
+        <view class="congratulations" wx:if="{{correct}}">
+          <view class="congsTitleImg">
+            <image src="{{imgUrl}}congratulations1.png" />
+          </view>
+          <view class="congCon">再接再厉</view>
+          <view class="congCons">20活力豆已经发放</view>
+          <view  class="comeOnBotton">
+            <view @tap="nextQuestion">下一题</view>
+          </view>
+        </view>
+      </view>
+      <!-- <nav @childFn.user="goPage" /> -->
     </view>
-    <view class="article">
-      <view class="articleCon">
-        <view class="articleConTitle">{{topicList[index].description}}</view>
-        <view class="select">
-          <view class="{{'A' === answer?correctStatus:errorStatus}}" data-sel="A" @tap="reply">A:{{topicList[index].answer_list[0].A}}</view>
-          <view class="{{'B' === answer?correctStatus:errorStatus}}" data-sel="B" @tap="reply">B:{{topicList[index].answer_list[1].B}}</view>
-          <view class="{{'C' === answer?correctStatus:errorStatus}}" data-sel="C" @tap="reply">C:{{topicList[index].answer_list[2].C}}</view>
-          <view class="{{'D' === answer?correctStatus:errorStatus}}" data-sel="D" @tap="reply">D:{{topicList[index].answer_list[3].D}}</view>
-        </view>
-      </view>
-    </view>
-    <view class="mask" wx:if="{{correct || error}}">
-      <!-- 答错 -->
-      <view class="comeOn" wx:if="{{error}}">
-        <view class="comeOnTitleImg">
-          <image src="{{imgUrl}}comeOn.png" />
-        </view>
-        <view class="comeOnCon">失败乃成功之母</view>
-        <view class="comeOnConButton">
-          <view @tap="nextQuestion">下一题</view>
-        </view>
-        <view  class="comeOnBottonImg">
-          <image src="{{imgUrl}}comeOn1.png" />
-        </view>
-      </view>
-      <!-- 答对 -->
-      <view class="congratulations" wx:if="{{correct}}">
-        <view class="congsTitleImg">
-          <image src="{{imgUrl}}congratulations1.png" />
-        </view>
-        <view class="congCon">再接再厉</view>
-        <view class="congCons">20活力豆已经发放</view>
-        <view  class="comeOnBotton">
-          <view @tap="nextQuestion">下一题</view>
-        </view>
-      </view>
-    </view>
-    <!-- <nav @childFn.user="goPage" /> -->
-  </view>
+  </scroll-view>
+  
 </template>
 
 <script>
@@ -554,7 +560,7 @@ export default class Challenge extends wepy.page {
     // 清理定时器
     clearInterval(this.countdown)
     // 提交答题结果
-    this.submitResult()
+    // this.submitResult()
   }
   /**
   * 生命周期函数--监听页面卸载
@@ -563,7 +569,7 @@ export default class Challenge extends wepy.page {
     // 清理定时器
     clearInterval(this.countdown)
     // 提交答题结果
-    this.submitResult()
+    // this.submitResult()
   }
 }
 </script>

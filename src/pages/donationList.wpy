@@ -190,7 +190,9 @@ export default class Donationlist extends wepy.page {
       success: data => {
         if (data.data.success) {
           this.donationList = data.data.data.projects.data
-          this.totalPersonCount = data.data.data.total_person_count
+          if (data.data.data.total_person_count) {
+            this.totalPersonCount = data.data.data.total_person_count
+          }
           this.$apply()
         } else {
           wx.showModal({

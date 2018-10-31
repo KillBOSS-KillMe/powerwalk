@@ -305,6 +305,7 @@ page{
         <view>帮助中心</view>
         <image class="go" src="/img/go.png" />
       </view>
+      <view class="features"></view>
     </view>
     <view class="mask {{invite}}">
       <view class="bulletBox">
