@@ -433,6 +433,8 @@ export default class Index extends wepy.page {
       this.code = res.code
     })
     // 发送请求,存储用户信息
+    console.log('===========================================')
+    console.log(this.inviteUserId)
     await wx.request({
       url: `${this.$parent.globalData.requestUrl}/api/userLogin`,
       method: 'POST',
@@ -469,6 +471,8 @@ export default class Index extends wepy.page {
         this.inviteUserId = options.userId
       }
     }
+    console.log('===========================================')
+    console.log(this.inviteUserId)
     // 获取用户信息
     this.onGotUserInfo()
     // 获取热门推荐商品列表

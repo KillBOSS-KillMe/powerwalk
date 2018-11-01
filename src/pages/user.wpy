@@ -467,7 +467,8 @@ export default class User extends wepy.page {
   }
   // 分享页面
   onShareAppMessage(res) {
-    let url = `pages/index?userId=${this.$parent.globalData.id}`
+    let url = `pages/index?userId=${this.userInfo.id}`
+    console.log(url)
     return {
       title: '步行的力量',
       desc: '',

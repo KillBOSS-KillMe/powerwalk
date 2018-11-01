@@ -371,11 +371,11 @@
         </view>
         <view class="infoContainer">
           <view class="info">
-            <view class="count">{{challengeList[index].get_bean}}</view>
-            <view class="unit">动力豆</view>
+            <view class="count">{{challengeList[index].cost_bean}}</view>
+            <view class="unit">活力豆</view>
             <view class="description">
               <view>达到{{challengeList[index].min_step}}步即可获得奖金</view>
-              <view>{{challengeList[index].cost_bean}}动力豆报名</view>
+              <view>{{challengeList[index].cost_bean}}活力豆报名</view>
             </view>
           </view>
         </view>
@@ -394,7 +394,8 @@
           <view class="infoContainer">
             <view class="info">
               <view class="infoShow">
-                <view>{{item.challege_list.get_bean}}</view>
+                <view wx:if="{{item.status == '已达成目标'}}">{{item.reward}}豆</view>
+                <view wx:if="{{item.status != '已达成目标'}}">0豆</view>
                 <view>获得收益</view>
               </view>
               <view class="infoShow">
@@ -409,7 +410,7 @@
           </view>
           <view class="thisStatus">
             {{item.finished_person}}人完成挑战
-            <text wx:if="{{item.finished_person != 0}}">,每人获得{{item.reward}}动力豆</text>
+            <text wx:if="{{item.finished_person != 0}}">,每人获得{{item.reward}}活力豆</text>
           </view>
         </view>
       </block>
@@ -435,14 +436,14 @@
       <view class="bulletBoxTitle">步数契约金</view>
       <view class="hideRun" @tap="participateHide">×</view>
       <view class="price">
-        <view>{{challengeList[index].get_bean}}</view>
-        <view>动力豆/人</view>
+        <view>{{challengeList[index].cost_bean}}</view>
+        <view>活力豆/人</view>
       </view>
       <view class="descriptionTitle">如何赚取步数奖励金？</view>
       <view class="conList">
         <view class="con">
           <view>报名参赛</view>
-          <view>支付{{challengeList[index].get_bean}}活力豆步数契约金，即可加入明天的{{challengeList[index].min_step}}步天挑战活动</view>
+          <view>支付{{challengeList[index].cost_bean}}活力豆步数契约金，即可加入明天的{{challengeList[index].min_step}}步天挑战活动</view>
         </view>
         <view class="con">
           <view>运动达标</view>
@@ -550,7 +551,7 @@ export default class Challenge extends wepy.page {
           thisTime = new Date(thisTime)
           for (let i in this.historyList) {
             // 计算总奖励金
-            this.historyList[i].allStep = this.historyList[i].participant_person * this.historyList[i].challege_list.get_bean
+            this.historyList[i].allStep = this.historyList[i].participant_person * this.historyList[i].challege_list.cost_bean
             // 计算每人获取的奖金
             if (this.historyList[i].finished_person !== 0) {
               // 总奖金除以达成目标的人数
