@@ -50,11 +50,11 @@
 <template>
   <view>
     <view class="head">
-      <view class="{{selShowData === 'getBeans'?'action':''}}" data-sel="getBeans" @tap="selShow">获取纪录</view>
-      <view class="{{selShowData === 'costBeans'?'action':''}}" data-sel="costBeans" @tap="selShow">消耗纪录</view>
+      <view class="{{selShowData === 'get'?'action':''}}" data-sel="get" @tap="selShow">获取纪录</view>
+      <view class="{{selShowData === 'cost'?'action':''}}" data-sel="cost" @tap="selShow">消耗纪录</view>
     </view>
     <!-- 获取纪录 -->
-    <view class="list" wx:if="{{selShowData === 'getBeans'}}">
+    <view class="list" wx:if="{{selShowData === 'get'}}">
       <view class="head2">
         <view class="description">详情</view>
         <!-- <view>数量</view> -->
@@ -70,7 +70,7 @@
       <view class="dataNullTitle" wx:if="{{getBeansList.length==0}}">暂无兑换纪录</view>
     </view>
     <!-- 消耗纪录 -->
-    <view class="list" wx:if="{{selShowData === 'costBeans'}}">
+    <view class="list" wx:if="{{selShowData === 'cost'}}">
       <view class="head2">
         <view class="description">详情</view>
         <!-- <view>数量</view> -->
@@ -105,7 +105,7 @@ export default class Beansdetails extends wepy.page {
   data = {
     userInfo: null,
     nextUrl: '',
-    selShowData: 'getBeans',
+    selShowData: 'get',
     getBeansList: null,
     costBeansList: null
   };
@@ -125,6 +125,8 @@ export default class Beansdetails extends wepy.page {
     let sel = e.currentTarget.dataset.sel
     this.selShowData = sel
     this.$apply()
+    // 数据更新
+    this.getBeansL()
   }
   // 兑换活力豆纪录
   getBeansL() {
@@ -135,7 +137,7 @@ export default class Beansdetails extends wepy.page {
         AuthrizeOpenId: this.$parent.globalData.openId
       },
       data: {
-        status: 'get'
+        status: this.selShowData
       },
       success: data => {
         if (data.data.success) {

@@ -234,8 +234,9 @@ page{
     </view>
     <view class="userNavT">
       <!-- <view> -->
-        <button open-type="getUserInfo" id='getUserInfo' lang="zh_CN" @getuserinfo="onGotUserInfo">{{loginName}}</button>
+        <!-- <button open-type="getUserInfo" id='getUserInfo' lang="zh_CN" @getuserinfo="onGotUserInfo">{{loginName}}</button> -->
       <!-- </view> -->
+      <view>{{loginName}}</view>
       <view @tap="goExchangeRecording">兑换记录</view>
     </view>
     <view class="userNav">

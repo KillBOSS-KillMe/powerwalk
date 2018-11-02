@@ -119,52 +119,56 @@
 .detailsInfo view:nth-child(3){
   margin-top: 20rpx
 }
+scroll-view{
+  height: auto;
+}
 </style>
-
 <template>
-  <view>
-    <view class="list">
-      <block wx:for="{{orderList}}" key="index" index="index" item="item">
-        <view class="listCon">
-          <view class="con">
-            <view class="orderNumber">订单号:{{item.order_number}}</view>
-            <view class="orderNumber" wx:if="{{item.tracking_number != null}}">物流单号:{{item.tracking_number}}</view>
-            <view class="info">
-              <view class="status">
-                <view>
-                  状态:
-                  <text>{{item.status}}</text>
-                </view>
-                <view>总价:￥{{item.total_beans}}</view>
-              </view>
-              <view class="again" data-index="{{index}}" @tap="againBuy">再次购买</view>
-            </view>
-            <block wx:for="{{item.order_good}}" key="indexs" index="indexs" wx:for-item="sonitem">
-              <view class="infoTitle" data-id="{{sonitem.good.id}}" @tap="goCommodity">
-                {{sonitem.good.name}}
-                <image src="/img/go.png" />
-              </view>
-              <view class="details" data-id="{{sonitem.good.id}}" @tap="goCommodity">
-                <view class="detailsImg">
-                  <image src="{{commodityImgUrl + sonitem.good.img}}" />
-                </view>
-                <view class="detailsInfo">
+  <scroll-view scroll-y="hidden">
+    <view>
+      <view class="list">
+        <block wx:for="{{orderList}}" key="index" index="index" item="item">
+          <view class="listCon">
+            <view class="con">
+              <view class="orderNumber">订单号:{{item.order_number}}</view>
+              <view class="orderNumber" wx:if="{{item.tracking_number != null}}">物流单号:{{item.tracking_number}}</view>
+              <view class="info">
+                <view class="status">
                   <view>
-                    <image src="/img/beans3.png" />
-                    <view>{{sonitem.good.cost_beans}}</view>
+                    状态:
+                    <text>{{item.status}}</text>
                   </view>
-                  <view class="detailsCon">{{sonitem.good.description}}</view>
-                  <view>×{{sonitem.num}}</view>
+                  <view>总价:￥{{item.total_beans}}</view>
                 </view>
+                <view class="again" data-index="{{index}}" @tap="againBuy">再次购买</view>
               </view>
-            </block>
+              <block wx:for="{{item.order_good}}" key="indexs" index="indexs" wx:for-item="sonitem">
+                <view class="infoTitle" data-id="{{sonitem.good.id}}" @tap="goCommodity">
+                  {{sonitem.good.name}}
+                  <image src="/img/go.png" />
+                </view>
+                <view class="details" data-id="{{sonitem.good.id}}" @tap="goCommodity">
+                  <view class="detailsImg">
+                    <image src="{{commodityImgUrl + sonitem.good.img}}" />
+                  </view>
+                  <view class="detailsInfo">
+                    <view>
+                      <image src="/img/beans3.png" />
+                      <view>{{sonitem.good.cost_beans}}</view>
+                    </view>
+                    <view class="detailsCon">{{sonitem.good.description}}</view>
+                    <view>×{{sonitem.num}}</view>
+                  </view>
+                </view>
+              </block>
+            </view>
           </view>
-        </view>
-      </block>
-      <view class="dataNullTitle" wx:if="{{orderList.length==0}}">暂无列表数据</view>
+        </block>
+        <view class="dataNullTitle" wx:if="{{orderList.length==0}}">暂无列表数据</view>
+      </view>
+      <!-- <nav @childFn.user="goPage" /> -->
     </view>
-    <!-- <nav @childFn.user="goPage" /> -->
-  </view>
+  </scroll-view>
 </template>
 
 <script>
