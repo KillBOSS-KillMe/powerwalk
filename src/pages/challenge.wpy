@@ -546,7 +546,7 @@ export default class Challenge extends wepy.page {
           // 获取参加的活动列表(已报名,进行中,已结束)
           this.historyList = data.data.data.user_challege_lists
           // 获取当天时间
-          let thisTime = `${this.year}-${this.month}-${this.date}`
+          let thisTime = `${this.year}/${this.month}/${this.date}`
           // 时间格式转化
           thisTime = new Date(thisTime)
           for (let i in this.historyList) {
@@ -561,8 +561,11 @@ export default class Challenge extends wepy.page {
             } else {
               this.historyList[i].reward = 0
             }
+            let date = this.historyList[i].deadline_date
+            // 时间中的-改为/   防止有时差
+            date = date.replace(/-/g, '/')
             // 获取活动时间
-            let date = new Date(this.historyList[i].deadline_date)
+            date = new Date(date)
             // 对比时间获取状态
             if (date.getTime() === thisTime.getTime()) {
               // 当天进行的活动

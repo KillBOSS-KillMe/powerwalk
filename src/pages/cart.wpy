@@ -393,7 +393,7 @@ export default class Cart extends wepy.page {
         success: data => {
           if (data.data.success) {
             wx.showToast({
-              title: '兑换成功',
+              title: '删除成功',
               duration: 2000,
               mask: true,
               icon: 'success'
