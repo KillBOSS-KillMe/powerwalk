@@ -126,7 +126,7 @@ page{
   <view>
     <view class="head">
 			<view class="headInfo">
-				<view>纪念您与步行的力量每一天</view>
+				<view>纪念您与益步步每一天</view>
 				<view class="day">
 					连续签到
 					<view>{{continuousDays}}</view>

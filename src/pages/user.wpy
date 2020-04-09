@@ -471,7 +471,7 @@ export default class User extends wepy.page {
     let url = `pages/index?userId=${this.userInfo.id}`
     console.log(url)
     return {
-      title: '步行的力量',
+      title: '益步步',
       desc: '',
       // 图片路径
       imageUrl: '/img/logo.png',
